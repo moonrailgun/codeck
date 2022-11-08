@@ -1,1 +1,0 @@
-export { Taichu } from './core';
