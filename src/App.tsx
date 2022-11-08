@@ -11,7 +11,7 @@ function App() {
         <Allotment.Pane>
           <FlowEditor />
         </Allotment.Pane>
-        <Allotment.Pane snap={true}>
+        <Allotment.Pane snap={true} preferredSize="30%">
           <CodeEditor />
         </Allotment.Pane>
       </Allotment>

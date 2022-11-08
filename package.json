@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@monaco-editor/react": "^4.4.6",
+    "ahooks": "^3.7.2",
     "allotment": "^1.17.0",
     "konva": "^8.3.13",
     "lit": "^2.0.2",

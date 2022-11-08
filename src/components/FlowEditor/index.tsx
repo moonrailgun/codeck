@@ -1,12 +1,17 @@
-import React, { useCallback, useRef } from 'react';
+import React from 'react';
 import { Stage, Layer, Rect, Text } from 'react-konva';
 import Konva from 'konva';
-import './FlowEditor.less';
+import { GridLayer } from './GridLayer';
+import { useMemoizedFn } from 'ahooks';
+import { useStageStore } from '../../store/stage';
 
 const scaleBy = 1.05;
 
 export const FlowEditor: React.FC = React.memo(() => {
-  const handleWheel = useCallback((e: Konva.KonvaEventObject<WheelEvent>) => {
+  const { width, height, scale, setScale, position, setPosition } =
+    useStageStore();
+
+  const handleWheel = useMemoizedFn((e: Konva.KonvaEventObject<WheelEvent>) => {
     e.evt.preventDefault();
     const stage = e.currentTarget as Konva.Stage;
 
@@ -31,27 +36,38 @@ export const FlowEditor: React.FC = React.memo(() => {
       direction = -direction;
     }
 
-    let newScale = direction > 0 ? oldScale * scaleBy : oldScale / scaleBy;
+    const newScale = direction > 0 ? oldScale * scaleBy : oldScale / scaleBy;
 
-    stage.scale({ x: newScale, y: newScale });
+    setScale(newScale);
 
-    let newPos = {
+    const newPos = {
       x: pointer.x - mousePointTo.x * newScale,
       y: pointer.y - mousePointTo.y * newScale,
     };
-    stage.position(newPos);
-  }, []);
+    setPosition(newPos);
+  });
+
+  const handleDragEnd = useMemoizedFn(
+    (e: Konva.KonvaEventObject<DragEvent>) => {
+      setPosition(e.currentTarget.position());
+    }
+  );
 
   return (
     <Stage
-      className="flow-editor h-full w-full"
-      width={window.innerWidth}
-      height={window.innerHeight}
+      className="h-full w-full"
+      width={width}
+      height={height}
+      scale={scale}
+      x={position.x}
+      y={position.y}
       onWheel={handleWheel}
+      onDragEnd={handleDragEnd}
       draggable={true}
     >
+      <GridLayer />
       <Layer>
-        <Text text="Try click on rect" />
+        <Text text="Try click on rect" fill="white" />
         <ColoredRect />
       </Layer>
     </Stage>
