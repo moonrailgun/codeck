@@ -1,5 +1,5 @@
 import React from 'react';
-import { FastLayer, Line } from 'react-konva';
+import { Layer, Line } from 'react-konva';
 import { useStageStore } from '../../store/stage';
 
 const stepSize = 40;
@@ -53,7 +53,8 @@ export const GridLayer: React.FC = React.memo(() => {
   };
 
   return (
-    <FastLayer
+    <Layer
+      listening={false}
       clipX={viewRect.x1}
       clipY={viewRect.y1}
       clipWidth={viewRect.x2 - viewRect.x1}
@@ -79,7 +80,7 @@ export const GridLayer: React.FC = React.memo(() => {
           strokeWidth={1}
         />
       ))}
-    </FastLayer>
+    </Layer>
   );
 });
 GridLayer.displayName = 'GridLayer';

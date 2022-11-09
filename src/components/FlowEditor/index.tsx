@@ -1,19 +1,26 @@
-import React from 'react';
-import { Stage, Layer, Rect, Text } from 'react-konva';
+import React, { useEffect, useRef } from 'react';
+import { Stage } from 'react-konva';
 import Konva from 'konva';
 import { GridLayer } from './GridLayer';
 import { useMemoizedFn } from 'ahooks';
 import { useStageStore } from '../../store/stage';
+import { NodeLayer } from './NodeLayer';
+import { ConnectionLayer } from './ConnectionLayer';
 
 const scaleBy = 1.05;
 
 export const FlowEditor: React.FC = React.memo(() => {
-  const { width, height, scale, setScale, position, setPosition } =
+  const { width, height, scale, setStageRef, setScale, position, setPosition } =
     useStageStore();
+  const stageRef = useRef<Konva.Stage>(null);
+
+  useEffect(() => {
+    setStageRef(stageRef.current);
+  }, []);
 
   const handleWheel = useMemoizedFn((e: Konva.KonvaEventObject<WheelEvent>) => {
     e.evt.preventDefault();
-    const stage = e.currentTarget as Konva.Stage;
+    const stage = e.target as Konva.Stage;
 
     const oldScale = stage.scaleX();
     const pointer = stage.getPointerPosition();
@@ -47,14 +54,22 @@ export const FlowEditor: React.FC = React.memo(() => {
     setPosition(newPos);
   });
 
+  const isDragging = useRef(false);
+  const handleDragStart = useMemoizedFn(() => {
+    isDragging.current = true;
+  });
   const handleDragEnd = useMemoizedFn(
     (e: Konva.KonvaEventObject<DragEvent>) => {
-      setPosition(e.currentTarget.position());
+      if (isDragging.current === true) {
+        setPosition(e.target.position());
+        isDragging.current = false;
+      }
     }
   );
 
   return (
     <Stage
+      ref={stageRef}
       className="h-full w-full"
       width={width}
       height={height}
@@ -62,39 +77,14 @@ export const FlowEditor: React.FC = React.memo(() => {
       x={position.x}
       y={position.y}
       onWheel={handleWheel}
+      onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
       draggable={true}
     >
       <GridLayer />
-      <Layer>
-        <Text text="Try click on rect" fill="white" />
-        <ColoredRect />
-      </Layer>
+      <NodeLayer />
+      <ConnectionLayer />
     </Stage>
   );
 });
 FlowEditor.displayName = 'FlowEditor';
-
-class ColoredRect extends React.Component {
-  state = {
-    color: 'green',
-  };
-  handleClick = () => {
-    this.setState({
-      color: Konva.Util.getRandomColor(),
-    });
-  };
-  render() {
-    return (
-      <Rect
-        x={20}
-        y={20}
-        width={50}
-        height={50}
-        fill={this.state.color}
-        shadowBlur={5}
-        onClick={this.handleClick}
-      />
-    );
-  }
-}

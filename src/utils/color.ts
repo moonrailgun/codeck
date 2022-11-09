@@ -1,0 +1,20 @@
+export const color = {
+  number: '#00d0fa',
+  string: '#ed1a95',
+  boolean: '#f30909',
+  array: '#ccff33',
+  data: '#ff7900',
+  nodeLabel: '#ffffff',
+  nodeLabelBox: '#3282b8',
+  nodeBoxGradient: {
+    start: '#28313b',
+    end: '#485461',
+  },
+  text: '#ffffff',
+  logic: '#7209b7',
+  get: '#008000',
+  math: '#ae2012',
+  func: '#0353a4',
+  begin: '#d8572a',
+  print: '#bc4749',
+};
