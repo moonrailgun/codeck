@@ -10,6 +10,7 @@ interface StageState {
   setStageRef: (stageRef: Konva.Stage | null) => void;
   setScale: (newScale: number) => void;
   setPosition: (position: Konva.Vector2d) => void;
+  unscale: (position: Konva.Vector2d) => Konva.Vector2d;
   calcAbsolutePositionToRelative: (
     absolutePos: Konva.Vector2d
   ) => Konva.Vector2d;
@@ -44,18 +45,24 @@ export const useStageStore = create<StageState>((set, get) => ({
       position,
     });
   },
+  unscale: (position) => {
+    const { scale } = get();
+
+    return {
+      x: position.x / scale.x,
+      y: position.y / scale.y,
+    };
+  },
   /**
    * 将绝对坐标计算为相对于stage的相对坐标
    */
-  calcAbsolutePositionToRelative: (
-    absolutePos: Konva.Vector2d
-  ): Konva.Vector2d => {
-    const { position, scale } = get();
+  calcAbsolutePositionToRelative: (absolutePos) => {
+    const { position, unscale } = get();
 
-    return {
-      x: (absolutePos.x - position.x) / scale.x,
-      y: (absolutePos.y - position.y) / scale.y,
-    };
+    return unscale({
+      x: absolutePos.x - position.x,
+      y: absolutePos.y - position.y,
+    });
   },
 
   getPointerPosition: () => {

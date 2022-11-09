@@ -1,19 +1,76 @@
 import { useUpdate } from 'ahooks';
 import React from 'react';
-import { Layer, Line } from 'react-konva';
+import { Layer } from 'react-konva';
 import { useUpdateRef } from '../../hooks/useUpdateRef';
-import { useConnectionStore } from '../../store/connection';
+import { ConnectInfo, useConnectionStore } from '../../store/connection';
 import { useStageStore } from '../../store/stage';
 import { useStage } from '../../hooks/useStage';
+import { useNodeStore } from '../../store/node';
+import Konva from 'konva';
+import { Connection } from '../Connection';
+
+function getWorkingConnectionFromPos(): Konva.Vector2d {
+  const { workingConnection } = useConnectionStore.getState();
+
+  if (!workingConnection) {
+    return { x: 0, y: 0 };
+  }
+
+  return (
+    getPinPos(
+      workingConnection.fromNodeId,
+      workingConnection.fromNodePinName
+    ) ?? { x: 0, y: 0 }
+  );
+}
+
+function getConnectionFromToPos(
+  connection: ConnectInfo
+): { from: Konva.Vector2d; to: Konva.Vector2d } | null {
+  const { fromNodeId, fromNodePinName, toNodeId, toNodePinName } = connection;
+
+  const from = getPinPos(fromNodeId, fromNodePinName);
+  const to = getPinPos(toNodeId, toNodePinName);
+
+  if (!from || !to) {
+    return null;
+  }
+
+  return {
+    from,
+    to,
+  };
+}
+
+function getPinPos(nodeId: string, nodePinName: string) {
+  const { nodeMap, getPinDefinitionByName } = useNodeStore.getState();
+
+  const node = nodeMap[nodeId];
+  if (!node) {
+    return null;
+  }
+
+  const pinDefinition = getPinDefinitionByName(nodeId, nodePinName);
+  if (!pinDefinition) {
+    return null;
+  }
+
+  return {
+    x: node.position.x + pinDefinition.position.x,
+    y: node.position.y + pinDefinition.position.y,
+  };
+}
 
 /**
  * 仅用于绘制
  * 因为线条的刷新频率比较高，所以单独放一个layer
  */
 export const ConnectionLayer: React.FC = React.memo(() => {
-  const { workingConnection } = useConnectionStore();
-  const { getPointerPosition, calcAbsolutePositionToRelative } =
+  const { connections, workingConnection } = useConnectionStore();
+  const { getPointerPosition, calcAbsolutePositionToRelative, unscale } =
     useStageStore();
+  useNodeStore(); // 这只是为了确保node位置更新了这个layer也能被渲染
+
   const updateDraw = useUpdate();
 
   const workingConnectionRef = useUpdateRef(workingConnection);
@@ -34,49 +91,32 @@ export const ConnectionLayer: React.FC = React.memo(() => {
 
   let workingConnectionEl: React.ReactNode = null;
   if (workingConnection) {
-    const fromPos = calcAbsolutePositionToRelative(
-      workingConnection.from.getAbsolutePosition()
-    );
+    const fromPos = unscale(getWorkingConnectionFromPos());
     const toPos = calcAbsolutePositionToRelative(getPointerPosition());
 
-    const dir = workingConnection.type === 'out' ? 1 : -1;
-
-    let holdLen = (toPos.x - fromPos.x) / 3; // 确保初始方向正确
-    const diffY = Math.abs(toPos.y - fromPos.y);
-    // let diffX = Math.abs(toPos.x - fromPos.x);
-    holdLen = dir * (Math.abs(holdLen) + diffY / 4);
-
-    let mid1 = {
-      x: fromPos.x + holdLen,
-      y: fromPos.y,
-    };
-    let mid2 = {
-      x: toPos.x - holdLen,
-      y: toPos.y,
-    };
-
     workingConnectionEl = (
-      <Line
-        strokeWidth={2}
-        stroke="white"
-        bezier={true}
-        points={[
-          fromPos.x,
-          fromPos.y,
-          mid1.x,
-          mid1.y,
-          mid2.x,
-          mid2.y,
-          toPos.x,
-          toPos.y,
-        ]}
-      />
+      <Connection from={fromPos} to={toPos} fromType={workingConnection.type} />
     );
   }
 
   return (
     <Layer listening={false}>
-      {/* other connection */}
+      {/* created connections */}
+      {connections.map((connection) => {
+        const info = getConnectionFromToPos(connection);
+        if (!info) {
+          return null;
+        }
+
+        return (
+          <Connection
+            key={connection.id}
+            from={info.from}
+            to={info.to}
+            fromType={'out'}
+          />
+        );
+      })}
 
       {workingConnectionEl}
     </Layer>

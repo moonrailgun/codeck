@@ -12,7 +12,7 @@ export const NodeLayer: React.FC = React.memo(() => {
         const def = nodeDefinition[node.name];
         const component = def.component;
 
-        return React.createElement(component, { id: node.id });
+        return React.createElement(component, { key: node.id, id: node.id });
       })}
     </Layer>
   );

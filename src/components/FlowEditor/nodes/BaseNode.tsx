@@ -14,9 +14,10 @@ interface BaseNodeProps extends TaichuNodeComponentProps {
   title: string;
 }
 export const BaseNode: React.FC<BaseNodeProps> = React.memo((props) => {
-  const { width = 150, height = 65, title } = props;
+  const { title } = props;
   const { startConnect } = useConnectionStore();
-  const { node } = useNodeInfo(props.id);
+  const { node, definition, updatePos } = useNodeInfo(props.id);
+  const { width, height } = definition;
   const { x, y } = node.position;
 
   return (
@@ -25,6 +26,9 @@ export const BaseNode: React.FC<BaseNodeProps> = React.memo((props) => {
       y={y}
       draggable={true}
       onDragStart={(e) => (e.cancelBubble = true)}
+      onDragEnd={(e) => {
+        updatePos(e.target.position());
+      }}
     >
       <Rect
         width={width}
@@ -61,22 +65,39 @@ export const BaseNode: React.FC<BaseNodeProps> = React.memo((props) => {
         fill="white"
       />
 
-      <ExecPin
-        x={20}
-        y={16}
-        onConnectionStart={(e) => {
-          e.cancelBubble = true;
-          startConnect(e.currentTarget, 'in');
-        }}
-      />
-      <ExecPin
-        x={width - 10}
-        y={16}
-        onConnectionStart={(e) => {
-          e.cancelBubble = true;
-          startConnect(e.currentTarget, 'out');
-        }}
-      />
+      {definition.inputs.map((inputPin) => {
+        if (inputPin.type === 'exec') {
+          return (
+            <ExecPin
+              x={inputPin.position.x}
+              y={inputPin.position.y}
+              onConnectionStart={(e) => {
+                e.cancelBubble = true;
+                startConnect(props.id, inputPin.name, inputPin.type, 'in');
+              }}
+            />
+          );
+        }
+
+        return null;
+      })}
+
+      {definition.outputs.map((outputPin) => {
+        if (outputPin.type === 'exec') {
+          return (
+            <ExecPin
+              x={outputPin.position.x}
+              y={outputPin.position.y}
+              onConnectionStart={(e) => {
+                e.cancelBubble = true;
+                startConnect(props.id, outputPin.name, outputPin.type, 'out');
+              }}
+            />
+          );
+        }
+
+        return null;
+      })}
     </Group>
   );
 });

@@ -15,5 +15,14 @@ useNodeStore.setState({
         y: 10,
       },
     },
+    bar: {
+      id: 'bar',
+      type: 'begin',
+      name: 'begin',
+      position: {
+        x: 110,
+        y: 110,
+      },
+    },
   },
 });
