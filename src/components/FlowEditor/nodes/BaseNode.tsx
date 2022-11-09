@@ -26,7 +26,12 @@ export const BaseNode: React.FC<BaseNodeProps> = React.memo((props) => {
       y={y}
       draggable={true}
       onDragStart={(e) => (e.cancelBubble = true)}
+      onDragMove={(e) => {
+        e.cancelBubble = true;
+        updatePos(e.target.position());
+      }}
       onDragEnd={(e) => {
+        e.cancelBubble = true;
         updatePos(e.target.position());
       }}
     >
@@ -73,7 +78,7 @@ export const BaseNode: React.FC<BaseNodeProps> = React.memo((props) => {
               y={inputPin.position.y}
               onConnectionStart={(e) => {
                 e.cancelBubble = true;
-                startConnect(props.id, inputPin.name, inputPin.type, 'in');
+                startConnect(props.id, inputPin.name, inputPin.type, 'in-out');
               }}
             />
           );
@@ -90,7 +95,12 @@ export const BaseNode: React.FC<BaseNodeProps> = React.memo((props) => {
               y={outputPin.position.y}
               onConnectionStart={(e) => {
                 e.cancelBubble = true;
-                startConnect(props.id, outputPin.name, outputPin.type, 'out');
+                startConnect(
+                  props.id,
+                  outputPin.name,
+                  outputPin.type,
+                  'out-in'
+                );
               }}
             />
           );

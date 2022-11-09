@@ -25,7 +25,6 @@ export const FlowEditor: React.FC = React.memo(() => {
 
     const oldScale = stage.scaleX();
     const pointer = stage.getPointerPosition();
-
     if (!pointer) {
       return;
     }
@@ -55,16 +54,9 @@ export const FlowEditor: React.FC = React.memo(() => {
     setPosition(newPos);
   });
 
-  const isDragging = useRef(false);
-  const handleDragStart = useMemoizedFn(() => {
-    isDragging.current = true;
-  });
-  const handleDragEnd = useMemoizedFn(
+  const handleUpdatePos = useMemoizedFn(
     (e: Konva.KonvaEventObject<DragEvent>) => {
-      if (isDragging.current === true) {
-        setPosition(e.target.position());
-        isDragging.current = false;
-      }
+      setPosition(e.target.position());
     }
   );
 
@@ -78,8 +70,8 @@ export const FlowEditor: React.FC = React.memo(() => {
       x={position.x}
       y={position.y}
       onWheel={handleWheel}
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
+      onDragMove={handleUpdatePos}
+      onDragEnd={handleUpdatePos}
       draggable={true}
     >
       <GridLayer />

@@ -10,7 +10,7 @@ export interface ConnectInfo {
   toNodePinName: string;
 }
 
-type ConnectType = 'out' | 'in';
+type FromDirection = 'out-in' | 'in-out';
 
 interface ConnectionState {
   connections: ConnectInfo[];
@@ -18,13 +18,13 @@ interface ConnectionState {
     fromNodeId: string;
     fromNodePinName: string;
     fromNodePinType: TaichuNodePortType;
-    type: ConnectType;
+    fromDirection: FromDirection;
   } | null;
   startConnect: (
     fromNodeId: string,
     fromNodePinName: string,
     fromNodePinType: TaichuNodePortType,
-    type: ConnectType
+    fromDirection: FromDirection
   ) => void;
   endConnect: () => void;
 }
@@ -32,7 +32,12 @@ interface ConnectionState {
 export const useConnectionStore = create<ConnectionState>((set, get) => ({
   connections: [],
   workingConnection: null,
-  startConnect: (fromNodeId, fromNodePinName, fromNodePinType, type) => {
+  startConnect: (
+    fromNodeId,
+    fromNodePinName,
+    fromNodePinType,
+    fromDirection
+  ) => {
     const { workingConnection, endConnect, connections } = get();
     if (!workingConnection) {
       set({
@@ -40,7 +45,7 @@ export const useConnectionStore = create<ConnectionState>((set, get) => ({
           fromNodeId,
           fromNodePinName,
           fromNodePinType,
-          type,
+          fromDirection,
         },
       });
       return;
@@ -53,7 +58,7 @@ export const useConnectionStore = create<ConnectionState>((set, get) => ({
       return;
     }
 
-    if (type === workingConnection.type) {
+    if (fromDirection === workingConnection.fromDirection) {
       // 相同方向
       endConnect();
       return;
@@ -69,7 +74,7 @@ export const useConnectionStore = create<ConnectionState>((set, get) => ({
       // TODO: 需要去重
       connections: [
         ...connections,
-        workingConnection.type === 'out'
+        workingConnection.fromDirection === 'out-in'
           ? {
               id: nanoid(),
               fromNodeId: workingConnection.fromNodeId,

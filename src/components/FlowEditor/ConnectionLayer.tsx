@@ -95,7 +95,11 @@ export const ConnectionLayer: React.FC = React.memo(() => {
     const toPos = calcAbsolutePositionToRelative(getPointerPosition());
 
     workingConnectionEl = (
-      <Connection from={fromPos} to={toPos} fromType={workingConnection.type} />
+      <Connection
+        from={fromPos}
+        to={toPos}
+        direction={workingConnection.fromDirection}
+      />
     );
   }
 
@@ -113,7 +117,7 @@ export const ConnectionLayer: React.FC = React.memo(() => {
             key={connection.id}
             from={info.from}
             to={info.to}
-            fromType={'out'}
+            direction={'out-in'}
           />
         );
       })}
