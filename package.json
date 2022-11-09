@@ -12,8 +12,10 @@
     "@monaco-editor/react": "^4.4.6",
     "ahooks": "^3.7.2",
     "allotment": "^1.17.0",
+    "immer": "^9.0.16",
     "konva": "^8.3.13",
     "lit": "^2.0.2",
+    "lodash-es": "^4.17.21",
     "nanoid": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -21,6 +23,7 @@
     "zustand": "^4.1.4"
   },
   "devDependencies": {
+    "@types/lodash-es": "^4.17.6",
     "@types/react": "^18.0.24",
     "@types/react-dom": "^18.0.8",
     "@vitejs/plugin-react": "^2.2.0",

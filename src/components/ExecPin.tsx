@@ -40,7 +40,6 @@ export const ExecPin: React.FC<ExecPinProps> = React.memo((props) => {
         setStrokeWidth(2);
       }}
       onClick={props.onConnectionStart}
-      onDragStart={props.onConnectionStart}
     />
   );
 });

@@ -19,6 +19,10 @@ export const useConnectionStore = create<ConnectionState>((set, get) => ({
   connections: [],
   workingConnection: null,
   startConnect: (from: Konva.Node, type: ConnectType) => {
+    // const workingConnection = get().workingConnection;
+    // if (workingConnection) {
+    // }
+
     set({
       workingConnection: {
         from,

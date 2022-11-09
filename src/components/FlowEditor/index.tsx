@@ -6,6 +6,7 @@ import { useMemoizedFn } from 'ahooks';
 import { useStageStore } from '../../store/stage';
 import { NodeLayer } from './NodeLayer';
 import { ConnectionLayer } from './ConnectionLayer';
+import './nodes/__all__';
 
 const scaleBy = 1.05;
 

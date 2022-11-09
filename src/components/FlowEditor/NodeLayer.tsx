@@ -1,11 +1,19 @@
 import React from 'react';
 import { Layer } from 'react-konva';
-import { BaseNode } from './nodes/BaseNode';
+import { useNodeStore } from '../../store/node';
+import { values } from 'lodash-es';
 
 export const NodeLayer: React.FC = React.memo(() => {
+  const { nodeMap, nodeDefinition } = useNodeStore();
+
   return (
     <Layer>
-      <BaseNode title={'any'} x={40} y={40} />
+      {values(nodeMap).map((node) => {
+        const def = nodeDefinition[node.name];
+        const component = def.component;
+
+        return React.createElement(component, { id: node.id });
+      })}
     </Layer>
   );
 });

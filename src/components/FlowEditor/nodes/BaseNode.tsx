@@ -1,10 +1,12 @@
 import React from 'react';
 import { Group, Rect, Text } from 'react-konva';
+import { useNodeInfo } from '../../../hooks/useNodeInfo';
 import { useConnectionStore } from '../../../store/connection';
+import { TaichuNodeComponentProps } from '../../../store/node';
 import { color } from '../../../utils/color';
 import { ExecPin } from '../../ExecPin';
 
-interface BaseNodeProps {
+interface BaseNodeProps extends TaichuNodeComponentProps {
   x?: number;
   y?: number;
   width?: number;
@@ -12,8 +14,10 @@ interface BaseNodeProps {
   title: string;
 }
 export const BaseNode: React.FC<BaseNodeProps> = React.memo((props) => {
-  const { x = 0, y = 0, width = 150, height = 65, title } = props;
+  const { width = 150, height = 65, title } = props;
   const { startConnect } = useConnectionStore();
+  const { node } = useNodeInfo(props.id);
+  const { x, y } = node.position;
 
   return (
     <Group
@@ -62,7 +66,6 @@ export const BaseNode: React.FC<BaseNodeProps> = React.memo((props) => {
         y={16}
         onConnectionStart={(e) => {
           e.cancelBubble = true;
-          console.log('onConnectionStart', e.currentTarget);
           startConnect(e.currentTarget, 'in');
         }}
       />
@@ -71,7 +74,6 @@ export const BaseNode: React.FC<BaseNodeProps> = React.memo((props) => {
         y={16}
         onConnectionStart={(e) => {
           e.cancelBubble = true;
-          console.log('onConnectionStart', e.currentTarget);
           startConnect(e.currentTarget, 'out');
         }}
       />

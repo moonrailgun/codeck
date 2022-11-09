@@ -2,15 +2,18 @@ lockfileVersion: 5.4
 
 specifiers:
   '@monaco-editor/react': ^4.4.6
+  '@types/lodash-es': ^4.17.6
   '@types/react': ^18.0.24
   '@types/react-dom': ^18.0.8
   '@vitejs/plugin-react': ^2.2.0
   ahooks: ^3.7.2
   allotment: ^1.17.0
   autoprefixer: ^10.4.13
+  immer: ^9.0.16
   konva: ^8.3.13
   less: ^4.1.3
   lit: ^2.0.2
+  lodash-es: ^4.17.21
   nanoid: ^4.0.0
   postcss: ^8.4.18
   react: ^18.2.0
@@ -25,15 +28,18 @@ dependencies:
   '@monaco-editor/react': 4.4.6_biqbaboplfbrettd7655fr4n2y
   ahooks: 3.7.2_react@18.2.0
   allotment: 1.17.0_biqbaboplfbrettd7655fr4n2y
+  immer: 9.0.16
   konva: 8.3.13
   lit: 2.2.7
+  lodash-es: 4.17.21
   nanoid: 4.0.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-konva: 18.2.3_ycsaxglfwmvsphhhrpeabwxklq
-  zustand: 4.1.4_react@18.2.0
+  zustand: 4.1.4_immer@9.0.16+react@18.2.0
 
 devDependencies:
+  '@types/lodash-es': 4.17.6
   '@types/react': 18.0.25
   '@types/react-dom': 18.0.8
   '@vitejs/plugin-react': 2.2.0_vite@3.2.3
@@ -422,6 +428,16 @@ packages:
   /@types/js-cookie/2.2.7:
     resolution: {integrity: sha512-aLkWa0C0vO5b4Sr798E26QgOkss68Un0bLjs7u9qxzPT5CG+8DuNTffWES58YzJs3hrVAOs1wonycqEBqNJubA==}
     dev: false
+
+  /@types/lodash-es/4.17.6:
+    resolution: {integrity: sha512-R+zTeVUKDdfoRxpAryaQNRKk3105Rrgx2CFRClIgRGaqDTdjsm8h6IYA8ir584W3ePzkZfst5xIgDwYrlh9HLg==}
+    dependencies:
+      '@types/lodash': 4.14.188
+    dev: true
+
+  /@types/lodash/4.14.188:
+    resolution: {integrity: sha512-zmEmF5OIM3rb7SbLCFYoQhO4dGt2FRM9AMkxvA3LaADOF1n8in/zGJlWji9fmafLoNyz+FoL6FE0SLtGIArD7w==}
+    dev: true
 
   /@types/parse-json/4.0.0:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
@@ -1179,6 +1195,10 @@ packages:
     dev: true
     optional: true
 
+  /immer/9.0.16:
+    resolution: {integrity: sha512-qenGE7CstVm1NrHQbMh8YaSzTZTFNP3zPqr3YU0S0UY441j4bJTg4A2Hh5KAhwgaiU6ZZ1Ar6y/2f4TblnMReQ==}
+    dev: false
+
   /import-fresh/3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
     engines: {node: '>=6'}
@@ -1347,6 +1367,10 @@ packages:
       '@lit/reactive-element': 1.3.3
       lit-element: 3.2.1
       lit-html: 2.2.6
+    dev: false
+
+  /lodash-es/4.17.21:
+    resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
     dev: false
 
   /lodash.clamp/4.0.3:
@@ -1999,7 +2023,7 @@ packages:
     engines: {node: '>= 6'}
     dev: true
 
-  /zustand/4.1.4_react@18.2.0:
+  /zustand/4.1.4_immer@9.0.16+react@18.2.0:
     resolution: {integrity: sha512-k2jVOlWo8p4R83mQ+/uyB8ILPO2PCJOf+QVjcL+1PbMCk1w5OoPYpAIxy9zd93FSfmJqoH6lGdwzzjwqJIRU5A==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
@@ -2011,6 +2035,7 @@ packages:
       react:
         optional: true
     dependencies:
+      immer: 9.0.16
       react: 18.2.0
       use-sync-external-store: 1.2.0_react@18.2.0
     dev: false
