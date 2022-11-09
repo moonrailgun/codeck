@@ -1,9 +1,4 @@
 export const color = {
-  number: '#00d0fa',
-  string: '#ed1a95',
-  boolean: '#f30909',
-  array: '#ccff33',
-  data: '#ff7900',
   nodeLabel: '#ffffff',
   nodeLabelBox: '#3282b8',
   nodeBoxGradient: {
@@ -11,10 +6,17 @@ export const color = {
     end: '#485461',
   },
   text: '#ffffff',
-  logic: '#7209b7',
-  get: '#008000',
-  math: '#ae2012',
-  func: '#0353a4',
-  begin: '#d8572a',
-  print: '#bc4749',
+  variable: {
+    number: '#00d0fa',
+    string: '#ed1a95',
+    boolean: '#f30909',
+    array: '#ccff33',
+    data: '#ff7900',
+  },
+  node: {
+    begin: '#d8572a',
+    function: '#0353a4',
+    logic: '#7209b7',
+    return: '#bc4749',
+  },
 };

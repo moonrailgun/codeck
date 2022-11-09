@@ -6,8 +6,7 @@ type TaichuNodeType = 'begin' | 'return' | 'function' | 'logic';
 
 interface TaichuNode {
   id: string;
-  type: TaichuNodeType;
-  name: string;
+  name: string; // 节点名, 指向 TaichuNodeDefinition
   position: Konva.Vector2d;
 }
 
@@ -27,6 +26,8 @@ interface TaichuNodePinDefinition {
 
 export interface TaichuNodeDefinition {
   name: string;
+  label: string;
+  type: TaichuNodeType;
   width: number;
   height: number;
   inputs: TaichuNodePinDefinition[];

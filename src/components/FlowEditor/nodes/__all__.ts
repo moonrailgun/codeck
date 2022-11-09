@@ -1,29 +1,8 @@
 import { useNodeStore } from '../../../store/node';
-import { BeginNode } from './BeginNode';
+import { BeginNodeDefinition } from './BeginNode';
+import { LogNodeDefinition } from './LogNode';
 
-useNodeStore.getState().regNode({
-  name: 'begin',
-  component: BeginNode,
-  width: 150,
-  height: 65,
-  inputs: [
-    {
-      name: 'exec-in',
-      type: 'exec',
-      position: {
-        x: 20,
-        y: 16,
-      },
-    },
-  ],
-  outputs: [
-    {
-      name: 'exec-out',
-      type: 'exec',
-      position: {
-        x: 140,
-        y: 16,
-      },
-    },
-  ],
-});
+const { regNode } = useNodeStore.getState();
+
+regNode(BeginNodeDefinition);
+regNode(LogNodeDefinition);

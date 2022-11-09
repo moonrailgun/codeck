@@ -8,7 +8,6 @@ useNodeStore.setState({
   nodeMap: {
     foo: {
       id: 'foo',
-      type: 'begin',
       name: 'begin',
       position: {
         x: 10,
@@ -17,11 +16,18 @@ useNodeStore.setState({
     },
     bar: {
       id: 'bar',
-      type: 'begin',
       name: 'begin',
       position: {
         x: 110,
         y: 110,
+      },
+    },
+    baz: {
+      id: 'baz',
+      name: 'log',
+      position: {
+        x: 210,
+        y: 210,
       },
     },
   },

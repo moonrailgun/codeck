@@ -10,6 +10,11 @@ export const NodeLayer: React.FC = React.memo(() => {
     <Layer>
       {values(nodeMap).map((node) => {
         const def = nodeDefinition[node.name];
+        if (!def) {
+          console.warn('Not found node:', node.name);
+
+          return null;
+        }
         const component = def.component;
 
         return React.createElement(component, { key: node.id, id: node.id });
