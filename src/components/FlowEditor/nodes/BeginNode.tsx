@@ -1,10 +1,10 @@
 import { TaichuNodeDefinition } from '../../../store/node';
 import { BaseNode } from './BaseNode';
 
-export const LogNodeDefinition: TaichuNodeDefinition = {
-  name: 'log',
-  label: 'Log',
-  type: 'function',
+export const BeginNodeDefinition: TaichuNodeDefinition = {
+  name: 'begin',
+  label: 'Begin',
+  type: 'begin',
   component: BaseNode,
   width: 150,
   height: 65,
@@ -13,7 +13,7 @@ export const LogNodeDefinition: TaichuNodeDefinition = {
       name: 'exec-in',
       type: 'exec',
       position: {
-        x: 20,
+        x: 14,
         y: 16,
       },
     },
@@ -23,7 +23,7 @@ export const LogNodeDefinition: TaichuNodeDefinition = {
       name: 'exec-out',
       type: 'exec',
       position: {
-        x: 140,
+        x: 136,
         y: 16,
       },
     },

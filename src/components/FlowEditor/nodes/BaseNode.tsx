@@ -1,15 +1,22 @@
+import Konva from 'konva';
 import React from 'react';
 import { Group, Rect, Text } from 'react-konva';
 import { useNodeInfo } from '../../../hooks/useNodeInfo';
 import { useConnectionStore } from '../../../store/connection';
-import { TaichuNodeComponentProps } from '../../../store/node';
+import {
+  TaichuNodeComponentProps,
+  TaichuNodePinDefinition,
+  TaichuNodePortType,
+} from '../../../store/node';
 import { color } from '../../../utils/color';
 import { ExecPin } from '../../ExecPin';
+import { PortPin } from '../../PortPin';
 
 export const BaseNode: React.FC<TaichuNodeComponentProps> = React.memo(
   (props) => {
     const { startConnect } = useConnectionStore();
-    const { node, definition, updatePos } = useNodeInfo(props.id);
+    const nodeId = props.id;
+    const { node, definition, updatePos } = useNodeInfo(nodeId);
     const { width, height, label } = definition;
     const { x, y } = node.position;
 
@@ -63,51 +70,67 @@ export const BaseNode: React.FC<TaichuNodeComponentProps> = React.memo(
           fill="white"
         />
 
-        {definition.inputs.map((inputPin) => {
-          if (inputPin.type === 'exec') {
-            return (
-              <ExecPin
-                x={inputPin.position.x}
-                y={inputPin.position.y}
-                onConnectionStart={(e) => {
-                  e.cancelBubble = true;
-                  startConnect(
-                    props.id,
-                    inputPin.name,
-                    inputPin.type,
-                    'in-out'
-                  );
-                }}
-              />
-            );
-          }
+        {definition.inputs.map((inputPin) => (
+          <Pin
+            key={node.id + inputPin.name}
+            nodeId={nodeId}
+            definition={inputPin}
+            onConnectionStart={() => {
+              startConnect(props.id, inputPin.name, inputPin.type, 'in-out');
+            }}
+          />
+        ))}
 
-          return null;
-        })}
-
-        {definition.outputs.map((outputPin) => {
-          if (outputPin.type === 'exec') {
-            return (
-              <ExecPin
-                x={outputPin.position.x}
-                y={outputPin.position.y}
-                onConnectionStart={(e) => {
-                  e.cancelBubble = true;
-                  startConnect(
-                    props.id,
-                    outputPin.name,
-                    outputPin.type,
-                    'out-in'
-                  );
-                }}
-              />
-            );
-          }
-
-          return null;
-        })}
+        {definition.outputs.map((outputPin) => (
+          <Pin
+            key={node.id + outputPin.name}
+            nodeId={nodeId}
+            definition={outputPin}
+            onConnectionStart={() => {
+              startConnect(props.id, outputPin.name, outputPin.type, 'out-in');
+            }}
+          />
+        ))}
       </Group>
     );
   }
 );
 BaseNode.displayName = 'BaseNode';
+
+export const Pin: React.FC<{
+  nodeId: string;
+  definition: TaichuNodePinDefinition;
+  onConnectionStart: () => void;
+}> = React.memo((props) => {
+  const { type, position, component } = props.definition;
+
+  return (
+    <Group>
+      {type === 'exec' ? (
+        <ExecPin
+          x={position.x}
+          y={position.y}
+          onConnectionStart={(e) => {
+            e.cancelBubble = true;
+            props.onConnectionStart();
+          }}
+        />
+      ) : (
+        <PortPin
+          x={position.x}
+          y={position.y}
+          onConnectionStart={(e) => {
+            e.cancelBubble = true;
+            props.onConnectionStart();
+          }}
+        />
+      )}
+
+      {component &&
+        React.createElement(component, {
+          nodeId: props.nodeId,
+        })}
+    </Group>
+  );
+});
+Pin.displayName = 'Pin';

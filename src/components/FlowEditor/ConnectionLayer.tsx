@@ -1,5 +1,5 @@
 import { useUpdate } from 'ahooks';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Layer } from 'react-konva';
 import { useUpdateRef } from '../../hooks/useUpdateRef';
 import { ConnectInfo, useConnectionStore } from '../../store/connection';
@@ -66,7 +66,7 @@ function getPinPos(nodeId: string, nodePinName: string) {
  * 因为线条的刷新频率比较高，所以单独放一个layer
  */
 export const ConnectionLayer: React.FC = React.memo(() => {
-  const { connections, workingConnection } = useConnectionStore();
+  const { connections, workingConnection, endConnect } = useConnectionStore();
   const { getPointerPosition, calcAbsolutePositionToRelative, unscale } =
     useStageStore();
   useNodeStore(); // 这只是为了确保node位置更新了这个layer也能被渲染
@@ -88,6 +88,19 @@ export const ConnectionLayer: React.FC = React.memo(() => {
       stage.off('mousemove', mouseMoveHandler);
     };
   });
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        endConnect();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
   let workingConnectionEl: React.ReactNode = null;
   if (workingConnection) {

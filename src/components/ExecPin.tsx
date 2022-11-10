@@ -18,15 +18,15 @@ export const ExecPin: React.FC<ExecPinProps> = React.memo((props) => {
       x={props.x}
       y={props.y}
       points={[
-        0,
-        0,
-        -pinSize,
-        -pinSize,
-        -2 * pinSize,
-        -pinSize,
-        -2 * pinSize,
         pinSize,
+        0,
+        0,
         -pinSize,
+        -pinSize,
+        -pinSize,
+        -pinSize,
+        pinSize,
+        0,
         pinSize,
       ]}
       stroke="white"

@@ -16,12 +16,15 @@ export interface TaichuNodeComponentProps {
 
 export type TaichuNodePortType = 'port' | 'exec';
 
-interface TaichuNodePinDefinition {
+export interface TaichuNodePinDefinition {
   name: string;
   type: TaichuNodePortType;
   position: Konva.Vector2d;
   defaultValue?: any;
   renderType?: string;
+  component?: React.ComponentType<{
+    nodeId: string;
+  }>;
 }
 
 export interface TaichuNodeDefinition {
