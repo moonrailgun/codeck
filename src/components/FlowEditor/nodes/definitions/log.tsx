@@ -1,7 +1,11 @@
-import { TaichuNodeDefinition } from '../../../store/node';
-import { BaseNode } from './BaseNode';
+import { TaichuNodeDefinition } from '../../../../store/node';
+import { BaseNode } from '../BaseNode';
 import React from 'react';
 import { Text } from 'react-konva';
+import {
+  STANDARD_PIN_EXEC_IN,
+  STANDARD_PIN_EXEC_OUT,
+} from '../../../../utils/consts';
 
 export const LogNodeDefinition: TaichuNodeDefinition = {
   name: 'log',
@@ -12,7 +16,7 @@ export const LogNodeDefinition: TaichuNodeDefinition = {
   height: 65,
   inputs: [
     {
-      name: 'exec-in',
+      name: STANDARD_PIN_EXEC_IN,
       type: 'exec',
       position: {
         x: 14,
@@ -33,7 +37,7 @@ export const LogNodeDefinition: TaichuNodeDefinition = {
   ],
   outputs: [
     {
-      name: 'exec-out',
+      name: STANDARD_PIN_EXEC_OUT,
       type: 'exec',
       position: {
         x: 136,

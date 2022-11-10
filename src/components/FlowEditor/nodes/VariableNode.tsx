@@ -3,16 +3,11 @@ import React from 'react';
 import { Group, Rect, Text } from 'react-konva';
 import { useNodeInfo } from '../../../hooks/useNodeInfo';
 import { useConnectionStore } from '../../../store/connection';
-import {
-  TaichuNodeComponentProps,
-  TaichuNodePinDefinition,
-} from '../../../store/node';
+import { TaichuNodeComponentProps } from '../../../store/node';
 import { color } from '../../../utils/color';
-import { ExecPin } from '../../ExecPin';
 import { Pin } from '../../Pin';
-import { PortPin } from '../../PortPin';
 
-export const BaseNode: React.FC<TaichuNodeComponentProps> = React.memo(
+export const VariableNode: React.FC<TaichuNodeComponentProps> = React.memo(
   (props) => {
     const { startConnect } = useConnectionStore();
     const nodeId = props.id;
@@ -37,7 +32,7 @@ export const BaseNode: React.FC<TaichuNodeComponentProps> = React.memo(
       >
         <Rect
           width={width}
-          height={height}
+          height={34}
           opacity={0.8}
           cornerRadius={5}
           shadowColor="black"
@@ -47,17 +42,10 @@ export const BaseNode: React.FC<TaichuNodeComponentProps> = React.memo(
           fillLinearGradientEndPoint={{ x: width, y: height }}
           fillLinearGradientColorStops={[
             0,
-            color.nodeBoxGradient.start,
+            color.variable['data'],
             1,
             color.nodeBoxGradient.end,
           ]}
-        />
-
-        <Rect
-          width={width}
-          height={34}
-          fill={color.node[definition.type]}
-          cornerRadius={[5, 5, 0, 0]}
         />
 
         <Text
@@ -95,4 +83,4 @@ export const BaseNode: React.FC<TaichuNodeComponentProps> = React.memo(
     );
   }
 );
-BaseNode.displayName = 'BaseNode';
+VariableNode.displayName = 'VariableNode';

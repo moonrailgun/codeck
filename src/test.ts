@@ -16,17 +16,25 @@ useNodeStore.setState({
     },
     bar: {
       id: 'bar',
-      name: 'begin',
+      name: 'log',
+      position: {
+        x: 210,
+        y: 210,
+      },
+    },
+    baz: {
+      id: 'baz',
+      name: 'varget',
       position: {
         x: 110,
         y: 110,
       },
     },
-    baz: {
-      id: 'baz',
-      name: 'log',
+    foz: {
+      id: 'foz',
+      name: 'varset',
       position: {
-        x: 210,
+        x: 410,
         y: 210,
       },
     },

@@ -1,5 +1,6 @@
-import { TaichuNodeDefinition } from '../../../store/node';
-import { BaseNode } from './BaseNode';
+import { TaichuNodeDefinition } from '../../../../store/node';
+import { STANDARD_PIN_EXEC_OUT } from '../../../../utils/consts';
+import { BaseNode } from '../BaseNode';
 
 export const BeginNodeDefinition: TaichuNodeDefinition = {
   name: 'begin',
@@ -8,19 +9,10 @@ export const BeginNodeDefinition: TaichuNodeDefinition = {
   component: BaseNode,
   width: 150,
   height: 65,
-  inputs: [
-    {
-      name: 'exec-in',
-      type: 'exec',
-      position: {
-        x: 14,
-        y: 16,
-      },
-    },
-  ],
+  inputs: [],
   outputs: [
     {
-      name: 'exec-out',
+      name: STANDARD_PIN_EXEC_OUT,
       type: 'exec',
       position: {
         x: 136,
