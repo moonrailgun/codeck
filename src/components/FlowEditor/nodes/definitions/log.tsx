@@ -1,11 +1,11 @@
 import { TaichuNodeDefinition } from '../../../../store/node';
 import { BaseNode } from '../BaseNode';
 import React from 'react';
-import { Text } from 'react-konva';
 import {
   STANDARD_PIN_EXEC_IN,
   STANDARD_PIN_EXEC_OUT,
 } from '../../../../utils/consts';
+import { PinLabel } from '../pin/Label';
 
 export const LogNodeDefinition: TaichuNodeDefinition = {
   name: 'log',
@@ -30,9 +30,7 @@ export const LogNodeDefinition: TaichuNodeDefinition = {
         x: 14,
         y: 50,
       },
-      component: ({ nodeId }) => (
-        <Text text={'Input'} x={32} y={44} fill="white" fontSize={14} />
-      ),
+      component: ({ nodeId }) => <PinLabel label={'input'} x={32} y={44} />,
     },
   ],
   outputs: [

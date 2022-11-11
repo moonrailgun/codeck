@@ -8,6 +8,7 @@ interface TaichuNode {
   id: string;
   name: string; // 节点名, 指向 TaichuNodeDefinition
   position: Konva.Vector2d;
+  data?: Record<string, any>; // node中存储的数据。比如用户输入
 }
 
 export interface TaichuNodeComponentProps {

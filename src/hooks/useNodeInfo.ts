@@ -3,7 +3,7 @@ import Konva from 'konva';
 import { useNodeStore } from '../store/node';
 
 /**
- * 获取当前节点信息
+ * 获取节点信息
  */
 export function useNodeInfo(nodeId: string) {
   const { nodeMap, nodeDefinition, updateNodePos } = useNodeStore();
