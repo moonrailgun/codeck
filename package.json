@@ -13,6 +13,7 @@
     "@monaco-editor/react": "^4.4.6",
     "ahooks": "^3.7.2",
     "allotment": "^1.17.0",
+    "fuse.js": "^6.6.2",
     "immer": "^9.0.16",
     "konva": "^8.3.13",
     "lit": "^2.0.2",
@@ -20,6 +21,7 @@
     "nanoid": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-highlight-words": "^0.18.0",
     "react-konva": "^18.2.3",
     "zustand": "^4.1.4"
   },
@@ -27,6 +29,7 @@
     "@types/lodash-es": "^4.17.6",
     "@types/react": "^18.0.24",
     "@types/react-dom": "^18.0.8",
+    "@types/react-highlight-words": "^0.16.4",
     "@vitejs/plugin-react": "^2.2.0",
     "autoprefixer": "^10.4.13",
     "less": "^4.1.3",

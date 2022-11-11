@@ -21,3 +21,9 @@
     background-color: #ffffff;
   }
 } */
+
+mark {
+  background-color: transparent;
+  color: inherit;
+  font-weight: bold;
+}

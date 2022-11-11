@@ -6,10 +6,12 @@ specifiers:
   '@types/lodash-es': ^4.17.6
   '@types/react': ^18.0.24
   '@types/react-dom': ^18.0.8
+  '@types/react-highlight-words': ^0.16.4
   '@vitejs/plugin-react': ^2.2.0
   ahooks: ^3.7.2
   allotment: ^1.17.0
   autoprefixer: ^10.4.13
+  fuse.js: ^6.6.2
   immer: ^9.0.16
   konva: ^8.3.13
   less: ^4.1.3
@@ -19,6 +21,7 @@ specifiers:
   postcss: ^8.4.18
   react: ^18.2.0
   react-dom: ^18.2.0
+  react-highlight-words: ^0.18.0
   react-konva: ^18.2.3
   tailwindcss: ^2.2.4
   typescript: ^4.5.4
@@ -30,6 +33,7 @@ dependencies:
   '@monaco-editor/react': 4.4.6_biqbaboplfbrettd7655fr4n2y
   ahooks: 3.7.2_react@18.2.0
   allotment: 1.17.0_biqbaboplfbrettd7655fr4n2y
+  fuse.js: 6.6.2
   immer: 9.0.16
   konva: 8.3.13
   lit: 2.2.7
@@ -37,6 +41,7 @@ dependencies:
   nanoid: 4.0.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-highlight-words: 0.18.0_react@18.2.0
   react-konva: 18.2.3_ycsaxglfwmvsphhhrpeabwxklq
   zustand: 4.1.4_immer@9.0.16+react@18.2.0
 
@@ -44,6 +49,7 @@ devDependencies:
   '@types/lodash-es': 4.17.6
   '@types/react': 18.0.25
   '@types/react-dom': 18.0.8
+  '@types/react-highlight-words': 0.16.4
   '@vitejs/plugin-react': 2.2.0_vite@3.2.3
   autoprefixer: 10.4.13_postcss@8.4.18
   less: 4.1.3
@@ -488,6 +494,12 @@ packages:
 
   /@types/react-dom/18.0.8:
     resolution: {integrity: sha512-C3GYO0HLaOkk9dDAz3Dl4sbe4AKUGTCfFIZsz3n/82dPNN8Du533HzKatDxeUYWu24wJgMP1xICqkWk1YOLOIw==}
+    dependencies:
+      '@types/react': 18.0.25
+    dev: true
+
+  /@types/react-highlight-words/0.16.4:
+    resolution: {integrity: sha512-KITBX3xzheQLu2s3bUgLmRE7ekmhc52zRjRTwkKayQARh30L4fjEGzGm7ULK9TuX2LgxWWavZqyQGDGjAHbL3w==}
     dependencies:
       '@types/react': 18.0.25
     dev: true
@@ -1184,6 +1196,11 @@ packages:
     resolution: {integrity: sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==}
     dev: true
 
+  /fuse.js/6.6.2:
+    resolution: {integrity: sha512-cJaJkxCCxC8qIIcPBF9yGxY0W/tVZS3uEISDxhYIdtk8OL93pe+6Zj7LjCqVV4dzbqcriOZ+kQ/NE4RXZHsIGA==}
+    engines: {node: '>=10'}
+    dev: false
+
   /gensync/1.0.0-beta.2:
     resolution: {integrity: sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==}
     engines: {node: '>=6.9.0'}
@@ -1243,6 +1260,10 @@ packages:
   /hex-color-regex/1.1.0:
     resolution: {integrity: sha512-l9sfDFsuqtOqKDsQdqrMRk0U85RZc0RtOR9yPI7mRVOa4FsR/BVnZ0shmQRM96Ji99kYZP/7hn1cedc1+ApsTQ==}
     dev: true
+
+  /highlight-words-core/1.2.2:
+    resolution: {integrity: sha512-BXUKIkUuh6cmmxzi5OIbUJxrG8OAk2MqoL1DtO3Wo9D2faJg2ph5ntyuQeLqaHJmzER6H5tllCDA9ZnNe9BVGg==}
+    dev: false
 
   /hsl-regex/1.0.0:
     resolution: {integrity: sha512-M5ezZw4LzXbBKMruP+BNANf0k+19hDQMgpzBIYnya//Al+fjNct9Wf3b1WedLqdEs2hKBvxq/jh+DsHJLj0F9A==}
@@ -1492,6 +1513,10 @@ packages:
       semver: 5.7.1
     dev: true
     optional: true
+
+  /memoize-one/4.0.3:
+    resolution: {integrity: sha512-QmpUu4KqDmX0plH4u+tf0riMc1KHE1+lw95cMrLlXQAFOx/xnBtwhZ52XJxd9X2O6kwKBqX32kmhbhlobD0cuw==}
+    dev: false
 
   /merge2/1.4.1:
     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}
@@ -1783,6 +1808,17 @@ packages:
       react-clientside-effect: 1.2.6_react@18.2.0
       use-callback-ref: 1.3.0_fan5qbzahqtxlm5dzefqlqx5ia
       use-sidecar: 1.1.2_fan5qbzahqtxlm5dzefqlqx5ia
+    dev: false
+
+  /react-highlight-words/0.18.0_react@18.2.0:
+    resolution: {integrity: sha512-5z+46eLPjB4JWgOhuQ0E+6iUPTD1U3amiy5KKjzZmeJ5zyvHr91hnzBT3UHya/KlySm5KRTKpYpba9vs67oO2A==}
+    peerDependencies:
+      react: ^0.14.0 || ^15.0.0 || ^16.0.0-0 || ^17.0.0-0 || ^18.0.0-0
+    dependencies:
+      highlight-words-core: 1.2.2
+      memoize-one: 4.0.3
+      prop-types: 15.8.1
+      react: 18.2.0
     dev: false
 
   /react-is/16.13.1:

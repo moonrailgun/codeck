@@ -1,8 +1,10 @@
 import { values } from 'lodash-es';
-import React, { PropsWithChildren, useState } from 'react';
+import React, { PropsWithChildren, useMemo, useState } from 'react';
 import { useNodeStore } from '../store/node';
 import { Trigger, Menu, Input, Empty } from '@arco-design/web-react';
 import { useMemoizedFn } from 'ahooks';
+import Highlighter from 'react-highlight-words';
+import Fuse from 'fuse.js';
 
 const ContextMenu: React.FC<{ onClose: () => void }> = React.memo((props) => {
   const { nodeDefinition } = useNodeStore();
@@ -17,9 +19,18 @@ const ContextMenu: React.FC<{ onClose: () => void }> = React.memo((props) => {
     props.onClose();
   });
 
-  const matchedNode = values(nodeDefinition).filter((definition) =>
-    definition.label.includes(searchValue)
+  const list = useMemo(() => values(nodeDefinition), [nodeDefinition]);
+
+  const fuse = useMemo(
+    () =>
+      new Fuse(list, {
+        keys: ['label'],
+      }),
+    [list]
   );
+
+  const matchedNode =
+    searchValue === '' ? list : fuse.search(searchValue).map((res) => res.item);
 
   return (
     <div
@@ -42,7 +53,10 @@ const ContextMenu: React.FC<{ onClose: () => void }> = React.memo((props) => {
               key={definition.name}
               onClick={() => handleCreateNode(definition.name)}
             >
-              {definition.label}
+              <Highlighter
+                searchWords={searchValue.split('')}
+                textToHighlight={definition.label}
+              />
             </Menu.Item>
           ))
         ) : (
