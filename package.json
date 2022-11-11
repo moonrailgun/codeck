@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@arco-design/web-react": "^2.41.1",
     "@monaco-editor/react": "^4.4.6",
     "ahooks": "^3.7.2",
     "allotment": "^1.17.0",

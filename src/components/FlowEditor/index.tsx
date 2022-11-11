@@ -6,6 +6,7 @@ import { useMemoizedFn } from 'ahooks';
 import { useStageStore } from '../../store/stage';
 import { NodeLayer } from './NodeLayer';
 import { ConnectionLayer } from './ConnectionLayer';
+import { ContextMenuWrapper } from '../ContextMenu';
 import './nodes/__all__';
 
 const scaleBy = 1.05;
@@ -61,23 +62,25 @@ export const FlowEditor: React.FC = React.memo(() => {
   );
 
   return (
-    <Stage
-      ref={stageRef}
-      className="h-full w-full"
-      width={width}
-      height={height}
-      scale={scale}
-      x={position.x}
-      y={position.y}
-      onWheel={handleWheel}
-      onDragMove={handleUpdatePos}
-      onDragEnd={handleUpdatePos}
-      draggable={true}
-    >
-      <GridLayer />
-      <NodeLayer />
-      <ConnectionLayer />
-    </Stage>
+    <ContextMenuWrapper className="h-full w-full">
+      <Stage
+        ref={stageRef}
+        className="h-full w-full"
+        width={width}
+        height={height}
+        scale={scale}
+        x={position.x}
+        y={position.y}
+        onWheel={handleWheel}
+        onDragMove={handleUpdatePos}
+        onDragEnd={handleUpdatePos}
+        draggable={true}
+      >
+        <GridLayer />
+        <NodeLayer />
+        <ConnectionLayer />
+      </Stage>
+    </ContextMenuWrapper>
   );
 });
 FlowEditor.displayName = 'FlowEditor';
