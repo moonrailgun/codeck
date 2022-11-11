@@ -1,5 +1,6 @@
 import create from 'zustand';
 import { immer } from 'zustand/middleware/immer';
+import { persist } from 'zustand/middleware';
 import Konva from 'konva';
 
 type TaichuNodeType = 'begin' | 'return' | 'function' | 'logic';
@@ -57,53 +58,80 @@ interface NodeState {
   ) => TaichuNodePinDefinition | null;
 }
 
-export const useNodeStore = create<NodeState, [['zustand/immer', never]]>(
-  immer((set, get) => ({
-    nodeMap: {},
-    nodeDefinition: {},
-    regNode: (definition: TaichuNodeDefinition) => {
-      set((state) => {
-        if (state.nodeDefinition[definition.name]) {
-          console.warn('This node is registered', definition.name);
-          return;
-        }
+export const useNodeStore = create<
+  NodeState,
+  [['zustand/persist', Record<string, TaichuNode>], ['zustand/immer', never]]
+>(
+  persist(
+    immer((set, get) => ({
+      nodeMap: {},
+      nodeDefinition: {},
+      regNode: (definition: TaichuNodeDefinition) => {
+        set((state) => {
+          if (state.nodeDefinition[definition.name]) {
+            console.warn('This node is registered', definition.name);
+            return;
+          }
 
-        state.nodeDefinition[definition.name] = definition;
-      });
-    },
-    updateNodePos: (nodeId: string, position: Konva.Vector2d) => {
-      set((state) => {
-        const node = state.nodeMap[nodeId];
+          state.nodeDefinition[definition.name] = definition;
+        });
+      },
+      updateNodePos: (nodeId: string, position: Konva.Vector2d) => {
+        set((state) => {
+          const node = state.nodeMap[nodeId];
+          if (!node) {
+            console.warn('Not found this node:', nodeId);
+            return;
+          }
+
+          node.position = position;
+        });
+      },
+      getNodeDefinition: (nodeId) => {
+        const { nodeMap, nodeDefinition } = get();
+        const node = nodeMap[nodeId];
         if (!node) {
-          console.warn('Not found this node:', nodeId);
-          return;
+          return null;
         }
 
-        node.position = position;
-      });
-    },
-    getNodeDefinition: (nodeId) => {
-      const { nodeMap, nodeDefinition } = get();
-      const node = nodeMap[nodeId];
-      if (!node) {
-        return null;
-      }
+        const definition = nodeDefinition[node.name];
+        return definition ?? null;
+      },
+      getPinDefinitionByName: (nodeId, pinName) => {
+        const { getNodeDefinition } = get();
+        const definition: TaichuNodeDefinition | null =
+          getNodeDefinition(nodeId);
+        if (!definition) {
+          return null;
+        }
 
-      const definition = nodeDefinition[node.name];
-      return definition ?? null;
-    },
-    getPinDefinitionByName: (nodeId, pinName) => {
-      const { getNodeDefinition } = get();
-      const definition: TaichuNodeDefinition | null = getNodeDefinition(nodeId);
-      if (!definition) {
-        return null;
-      }
+        return (
+          [...definition.inputs, ...definition.outputs].find(
+            (item) => item.name === pinName
+          ) ?? null
+        );
+      },
+    })),
+    {
+      name: 'nodeMap',
+      partialize: (state) => state.nodeMap,
+    }
+  )
+);
 
-      return (
-        [...definition.inputs, ...definition.outputs].find(
-          (item) => item.name === pinName
-        ) ?? null
-      );
-    },
-  }))
+//
+
+export const useNode1Store = create<
+  Pick<NodeState, 'nodeMap'>,
+  [['zustand/persist', Record<string, TaichuNode>]]
+>(
+  persist(
+    (set, get) => ({
+      nodeMap: {},
+    }),
+    {
+      name: 'nodeMap',
+      partialize: (state) => state.nodeMap,
+    }
+  )
 );
