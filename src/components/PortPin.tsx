@@ -8,6 +8,7 @@ const triangleSize = 3;
 interface PortPinProps {
   x: number;
   y: number;
+  connected: boolean;
   onConnectionStart: (e: Konva.KonvaEventObject<Event>) => void;
 }
 
@@ -22,7 +23,7 @@ export const PortPin: React.FC<PortPinProps> = React.memo((props) => {
         radius={pinSize}
         stroke="white"
         strokeWidth={strokeWidth}
-        fill={''}
+        fill={props.connected ? 'white' : ''}
         onMouseEnter={(e) => {
           setStrokeWidth(3);
         }}

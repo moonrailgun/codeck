@@ -7,6 +7,7 @@ const pinSize = 6;
 interface ExecPinProps {
   x: number;
   y: number;
+  connected: boolean;
   onConnectionStart: (e: Konva.KonvaEventObject<Event>) => void;
 }
 
@@ -31,7 +32,7 @@ export const ExecPin: React.FC<ExecPinProps> = React.memo((props) => {
       ]}
       stroke="white"
       strokeWidth={strokeWidth}
-      fill={''}
+      fill={props.connected ? 'white' : ''}
       closed={true}
       onMouseEnter={(e) => {
         setStrokeWidth(3);

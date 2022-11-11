@@ -27,6 +27,7 @@ interface ConnectionState {
     fromDirection: FromDirection
   ) => void;
   endConnect: () => void;
+  checkIsConnected: (nodeId: string, pinName: string) => boolean;
 }
 
 export const useConnectionStore = create<ConnectionState>((set, get) => ({
@@ -97,5 +98,22 @@ export const useConnectionStore = create<ConnectionState>((set, get) => ({
     set({
       workingConnection: null,
     });
+  },
+  checkIsConnected: (nodeId, pinName) => {
+    const { connections, workingConnection } = get();
+
+    if (
+      workingConnection &&
+      workingConnection.fromNodeId === nodeId &&
+      workingConnection.fromNodePinName === pinName
+    ) {
+      return true;
+    }
+
+    return connections.some(
+      (c) =>
+        (c.fromNodeId === nodeId && c.fromNodePinName === pinName) ||
+        (c.toNodeId === nodeId && c.toNodePinName === pinName)
+    );
   },
 }));

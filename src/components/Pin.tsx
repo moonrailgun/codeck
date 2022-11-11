@@ -1,5 +1,6 @@
 import React from 'react';
 import { Group } from 'react-konva';
+import { useConnectionStore } from '../store/connection';
 import { TaichuNodePinDefinition } from '../store/node';
 import { ExecPin } from './ExecPin';
 import { PortPin } from './PortPin';
@@ -9,7 +10,10 @@ export const Pin: React.FC<{
   definition: TaichuNodePinDefinition;
   onConnectionStart: () => void;
 }> = React.memo((props) => {
-  const { type, position, component } = props.definition;
+  const { type, position, component, name } = props.definition;
+  const { checkIsConnected } = useConnectionStore();
+
+  const connected = checkIsConnected(props.nodeId, name);
 
   return (
     <Group>
@@ -17,6 +21,7 @@ export const Pin: React.FC<{
         <ExecPin
           x={position.x}
           y={position.y}
+          connected={connected}
           onConnectionStart={(e) => {
             e.cancelBubble = true;
             props.onConnectionStart();
@@ -26,6 +31,7 @@ export const Pin: React.FC<{
         <PortPin
           x={position.x}
           y={position.y}
+          connected={connected}
           onConnectionStart={(e) => {
             e.cancelBubble = true;
             props.onConnectionStart();
