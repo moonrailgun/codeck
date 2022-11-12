@@ -88,6 +88,20 @@ export const ConnectionLayer: React.FC = React.memo(() => {
     };
   });
 
+  useStage((stage) => {
+    const handleAutoCreateNode = () => {
+      // 正在选择
+      // TODO: 自动创建并连接默认入口/出口
+      console.log('handleAutoCreateNode');
+    };
+
+    stage.on('click', handleAutoCreateNode);
+
+    return () => {
+      stage.off('click', handleAutoCreateNode);
+    };
+  });
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -95,9 +109,18 @@ export const ConnectionLayer: React.FC = React.memo(() => {
       }
     };
 
+    const handleContextMenu = (e: MouseEvent) => {
+      if (workingConnectionRef.current) {
+        // 正在选择
+        endConnect();
+      }
+    };
+
     window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('contextmenu', handleContextMenu);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('contextmenu', handleContextMenu);
     };
   }, []);
 

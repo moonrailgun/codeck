@@ -13,6 +13,7 @@ import Highlighter from 'react-highlight-words';
 import Fuse from 'fuse.js';
 import { useStageStore } from '../store/stage';
 import Konva from 'konva';
+import { useConnectionStore } from '../store/connection';
 
 const ContextMenu: React.FC<{ onClose: () => void }> = React.memo((props) => {
   const { nodeDefinition, createNode } = useNodeStore();
@@ -94,6 +95,7 @@ interface ContextMenuWrapperProps extends PropsWithChildren {
 export const ContextMenuWrapper: React.FC<ContextMenuWrapperProps> = React.memo(
   (props) => {
     const [popupVisible, setPopupVisible] = useState(false);
+    const { workingConnection } = useConnectionStore();
 
     return (
       <Trigger
@@ -108,6 +110,7 @@ export const ContextMenuWrapper: React.FC<ContextMenuWrapperProps> = React.memo(
           left: 8,
         }}
         trigger={['contextMenu']}
+        disabled={!!workingConnection}
       >
         <div className={props.className}>{props.children}</div>
       </Trigger>
