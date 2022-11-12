@@ -5,7 +5,7 @@ import { useNodeInfo } from '../../../hooks/useNodeInfo';
 import { useConnectionStore } from '../../../store/connection';
 import { TaichuNodeComponentProps } from '../../../store/node';
 import { color } from '../../../utils/color';
-import { Pin } from '../../Pin';
+import { Pin } from './pin/Pin';
 
 export const VariableNode: React.FC<TaichuNodeComponentProps> = React.memo(
   (props) => {

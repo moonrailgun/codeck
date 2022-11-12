@@ -3,14 +3,9 @@ import React from 'react';
 import { Group, Rect, Text } from 'react-konva';
 import { useNodeInfo } from '../../../hooks/useNodeInfo';
 import { useConnectionStore } from '../../../store/connection';
-import {
-  TaichuNodeComponentProps,
-  TaichuNodePinDefinition,
-} from '../../../store/node';
+import { TaichuNodeComponentProps } from '../../../store/node';
 import { color } from '../../../utils/color';
-import { ExecPin } from '../../ExecPin';
-import { Pin } from '../../Pin';
-import { PortPin } from '../../PortPin';
+import { Pin } from './pin/Pin';
 
 export const BaseNode: React.FC<TaichuNodeComponentProps> = React.memo(
   (props) => {
