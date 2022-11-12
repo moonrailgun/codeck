@@ -14,7 +14,14 @@ interface StageState {
   calcAbsolutePositionToRelative: (
     absolutePos: Konva.Vector2d
   ) => Konva.Vector2d;
+  /**
+   * 获取鼠标在视口上的坐标
+   */
   getPointerPosition: () => Konva.Vector2d;
+  /**
+   * 获取鼠标在stage上的坐标
+   */
+  getRelativePointerPosition: () => Konva.Vector2d;
 }
 
 export const useStageStore = create<StageState>((set, get) => ({
@@ -67,5 +74,11 @@ export const useStageStore = create<StageState>((set, get) => ({
 
   getPointerPosition: () => {
     return get().stageRef?.getPointerPosition?.() ?? { x: 0, y: 0 };
+  },
+
+  getRelativePointerPosition: () => {
+    const { calcAbsolutePositionToRelative, getPointerPosition } = get();
+
+    return calcAbsolutePositionToRelative(getPointerPosition());
   },
 }));

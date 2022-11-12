@@ -2,6 +2,7 @@ import create from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { persist } from 'zustand/middleware';
 import Konva from 'konva';
+import { nanoid } from 'nanoid';
 
 type TaichuNodeType = 'begin' | 'return' | 'function' | 'logic';
 
@@ -56,6 +57,11 @@ interface NodeState {
     nodeId: string,
     pinName: string
   ) => TaichuNodePinDefinition | null;
+  createNode: (
+    nodeName: string,
+    position: Konva.Vector2d,
+    data?: TaichuNode['data']
+  ) => void;
 }
 
 export const useNodeStore = create<
@@ -111,24 +117,18 @@ export const useNodeStore = create<
           ) ?? null
         );
       },
+      createNode: (nodeName, position, data) => {
+        set((state) => {
+          const id = nanoid();
+          state.nodeMap[id] = {
+            id,
+            name: nodeName,
+            position,
+            data,
+          };
+        });
+      },
     })),
-    {
-      name: 'nodeMap',
-      partialize: (state) => state.nodeMap,
-    }
-  )
-);
-
-//
-
-export const useNode1Store = create<
-  Pick<NodeState, 'nodeMap'>,
-  [['zustand/persist', Record<string, TaichuNode>]]
->(
-  persist(
-    (set, get) => ({
-      nodeMap: {},
-    }),
     {
       name: 'nodeMap',
       partialize: (state) => state.nodeMap,

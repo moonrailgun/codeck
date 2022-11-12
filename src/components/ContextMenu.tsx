@@ -1,21 +1,41 @@
 import { values } from 'lodash-es';
-import React, { PropsWithChildren, useMemo, useState } from 'react';
+import React, {
+  PropsWithChildren,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useNodeStore } from '../store/node';
-import { Trigger, Menu, Input, Empty } from '@arco-design/web-react';
+import { Trigger, Menu, Input, Empty, Message } from '@arco-design/web-react';
 import { useMemoizedFn } from 'ahooks';
 import Highlighter from 'react-highlight-words';
 import Fuse from 'fuse.js';
+import { useStageStore } from '../store/stage';
+import Konva from 'konva';
 
 const ContextMenu: React.FC<{ onClose: () => void }> = React.memo((props) => {
-  const { nodeDefinition } = useNodeStore();
+  const { nodeDefinition, createNode } = useNodeStore();
   const [searchValue, setSearchValue] = useState('');
+  const { getRelativePointerPosition } = useStageStore();
+  const nodeCreatedPosRef = useRef<Konva.Vector2d | null>(null);
+
+  useEffect(() => {
+    nodeCreatedPosRef.current = getRelativePointerPosition();
+  }, []);
 
   const handleCreateNode = useMemoizedFn((nodeName: string) => {
     if (!nodeName) {
+      Message.error('Node Name undefined');
       return;
     }
 
-    console.log('Name', nodeName);
+    if (!nodeCreatedPosRef.current) {
+      Message.error('Cannot get pointer position');
+      return;
+    }
+
+    createNode(nodeName, nodeCreatedPosRef.current);
     props.onClose();
   });
 

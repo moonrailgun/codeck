@@ -67,8 +67,7 @@ function getPinPos(nodeId: string, nodePinName: string) {
  */
 export const ConnectionLayer: React.FC = React.memo(() => {
   const { connections, workingConnection, endConnect } = useConnectionStore();
-  const { getPointerPosition, calcAbsolutePositionToRelative, unscale } =
-    useStageStore();
+  const { getRelativePointerPosition, unscale } = useStageStore();
   useNodeStore(); // 这只是为了确保node位置更新了这个layer也能被渲染
 
   const updateDraw = useUpdate();
@@ -105,7 +104,7 @@ export const ConnectionLayer: React.FC = React.memo(() => {
   let workingConnectionEl: React.ReactNode = null;
   if (workingConnection) {
     const fromPos = unscale(getWorkingConnectionFromPos());
-    const toPos = calcAbsolutePositionToRelative(getPointerPosition());
+    const toPos = getRelativePointerPosition();
 
     workingConnectionEl = (
       <Connection
