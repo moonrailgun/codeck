@@ -1,11 +1,14 @@
+import React from 'react';
 import { TaichuNodeDefinition } from '../../../../store/node';
 import { BaseNode } from '../BaseNode';
-import React from 'react';
 import {
   STANDARD_PIN_EXEC_IN,
   STANDARD_PIN_EXEC_OUT,
 } from '../../../../utils/consts';
 import { PinLabel } from '../pin/Label';
+import { NodeInputText } from '../input/Text';
+import { Group } from 'react-konva';
+import { useNodeDataValue } from '../../../../hooks/useNodeData';
 
 export const LogNodeDefinition: TaichuNodeDefinition = {
   name: 'log',
@@ -13,7 +16,7 @@ export const LogNodeDefinition: TaichuNodeDefinition = {
   type: 'function',
   component: BaseNode,
   width: 150,
-  height: 65,
+  height: 100,
   inputs: [
     {
       name: STANDARD_PIN_EXEC_IN,
@@ -30,7 +33,16 @@ export const LogNodeDefinition: TaichuNodeDefinition = {
         x: 14,
         y: 50,
       },
-      component: ({ nodeId }) => <PinLabel label={'input'} x={32} y={44} />,
+      component: ({ nodeId }) => {
+        const [message, setMessage] = useNodeDataValue(nodeId, 'message');
+
+        return (
+          <Group x={32} y={44}>
+            <PinLabel label={'message'} />
+            <NodeInputText y={20} value={message ?? ''} onChange={setMessage} />
+          </Group>
+        );
+      },
     },
   ],
   outputs: [

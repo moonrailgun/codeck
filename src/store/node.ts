@@ -3,6 +3,7 @@ import { immer } from 'zustand/middleware/immer';
 import { persist } from 'zustand/middleware';
 import Konva from 'konva';
 import { nanoid } from 'nanoid';
+import { set as _set } from 'lodash-es';
 
 type TaichuNodeType = 'begin' | 'return' | 'function' | 'logic';
 
@@ -62,6 +63,10 @@ interface NodeState {
     position: Konva.Vector2d,
     data?: TaichuNode['data']
   ) => void;
+  /**
+   * 设置节点数据
+   */
+  setNodeData: (nodeId: string, key: string, value: unknown) => void;
 }
 
 export const useNodeStore = create<
@@ -126,6 +131,17 @@ export const useNodeStore = create<
             position,
             data,
           };
+        });
+      },
+      setNodeData: (nodeId, key, value) => {
+        set((state) => {
+          const node = state.nodeMap[nodeId];
+          if (!node) {
+            console.warn('Not found node', nodeId);
+            return;
+          }
+
+          _set(node, ['data', key], value);
         });
       },
     })),

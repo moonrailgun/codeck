@@ -3,8 +3,8 @@ import { Text } from 'react-konva';
 
 interface PinLabelProps {
   label: string;
-  x: number;
-  y: number;
+  x?: number;
+  y?: number;
 }
 export const PinLabel: React.FC<PinLabelProps> = React.memo((props) => {
   return (

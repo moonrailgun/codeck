@@ -90,9 +90,11 @@ export const ConnectionLayer: React.FC = React.memo(() => {
 
   useStage((stage) => {
     const handleAutoCreateNode = () => {
-      // 正在选择
-      // TODO: 自动创建并连接默认入口/出口
-      console.log('handleAutoCreateNode');
+      if (workingConnectionRef.current) {
+        // 正在选择
+        // TODO: 自动创建并连接默认入口/出口
+        console.log('handleAutoCreateNode');
+      }
     };
 
     stage.on('click', handleAutoCreateNode);

@@ -22,6 +22,7 @@ specifiers:
   react-dom: ^18.2.0
   react-highlight-words: ^0.18.0
   react-konva: ^18.2.3
+  react-konva-utils: ^0.3.0
   tailwindcss: ^2.2.4
   typescript: ^4.5.4
   vite: ^3.2.3
@@ -41,6 +42,7 @@ dependencies:
   react-dom: 18.2.0_react@18.2.0
   react-highlight-words: 0.18.0_react@18.2.0
   react-konva: 18.2.3_ycsaxglfwmvsphhhrpeabwxklq
+  react-konva-utils: 0.3.0_ycsaxglfwmvsphhhrpeabwxklq
   zustand: 4.1.4_immer@9.0.16+react@18.2.0
 
 devDependencies:
@@ -1794,6 +1796,20 @@ packages:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: false
 
+  /react-konva-utils/0.3.0_ycsaxglfwmvsphhhrpeabwxklq:
+    resolution: {integrity: sha512-yH5FVpDGQ8gHeClyHY533M4oSLjEfYuvn+Z29zXm9osjhuulhtJrh5k+wtyY6QSC0MG0ioqE0cjiudGl1WGB9A==}
+    peerDependencies:
+      konva: ^8.3.5
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    dependencies:
+      konva: 8.3.13
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-konva: 18.2.3_ycsaxglfwmvsphhhrpeabwxklq
+      use-image: 1.1.0_biqbaboplfbrettd7655fr4n2y
+    dev: false
+
   /react-konva/18.2.3_ycsaxglfwmvsphhhrpeabwxklq:
     resolution: {integrity: sha512-OPxjBTgaEGU9pt/VJSVM7QNXYHEZ5CkulX+4fTTvbaH+Wh+vMLbXmH3yjWw4kT/5Qi6t0UQKHPPmirCv8/9sdg==}
     peerDependencies:
@@ -2105,6 +2121,16 @@ packages:
       '@types/react': 18.0.25
       react: 18.2.0
       tslib: 2.4.1
+    dev: false
+
+  /use-image/1.1.0_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-+cBHRR/44ZyMUS873O0vbVylgMM0AbdTunEplAWXvIQ2p69h2sIo2Qq74zeUsq6AMo+27e5lERQvXzd1crGiMg==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /use-resize-observer/9.0.2_biqbaboplfbrettd7655fr4n2y:
