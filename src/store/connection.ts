@@ -1,6 +1,7 @@
 import { nanoid } from 'nanoid';
 import create from 'zustand';
 import { TaichuNodePortType } from './node';
+import { persist } from 'zustand/middleware';
 
 export interface ConnectInfo {
   id: string;
@@ -30,90 +31,101 @@ interface ConnectionState {
   checkIsConnected: (nodeId: string, pinName: string) => boolean;
 }
 
-export const useConnectionStore = create<ConnectionState>((set, get) => ({
-  connections: [],
-  workingConnection: null,
-  startConnect: (
-    fromNodeId,
-    fromNodePinName,
-    fromNodePinType,
-    fromDirection
-  ) => {
-    const { workingConnection, endConnect, connections } = get();
-    if (!workingConnection) {
-      set({
-        workingConnection: {
-          fromNodeId,
-          fromNodePinName,
-          fromNodePinType,
-          fromDirection,
-        },
-      });
-      return;
-    }
-
-    // 正在处于连接状态
-    if (fromNodeId === workingConnection.fromNodeId) {
-      // 连接到相同节点
-      endConnect();
-      return;
-    }
-
-    if (fromDirection === workingConnection.fromDirection) {
-      // 相同方向
-      endConnect();
-      return;
-    }
-
-    if (fromNodePinType !== workingConnection.fromNodePinType) {
-      // 不匹配(譬如exec和port连接)
-      endConnect();
-      return;
-    }
-
-    set({
-      // TODO: 需要去重
-      connections: [
-        ...connections,
-        workingConnection.fromDirection === 'out-in'
-          ? {
-              id: nanoid(),
-              fromNodeId: workingConnection.fromNodeId,
-              fromNodePinName: workingConnection.fromNodePinName,
-              toNodeId: fromNodeId,
-              toNodePinName: fromNodePinName,
-            }
-          : {
-              id: nanoid(),
-              fromNodeId: fromNodeId,
-              fromNodePinName: fromNodePinName,
-              toNodeId: workingConnection.fromNodeId,
-              toNodePinName: workingConnection.fromNodePinName,
-            },
-      ],
-    });
-    endConnect();
-  },
-  endConnect: () => {
-    set({
+export const useConnectionStore = create<
+  ConnectionState,
+  [['zustand/persist', Pick<ConnectionState, 'connections'>]]
+>(
+  persist(
+    (set, get) => ({
+      connections: [],
       workingConnection: null,
-    });
-  },
-  checkIsConnected: (nodeId, pinName) => {
-    const { connections, workingConnection } = get();
+      startConnect: (
+        fromNodeId,
+        fromNodePinName,
+        fromNodePinType,
+        fromDirection
+      ) => {
+        const { workingConnection, endConnect, connections } = get();
+        if (!workingConnection) {
+          set({
+            workingConnection: {
+              fromNodeId,
+              fromNodePinName,
+              fromNodePinType,
+              fromDirection,
+            },
+          });
+          return;
+        }
 
-    if (
-      workingConnection &&
-      workingConnection.fromNodeId === nodeId &&
-      workingConnection.fromNodePinName === pinName
-    ) {
-      return true;
+        // 正在处于连接状态
+        if (fromNodeId === workingConnection.fromNodeId) {
+          // 连接到相同节点
+          endConnect();
+          return;
+        }
+
+        if (fromDirection === workingConnection.fromDirection) {
+          // 相同方向
+          endConnect();
+          return;
+        }
+
+        if (fromNodePinType !== workingConnection.fromNodePinType) {
+          // 不匹配(譬如exec和port连接)
+          endConnect();
+          return;
+        }
+
+        set({
+          // TODO: 需要去重
+          connections: [
+            ...connections,
+            workingConnection.fromDirection === 'out-in'
+              ? {
+                  id: nanoid(),
+                  fromNodeId: workingConnection.fromNodeId,
+                  fromNodePinName: workingConnection.fromNodePinName,
+                  toNodeId: fromNodeId,
+                  toNodePinName: fromNodePinName,
+                }
+              : {
+                  id: nanoid(),
+                  fromNodeId: fromNodeId,
+                  fromNodePinName: fromNodePinName,
+                  toNodeId: workingConnection.fromNodeId,
+                  toNodePinName: workingConnection.fromNodePinName,
+                },
+          ],
+        });
+        endConnect();
+      },
+      endConnect: () => {
+        set({
+          workingConnection: null,
+        });
+      },
+      checkIsConnected: (nodeId, pinName) => {
+        const { connections, workingConnection } = get();
+
+        if (
+          workingConnection &&
+          workingConnection.fromNodeId === nodeId &&
+          workingConnection.fromNodePinName === pinName
+        ) {
+          return true;
+        }
+
+        return connections.some(
+          (c) =>
+            (c.fromNodeId === nodeId && c.fromNodePinName === pinName) ||
+            (c.toNodeId === nodeId && c.toNodePinName === pinName)
+        );
+      },
+    }),
+    {
+      name: 'connection',
+      partialize: (state) => ({ connections: state.connections }),
     }
-
-    return connections.some(
-      (c) =>
-        (c.fromNodeId === nodeId && c.fromNodePinName === pinName) ||
-        (c.toNodeId === nodeId && c.toNodePinName === pinName)
-    );
-  },
-}));
+  )
+);

@@ -71,11 +71,20 @@ interface NodeState {
 
 export const useNodeStore = create<
   NodeState,
-  [['zustand/persist', Record<string, TaichuNode>], ['zustand/immer', never]]
+  [['zustand/persist', Pick<NodeState, 'nodeMap'>], ['zustand/immer', never]]
 >(
   persist(
     immer((set, get) => ({
-      nodeMap: {},
+      nodeMap: {
+        begin: {
+          id: 'begin',
+          name: 'begin',
+          position: {
+            x: 10,
+            y: 10,
+          },
+        },
+      },
       nodeDefinition: {},
       regNode: (definition: TaichuNodeDefinition) => {
         set((state) => {
@@ -147,7 +156,7 @@ export const useNodeStore = create<
     })),
     {
       name: 'nodeMap',
-      partialize: (state) => state.nodeMap,
+      partialize: (state) => ({ nodeMap: state.nodeMap }),
     }
   )
 );
