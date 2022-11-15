@@ -1,5 +1,5 @@
 import { useUpdate } from 'ahooks';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Layer } from 'react-konva';
 import { useUpdateRef } from '../../hooks/useUpdateRef';
 import { ConnectInfo, useConnectionStore } from '../../store/connection';
@@ -69,10 +69,13 @@ export const ConnectionLayer: React.FC = React.memo(() => {
   const { connections, workingConnection, endConnect } = useConnectionStore();
   const { getRelativePointerPosition, unscale } = useStageStore();
   useNodeStore(); // 这只是为了确保node位置更新了这个layer也能被渲染
+  const [selectedConnectionId, setSelectedConnectionId] = useState('');
 
   const updateDraw = useUpdate();
 
   const workingConnectionRef = useUpdateRef(workingConnection);
+
+  const selectedConnectionIdRef = useUpdateRef(selectedConnectionId);
 
   useStage((stage) => {
     const mouseMoveHandler = () => {
@@ -90,6 +93,8 @@ export const ConnectionLayer: React.FC = React.memo(() => {
 
   useStage((stage) => {
     const handleAutoCreateNode = () => {
+      setSelectedConnectionId(''); // 清空当前选择的连接线
+
       if (workingConnectionRef.current) {
         // 正在选择
         // TODO: 自动创建并连接默认入口/出口
@@ -108,6 +113,12 @@ export const ConnectionLayer: React.FC = React.memo(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         endConnect();
+      }
+
+      if (e.key === 'Backspace' && selectedConnectionIdRef.current) {
+        useConnectionStore
+          .getState()
+          .removeConnection(selectedConnectionIdRef.current);
       }
     };
 
@@ -141,7 +152,7 @@ export const ConnectionLayer: React.FC = React.memo(() => {
   }
 
   return (
-    <Layer listening={false}>
+    <Layer>
       {/* created connections */}
       {connections.map((connection) => {
         const info = getConnectionFromToPos(connection);
@@ -155,6 +166,11 @@ export const ConnectionLayer: React.FC = React.memo(() => {
             from={info.from}
             to={info.to}
             direction={'out-in'}
+            isActive={connection.id === selectedConnectionId}
+            onClick={(e) => {
+              e.cancelBubble = true;
+              setSelectedConnectionId(connection.id);
+            }}
           />
         );
       })}

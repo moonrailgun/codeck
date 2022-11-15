@@ -2,6 +2,7 @@ import { nanoid } from 'nanoid';
 import create from 'zustand';
 import { TaichuNodePortType } from './node';
 import { persist } from 'zustand/middleware';
+import { immer } from 'zustand/middleware/immer';
 
 export interface ConnectInfo {
   id: string;
@@ -29,14 +30,18 @@ interface ConnectionState {
   ) => void;
   endConnect: () => void;
   checkIsConnected: (nodeId: string, pinName: string) => boolean;
+  removeConnection: (connectionId: string) => void;
 }
 
 export const useConnectionStore = create<
   ConnectionState,
-  [['zustand/persist', Pick<ConnectionState, 'connections'>]]
+  [
+    ['zustand/persist', Pick<ConnectionState, 'connections'>],
+    ['zustand/immer', never]
+  ]
 >(
   persist(
-    (set, get) => ({
+    immer((set, get) => ({
       connections: [],
       workingConnection: null,
       startConnect: (
@@ -122,7 +127,17 @@ export const useConnectionStore = create<
             (c.toNodeId === nodeId && c.toNodePinName === pinName)
         );
       },
-    }),
+      removeConnection: (connectionId) => {
+        set((state) => {
+          const index = state.connections.findIndex(
+            (conn) => conn.id === connectionId
+          );
+          if (index >= 0) {
+            state.connections.splice(index, 1);
+          }
+        });
+      },
+    })),
     {
       name: 'connection',
       partialize: (state) => ({ connections: state.connections }),
