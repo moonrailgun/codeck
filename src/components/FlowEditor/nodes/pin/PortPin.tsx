@@ -30,8 +30,11 @@ export const PortPin: React.FC<PortPinProps> = React.memo((props) => {
         onMouseLeave={(e) => {
           setStrokeWidth(2);
         }}
-        onClick={props.onConnectionStart}
+        onMouseDown={props.onConnectionStart}
+        onMouseUp={props.onConnectionStart}
       />
+
+      {/* 用于装饰的小三角 */}
       <Line
         x={props.x + pinSize + triangleSize * 2}
         y={props.y}

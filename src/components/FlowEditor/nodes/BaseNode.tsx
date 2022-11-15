@@ -1,4 +1,3 @@
-import Konva from 'konva';
 import React from 'react';
 import { Group, Rect, Text } from 'react-konva';
 import { useNodeInfo } from '../../../hooks/useNodeInfo';
@@ -9,7 +8,6 @@ import { Pin } from './pin/Pin';
 
 export const BaseNode: React.FC<TaichuNodeComponentProps> = React.memo(
   (props) => {
-    const { startConnect } = useConnectionStore();
     const nodeId = props.id;
     const { node, definition, updatePos } = useNodeInfo(nodeId);
     const { width, height, label } = definition;
@@ -20,7 +18,9 @@ export const BaseNode: React.FC<TaichuNodeComponentProps> = React.memo(
         x={x}
         y={y}
         draggable={true}
-        onDragStart={(e) => (e.cancelBubble = true)}
+        onDragStart={(e) => {
+          e.cancelBubble = true;
+        }}
         onDragMove={(e) => {
           e.cancelBubble = true;
           updatePos(e.target.position());
@@ -71,7 +71,9 @@ export const BaseNode: React.FC<TaichuNodeComponentProps> = React.memo(
             nodeId={nodeId}
             definition={inputPin}
             onConnectionStart={() => {
-              startConnect(props.id, inputPin.name, inputPin.type, 'in-out');
+              useConnectionStore
+                .getState()
+                .startConnect(props.id, inputPin.name, inputPin.type, 'in-out');
             }}
           />
         ))}
@@ -82,7 +84,14 @@ export const BaseNode: React.FC<TaichuNodeComponentProps> = React.memo(
             nodeId={nodeId}
             definition={outputPin}
             onConnectionStart={() => {
-              startConnect(props.id, outputPin.name, outputPin.type, 'out-in');
+              useConnectionStore
+                .getState()
+                .startConnect(
+                  props.id,
+                  outputPin.name,
+                  outputPin.type,
+                  'out-in'
+                );
             }}
           />
         ))}

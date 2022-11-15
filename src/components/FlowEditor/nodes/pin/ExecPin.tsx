@@ -40,7 +40,8 @@ export const ExecPin: React.FC<ExecPinProps> = React.memo((props) => {
       onMouseLeave={(e) => {
         setStrokeWidth(2);
       }}
-      onClick={props.onConnectionStart}
+      onMouseDown={props.onConnectionStart}
+      onMouseUp={props.onConnectionStart}
     />
   );
 });
