@@ -11,19 +11,21 @@ import { Group } from 'react-konva';
 import { useNodeDataValue } from '../../../../hooks/useNodeData';
 import { buildPinPos } from '../../../../utils/position-helper';
 
-export const LogNodeDefinition: TaichuNodeDefinition = {
-  name: 'log',
-  label: 'Log',
+const width = 240;
+
+export const JSONStringifyNodeDefinition: TaichuNodeDefinition = {
+  name: 'json-stringify',
+  label: 'JSONStringify',
   type: 'function',
   component: BaseNode,
-  width: 150,
+  width,
   height: 100,
   inputs: [
     {
       name: STANDARD_PIN_EXEC_IN,
       type: 'exec',
       position: {
-        x: buildPinPos(150, 'input'),
+        x: buildPinPos(width, 'input'),
         y: 16,
       },
     },
@@ -31,16 +33,16 @@ export const LogNodeDefinition: TaichuNodeDefinition = {
       name: 'input',
       type: 'port',
       position: {
-        x: buildPinPos(150, 'input'),
+        x: buildPinPos(width, 'input'),
         y: 50,
       },
       component: ({ nodeId }) => {
-        const [message, setMessage] = useNodeDataValue(nodeId, 'message');
+        const [input, setInput] = useNodeDataValue(nodeId, 'input');
 
         return (
           <Group x={32} y={44}>
-            <PinLabel label={'message'} />
-            <NodeInputText y={20} value={message ?? ''} onChange={setMessage} />
+            <PinLabel label={'input'} />
+            <NodeInputText y={20} value={input ?? ''} onChange={setInput} />
           </Group>
         );
       },
@@ -51,12 +53,29 @@ export const LogNodeDefinition: TaichuNodeDefinition = {
       name: STANDARD_PIN_EXEC_OUT,
       type: 'exec',
       position: {
-        x: buildPinPos(150, 'output'),
+        x: buildPinPos(width, 'output'),
         y: 16,
       },
     },
+    {
+      name: 'output',
+      type: 'port',
+      position: {
+        x: buildPinPos(width, 'output'),
+        y: 50,
+      },
+      component: ({ nodeId }) => {
+        return (
+          <Group x={170} y={44}>
+            <PinLabel label={'output'} />
+          </Group>
+        );
+      },
+    },
   ],
-  code: ({ node }) => {
-    return `console.log("${node.data?.message ?? ''}");\n`;
+  code: ({ node, buildPinVarName }) => {
+    return `let ${buildPinVarName('output')} = JSON.stringify("${
+      node.data?.input ?? ''
+    }");\n`;
   },
 };

@@ -9,11 +9,10 @@ import { PinLabel } from '../pin/Label';
 import { NodeInputText } from '../input/Text';
 import { Group } from 'react-konva';
 import { useNodeDataValue } from '../../../../hooks/useNodeData';
-import { buildPinPos } from '../../../../utils/position-helper';
 
-export const LogNodeDefinition: TaichuNodeDefinition = {
-  name: 'log',
-  label: 'Log',
+export const AlertNodeDefinition: TaichuNodeDefinition = {
+  name: 'alert',
+  label: 'Alert',
   type: 'function',
   component: BaseNode,
   width: 150,
@@ -23,7 +22,7 @@ export const LogNodeDefinition: TaichuNodeDefinition = {
       name: STANDARD_PIN_EXEC_IN,
       type: 'exec',
       position: {
-        x: buildPinPos(150, 'input'),
+        x: 14,
         y: 16,
       },
     },
@@ -31,7 +30,7 @@ export const LogNodeDefinition: TaichuNodeDefinition = {
       name: 'input',
       type: 'port',
       position: {
-        x: buildPinPos(150, 'input'),
+        x: 14,
         y: 50,
       },
       component: ({ nodeId }) => {
@@ -51,12 +50,12 @@ export const LogNodeDefinition: TaichuNodeDefinition = {
       name: STANDARD_PIN_EXEC_OUT,
       type: 'exec',
       position: {
-        x: buildPinPos(150, 'output'),
+        x: 136,
         y: 16,
       },
     },
   ],
-  code: ({ node }) => {
-    return `console.log("${node.data?.message ?? ''}");\n`;
+  code: (node) => {
+    return `alert("${node.data?.message ?? ''}");\n`;
   },
 };

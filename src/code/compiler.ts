@@ -21,7 +21,13 @@ export class CodeCompiler {
     while (currentNode !== null) {
       const codeFn = this.nodeDefinition[currentNode.name].code;
       if (codeFn) {
-        codeText += codeFn(currentNode);
+        const node = currentNode;
+        codeText += codeFn({
+          node,
+          buildPinVarName: (pinName) => {
+            return `_${node.id}_${pinName}`;
+          },
+        });
       }
 
       currentNode = this.getExecNext(currentNode.id);

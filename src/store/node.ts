@@ -43,7 +43,10 @@ export interface TaichuNodeDefinition {
   /**
    * 节点代码生成逻辑
    */
-  code?: (node: TaichuNode) => string;
+  code?: (ctx: {
+    node: TaichuNode;
+    buildPinVarName: (pinName: string) => string;
+  }) => string;
 }
 
 interface NodeState {
