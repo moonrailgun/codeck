@@ -55,4 +55,7 @@ export const LogNodeDefinition: TaichuNodeDefinition = {
       },
     },
   ],
+  code: (node) => {
+    return `console.log("${node.data?.message ?? ''}");\n`;
+  },
 };

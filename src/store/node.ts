@@ -7,7 +7,7 @@ import { set as _set } from 'lodash-es';
 
 type TaichuNodeType = 'begin' | 'return' | 'function' | 'logic';
 
-interface TaichuNode {
+export interface TaichuNode {
   id: string;
   name: string; // 节点名, 指向 TaichuNodeDefinition
   position: Konva.Vector2d;
@@ -40,6 +40,10 @@ export interface TaichuNodeDefinition {
   inputs: TaichuNodePinDefinition[];
   outputs: TaichuNodePinDefinition[];
   component: React.ComponentType<TaichuNodeComponentProps>;
+  /**
+   * 节点代码生成逻辑
+   */
+  code?: (node: TaichuNode) => string;
 }
 
 interface NodeState {
