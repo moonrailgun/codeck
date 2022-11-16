@@ -51,6 +51,7 @@ export interface TaichuNodeDefinition {
   code?: (ctx: {
     node: TaichuNode;
     buildPinVarName: (pinName: string, nodeId?: string) => string;
+    getConnectionInput: (pinName: string, nodeId?: string) => string | null;
   }) => string;
 }
 

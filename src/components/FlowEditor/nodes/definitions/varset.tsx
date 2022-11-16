@@ -1,4 +1,5 @@
-import { useNodeData } from '../../../../hooks/useNodeData';
+import { Group } from 'react-konva';
+import { useNodeData, useNodeDataValue } from '../../../../hooks/useNodeData';
 import { TaichuNodeDefinition } from '../../../../store/node';
 import {
   DEFAULT_CORE_CATEGORY,
@@ -6,6 +7,7 @@ import {
   STANDARD_PIN_EXEC_OUT,
 } from '../../../../utils/consts';
 import { BaseNode } from '../BaseNode';
+import { NodeInputText } from '../input/Text';
 import { PinLabel } from '../pin/Label';
 
 export const VarSetNodeDefinition: TaichuNodeDefinition = {
@@ -14,7 +16,7 @@ export const VarSetNodeDefinition: TaichuNodeDefinition = {
   type: 'function',
   component: BaseNode,
   width: 150,
-  height: 65,
+  height: 90,
   category: DEFAULT_CORE_CATEGORY,
   hidden: true,
   inputs: [
@@ -35,8 +37,14 @@ export const VarSetNodeDefinition: TaichuNodeDefinition = {
       },
       component: ({ nodeId }) => {
         const { name } = useNodeData(nodeId);
+        const [value, setValue] = useNodeDataValue(nodeId, 'manual');
 
-        return <PinLabel x={34} y={44} label={name} />;
+        return (
+          <Group x={32} y={44}>
+            <PinLabel label={name} />
+            <NodeInputText y={20} value={value ?? ''} onChange={setValue} />
+          </Group>
+        );
       },
     },
   ],
@@ -50,4 +58,9 @@ export const VarSetNodeDefinition: TaichuNodeDefinition = {
       },
     },
   ],
+  code: ({ node, getConnectionInput }) => {
+    return `${node.data?.name ?? ''} = ${
+      getConnectionInput('variable') ?? JSON.stringify(node.data?.manual ?? '')
+    };\n`;
+  },
 };

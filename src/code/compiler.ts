@@ -1,5 +1,5 @@
 import { isUndefined, values } from 'lodash-es';
-import { useConnectionStore } from '../store/connection';
+import { ConnectInfo, useConnectionStore } from '../store/connection';
 import { TaichuNode, useNodeStore } from '../store/node';
 import { useVariableStore } from '../store/variable';
 import { STANDARD_PIN_EXEC_OUT } from '../utils/consts';
@@ -31,15 +31,52 @@ export class CodeCompiler {
 
     codeText += this.generateVariable() + '\n\n';
 
+    // 主流程代码
     while (currentNode !== null) {
       const codeFn = this.nodeDefinition[currentNode.name].code;
       if (codeFn) {
         const node = currentNode;
+        const buildPinVarName = (pinName: string, nodeId?: string) => {
+          return `_${nodeId ?? node.id}_${pinName}`;
+        };
+        const getConnectionInput = (
+          pinName: string,
+          nodeId: string
+        ): string | null => {
+          const connection: ConnectInfo | undefined = this.connections.find(
+            (item) => item.toNodeId === nodeId && item.toNodePinName === pinName
+          );
+          if (!connection) {
+            return null;
+          }
+
+          const fromNode: TaichuNode | undefined =
+            this.nodeMap[connection.fromNodeId];
+          if (!fromNode) {
+            return null;
+          }
+
+          const fromNodeDef = this.nodeDefinition[fromNode.name];
+          if (!fromNodeDef) {
+            return null;
+          }
+
+          return (
+            fromNodeDef.code?.({
+              node: fromNode,
+              buildPinVarName,
+              getConnectionInput: (pinName: string, nodeId?: string) =>
+                getConnectionInput(pinName, nodeId ?? fromNode.id),
+            }) ?? ''
+          );
+
+          // return this.nodeMap[]
+        };
         codeText += codeFn({
           node,
-          buildPinVarName: (pinName, nodeId) => {
-            return `_${nodeId ?? node.id}_${pinName}`;
-          },
+          buildPinVarName,
+          getConnectionInput: (pinName: string, nodeId?: string) =>
+            getConnectionInput(pinName, nodeId ?? node.id),
         });
       }
 

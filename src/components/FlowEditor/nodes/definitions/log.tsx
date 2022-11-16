@@ -18,7 +18,7 @@ export const LogNodeDefinition: TaichuNodeDefinition = {
   type: 'function',
   component: BaseNode,
   width: 150,
-  height: 100,
+  height: 90,
   category: DEFAULT_CORE_CATEGORY,
   inputs: [
     {
@@ -58,7 +58,9 @@ export const LogNodeDefinition: TaichuNodeDefinition = {
       },
     },
   ],
-  code: ({ node }) => {
-    return `console.log("${node.data?.message ?? ''}");\n`;
+  code: ({ node, getConnectionInput }) => {
+    return `console.log(${
+      getConnectionInput('input') ?? JSON.stringify(node.data?.message ?? '')
+    });\n`;
   },
 };
