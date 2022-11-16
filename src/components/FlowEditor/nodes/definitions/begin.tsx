@@ -1,5 +1,8 @@
 import { TaichuNodeDefinition } from '../../../../store/node';
-import { STANDARD_PIN_EXEC_OUT } from '../../../../utils/consts';
+import {
+  DEFAULT_CORE_CATEGORY,
+  STANDARD_PIN_EXEC_OUT,
+} from '../../../../utils/consts';
 import { BaseNode } from '../BaseNode';
 
 export const BeginNodeDefinition: TaichuNodeDefinition = {
@@ -9,6 +12,8 @@ export const BeginNodeDefinition: TaichuNodeDefinition = {
   component: BaseNode,
   width: 150,
   height: 65,
+  category: DEFAULT_CORE_CATEGORY,
+  hidden: true,
   inputs: [],
   outputs: [
     {

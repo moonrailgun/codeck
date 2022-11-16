@@ -2,6 +2,7 @@ import React from 'react';
 import { TaichuNodeDefinition } from '../../../../store/node';
 import { BaseNode } from '../BaseNode';
 import {
+  DEFAULT_CORE_CATEGORY,
   STANDARD_PIN_EXEC_IN,
   STANDARD_PIN_EXEC_OUT,
 } from '../../../../utils/consts';
@@ -20,6 +21,7 @@ export const JSONStringifyNodeDefinition: TaichuNodeDefinition = {
   component: BaseNode,
   width,
   height: 100,
+  category: DEFAULT_CORE_CATEGORY,
   inputs: [
     {
       name: STANDARD_PIN_EXEC_IN,

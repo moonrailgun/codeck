@@ -1,4 +1,4 @@
-import { values } from 'lodash-es';
+import { entries, groupBy, keys, values } from 'lodash-es';
 import React, {
   PropsWithChildren,
   useEffect,
@@ -7,40 +7,51 @@ import React, {
   useState,
 } from 'react';
 import { useNodeStore } from '../store/node';
-import { Trigger, Menu, Input, Empty, Message } from '@arco-design/web-react';
+import { Trigger, Menu, Input, Message, Tree } from '@arco-design/web-react';
 import { useMemoizedFn } from 'ahooks';
 import Highlighter from 'react-highlight-words';
 import Fuse from 'fuse.js';
 import { useStageStore } from '../store/stage';
 import Konva from 'konva';
 import { useConnectionStore } from '../store/connection';
+import { useVariableStore } from '../store/variable';
+import { VarGetNodeDefinition } from './FlowEditor/nodes/definitions/varget';
+import { VarSetNodeDefinition } from './FlowEditor/nodes/definitions/varset';
 
 const ContextMenu: React.FC<{ onClose: () => void }> = React.memo((props) => {
   const { nodeDefinition, createNode } = useNodeStore();
   const [searchValue, setSearchValue] = useState('');
   const { getRelativePointerPosition } = useStageStore();
+  const { variableMap } = useVariableStore();
   const nodeCreatedPosRef = useRef<Konva.Vector2d | null>(null);
 
   useEffect(() => {
     nodeCreatedPosRef.current = getRelativePointerPosition();
   }, []);
 
-  const handleCreateNode = useMemoizedFn((nodeName: string) => {
-    if (!nodeName) {
-      Message.error('Node Name undefined');
-      return;
+  const handleCreateNode = useMemoizedFn(
+    (nodeName: string, data?: Record<string, any>) => {
+      if (!nodeName) {
+        Message.error('Node Name undefined');
+        return;
+      }
+
+      if (!nodeCreatedPosRef.current) {
+        Message.error('Cannot get pointer position');
+        return;
+      }
+
+      createNode(nodeName, nodeCreatedPosRef.current, data);
+      props.onClose();
     }
+  );
 
-    if (!nodeCreatedPosRef.current) {
-      Message.error('Cannot get pointer position');
-      return;
-    }
+  const list = useMemo(
+    () => values(nodeDefinition).filter((definiton) => !definiton.hidden),
+    [nodeDefinition]
+  );
 
-    createNode(nodeName, nodeCreatedPosRef.current);
-    props.onClose();
-  });
-
-  const list = useMemo(() => values(nodeDefinition), [nodeDefinition]);
+  const variableList = useMemo(() => keys(variableMap), [variableMap]);
 
   const fuse = useMemo(
     () =>
@@ -50,8 +61,15 @@ const ContextMenu: React.FC<{ onClose: () => void }> = React.memo((props) => {
     [list]
   );
 
+  const variableFuse = useMemo(() => new Fuse(variableList), [variableList]);
+
   const matchedNode =
     searchValue === '' ? list : fuse.search(searchValue).map((res) => res.item);
+
+  const matchedVariable =
+    searchValue === ''
+      ? variableList
+      : variableFuse.search(searchValue).map((res) => res.item);
 
   return (
     <div
@@ -68,21 +86,76 @@ const ContextMenu: React.FC<{ onClose: () => void }> = React.memo((props) => {
           onChange={setSearchValue}
         />
 
-        {Array.isArray(matchedNode) && matchedNode.length > 0 ? (
-          matchedNode.map((definition) => (
-            <Menu.Item
-              key={definition.name}
-              onClick={() => handleCreateNode(definition.name)}
-            >
-              <Highlighter
-                searchWords={searchValue.split('')}
-                textToHighlight={definition.label}
-              />
-            </Menu.Item>
-          ))
-        ) : (
-          <Empty description="Not Found" />
-        )}
+        <div className="overflow-auto" style={{ maxHeight: 400 }}>
+          <Tree size="mini" className="h-full">
+            {Array.isArray(matchedVariable) && matchedVariable.length > 0 && (
+              <Tree.Node title="Variable">
+                {matchedVariable.map((item) => (
+                  <Tree.Node
+                    key={`var-${item}`}
+                    title={
+                      <Highlighter
+                        searchWords={searchValue.split('')}
+                        textToHighlight={item}
+                      />
+                    }
+                  >
+                    <Tree.Node
+                      key={`var-${item}-get`}
+                      title={
+                        <div
+                          onClick={() =>
+                            handleCreateNode(VarGetNodeDefinition.name, {
+                              name: item,
+                            })
+                          }
+                        >
+                          Get
+                        </div>
+                      }
+                    />
+                    <Tree.Node
+                      key={`var-${item}-set`}
+                      title={
+                        <div
+                          onClick={() =>
+                            handleCreateNode(VarSetNodeDefinition.name, {
+                              name: item,
+                            })
+                          }
+                        >
+                          Set
+                        </div>
+                      }
+                    />
+                  </Tree.Node>
+                ))}
+              </Tree.Node>
+            )}
+
+            {Array.isArray(matchedNode) &&
+              matchedNode.length > 0 &&
+              entries(groupBy(matchedNode, 'category')).map(
+                ([category, items]) => (
+                  <Tree.Node key={category} title={category}>
+                    {items.map((item) => (
+                      <Tree.Node
+                        key={`${category}-${item.name}`}
+                        title={
+                          <div onClick={() => handleCreateNode(item.name)}>
+                            <Highlighter
+                              searchWords={searchValue.split('')}
+                              textToHighlight={item.label}
+                            />
+                          </div>
+                        }
+                      />
+                    ))}
+                  </Tree.Node>
+                )
+              )}
+          </Tree>
+        </div>
       </Menu>
     </div>
   );

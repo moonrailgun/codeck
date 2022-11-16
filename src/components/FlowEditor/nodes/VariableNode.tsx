@@ -1,6 +1,7 @@
 import Konva from 'konva';
 import React from 'react';
 import { Group, Rect, Text } from 'react-konva';
+import { useNodeData } from '../../../hooks/useNodeData';
 import { useNodeInfo } from '../../../hooks/useNodeInfo';
 import { useConnectionStore } from '../../../store/connection';
 import { TaichuNodeComponentProps } from '../../../store/node';
@@ -12,6 +13,7 @@ export const VariableNode: React.FC<TaichuNodeComponentProps> = React.memo(
     const { startConnect } = useConnectionStore();
     const nodeId = props.id;
     const { node, definition, updatePos } = useNodeInfo(nodeId);
+    const { name } = useNodeData(nodeId);
     const { width, height, label } = definition;
     const { x, y } = node.position;
 
@@ -49,10 +51,10 @@ export const VariableNode: React.FC<TaichuNodeComponentProps> = React.memo(
         />
 
         <Text
-          x={30}
+          x={14}
           y={8}
           fontSize={16}
-          text={label}
+          text={`Get ${name}`}
           width={width}
           height={34}
           fill="white"

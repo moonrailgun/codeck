@@ -37,6 +37,11 @@ export interface TaichuNodeDefinition {
   type: TaichuNodeType;
   width: number;
   height: number;
+  category: string;
+  /**
+   * 是否在右键菜单中隐藏
+   */
+  hidden?: boolean;
   inputs: TaichuNodePinDefinition[];
   outputs: TaichuNodePinDefinition[];
   component: React.ComponentType<TaichuNodeComponentProps>;
