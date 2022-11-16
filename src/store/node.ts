@@ -45,7 +45,7 @@ export interface TaichuNodeDefinition {
    */
   code?: (ctx: {
     node: TaichuNode;
-    buildPinVarName: (pinName: string) => string;
+    buildPinVarName: (pinName: string, nodeId?: string) => string;
   }) => string;
 }
 
@@ -76,10 +76,7 @@ interface NodeState {
   setNodeData: (nodeId: string, key: string, value: unknown) => void;
 }
 
-export const useNodeStore = create<
-  NodeState,
-  [['zustand/persist', Pick<NodeState, 'nodeMap'>], ['zustand/immer', never]]
->(
+export const useNodeStore = create<NodeState>()(
   persist(
     immer((set, get) => ({
       nodeMap: {

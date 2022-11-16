@@ -1,14 +1,25 @@
-import { values } from 'lodash-es';
-import { ConnectInfo } from '../store/connection';
-import { TaichuNode, TaichuNodeDefinition } from '../store/node';
+import { isUndefined, values } from 'lodash-es';
+import { useConnectionStore } from '../store/connection';
+import { TaichuNode, useNodeStore } from '../store/node';
+import { useVariableStore } from '../store/variable';
 import { STANDARD_PIN_EXEC_OUT } from '../utils/consts';
 
 export class CodeCompiler {
-  constructor(
-    public nodeMap: Record<string, TaichuNode>,
-    public nodeDefinition: Record<string, TaichuNodeDefinition>,
-    public connections: ConnectInfo[]
-  ) {}
+  get nodeMap() {
+    return useNodeStore.getState().nodeMap;
+  }
+
+  get nodeDefinition() {
+    return useNodeStore.getState().nodeDefinition;
+  }
+
+  get connections() {
+    return useConnectionStore.getState().connections;
+  }
+
+  get variableMap() {
+    return useVariableStore.getState().variableMap;
+  }
 
   /**
    * 生成代码
@@ -18,14 +29,16 @@ export class CodeCompiler {
     let codeText = '';
     let currentNode: TaichuNode | null = this.getExecNext(begin.id);
 
+    codeText += this.generateVariable() + '\n\n';
+
     while (currentNode !== null) {
       const codeFn = this.nodeDefinition[currentNode.name].code;
       if (codeFn) {
         const node = currentNode;
         codeText += codeFn({
           node,
-          buildPinVarName: (pinName) => {
-            return `_${node.id}_${pinName}`;
+          buildPinVarName: (pinName, nodeId) => {
+            return `_${nodeId ?? node.id}_${pinName}`;
           },
         });
       }
@@ -34,6 +47,19 @@ export class CodeCompiler {
     }
 
     return codeText;
+  }
+
+  generateVariable(): string {
+    const list = values(this.variableMap);
+    return list
+      .map((item) => {
+        if (isUndefined(item.defaultValue)) {
+          return `let ${item.name};`;
+        } else {
+          return `let ${item.name} = ${JSON.stringify(item.defaultValue)};`;
+        }
+      })
+      .join('\n');
   }
 
   private findBegin(): TaichuNode {

@@ -10,11 +10,7 @@ export const CodeEditor: React.FC = React.memo(() => {
 
   const code = useMemo(() => {
     try {
-      const text = new CodeCompiler(
-        nodeMap,
-        nodeDefinition,
-        connections
-      ).generate();
+      const text = new CodeCompiler().generate();
 
       return text;
     } catch (err) {

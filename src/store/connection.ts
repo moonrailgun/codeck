@@ -33,13 +33,7 @@ interface ConnectionState {
   removeConnection: (connectionId: string) => void;
 }
 
-export const useConnectionStore = create<
-  ConnectionState,
-  [
-    ['zustand/persist', Pick<ConnectionState, 'connections'>],
-    ['zustand/immer', never]
-  ]
->(
+export const useConnectionStore = create<ConnectionState>()(
   persist(
     immer((set, get) => ({
       connections: [],
