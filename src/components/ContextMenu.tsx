@@ -165,29 +165,32 @@ ContextMenu.displayName = 'ContextMenu';
 interface ContextMenuWrapperProps extends PropsWithChildren {
   className?: string;
 }
-export const ContextMenuWrapper: React.FC<ContextMenuWrapperProps> = React.memo(
-  (props) => {
-    const [popupVisible, setPopupVisible] = useState(false);
-    const { workingConnection } = useConnectionStore();
+export const ContextMenuWrapper = React.forwardRef<
+  HTMLDivElement,
+  ContextMenuWrapperProps
+>((props, ref) => {
+  const [popupVisible, setPopupVisible] = useState(false);
+  const { workingConnection } = useConnectionStore();
 
-    return (
-      <Trigger
-        popup={() => <ContextMenu onClose={() => setPopupVisible(false)} />}
-        alignPoint={true}
-        escToClose={true}
-        popupVisible={popupVisible}
-        onVisibleChange={(v) => setPopupVisible(v)}
-        position="bl"
-        popupAlign={{
-          bottom: 8,
-          left: 8,
-        }}
-        trigger={['contextMenu']}
-        disabled={!!workingConnection}
-      >
-        <div className={props.className}>{props.children}</div>
-      </Trigger>
-    );
-  }
-);
+  return (
+    <Trigger
+      popup={() => <ContextMenu onClose={() => setPopupVisible(false)} />}
+      alignPoint={true}
+      escToClose={true}
+      popupVisible={popupVisible}
+      onVisibleChange={(v) => setPopupVisible(v)}
+      position="bl"
+      popupAlign={{
+        bottom: 8,
+        left: 8,
+      }}
+      trigger={['contextMenu']}
+      disabled={!!workingConnection}
+    >
+      <div className={props.className} ref={ref}>
+        {props.children}
+      </div>
+    </Trigger>
+  );
+});
 ContextMenuWrapper.displayName = 'ContextMenuWrapper';

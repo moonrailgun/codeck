@@ -47,7 +47,7 @@ export const ManagerPanel: React.FC = React.memo(() => {
 
       <Collapse bordered={true} lazyload={true} accordion={true}>
         {variableList.map((item) => (
-          <Collapse.Item header={item.name} name={item.name}>
+          <Collapse.Item key={item.name} header={item.name} name={item.name}>
             <VariableForm
               isCreate={false}
               initialValues={item}

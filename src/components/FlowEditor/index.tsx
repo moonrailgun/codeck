@@ -7,6 +7,8 @@ import { useStageStore } from '../../store/stage';
 import { NodeLayer } from './NodeLayer';
 import { ConnectionLayer } from './ConnectionLayer';
 import { ContextMenuWrapper } from '../ContextMenu';
+import { useStage } from '../../hooks/useStage';
+import { useUIStore } from '../../store/ui';
 import './nodes/__all__';
 
 const scaleBy = 1.05;
@@ -15,10 +17,41 @@ export const FlowEditor: React.FC = React.memo(() => {
   const { width, height, scale, setStageRef, setScale, position, setPosition } =
     useStageStore();
   const stageRef = useRef<Konva.Stage>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setStageRef(stageRef.current);
   }, []);
+
+  useEffect(() => {
+    if (!containerRef.current) {
+      return;
+    }
+
+    const handleKeydown = (e: KeyboardEvent) => {
+      if (e.key === 'Backspace') {
+        useUIStore.getState().deleteAllSelected();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeydown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeydown);
+    };
+  }, []);
+
+  useStage((stage) => {
+    const handleClick = (e: Konva.KonvaEventObject<MouseEvent>) => {
+      useUIStore.getState().clearSelectedStatus();
+    };
+
+    stage.on('click', handleClick);
+
+    return () => {
+      stage.off('click', handleClick);
+    };
+  });
 
   const handleWheel = useMemoizedFn((e: Konva.KonvaEventObject<WheelEvent>) => {
     e.evt.preventDefault();
@@ -62,7 +95,7 @@ export const FlowEditor: React.FC = React.memo(() => {
   );
 
   return (
-    <ContextMenuWrapper className="h-full w-full">
+    <ContextMenuWrapper ref={containerRef} className="h-full w-full">
       <Stage
         ref={stageRef}
         className="h-full w-full"

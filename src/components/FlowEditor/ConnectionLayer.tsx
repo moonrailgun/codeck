@@ -8,6 +8,7 @@ import { useStage } from '../../hooks/useStage';
 import { useNodeStore } from '../../store/node';
 import Konva from 'konva';
 import { Connection } from '../Connection';
+import { useUIStore } from '../../store/ui';
 
 function getWorkingConnectionFromPos(): Konva.Vector2d {
   const { workingConnection } = useConnectionStore.getState();
@@ -69,13 +70,11 @@ export const ConnectionLayer: React.FC = React.memo(() => {
   const { connections, workingConnection, endConnect } = useConnectionStore();
   const { getRelativePointerPosition, unscale } = useStageStore();
   useNodeStore(); // 这只是为了确保node位置更新了这个layer也能被渲染
-  const [selectedConnectionId, setSelectedConnectionId] = useState('');
+  const { selectedConnectionIds } = useUIStore();
 
   const updateDraw = useUpdate();
 
   const workingConnectionRef = useUpdateRef(workingConnection);
-
-  const selectedConnectionIdRef = useUpdateRef(selectedConnectionId);
 
   useStage((stage) => {
     const mouseMoveHandler = () => {
@@ -93,8 +92,6 @@ export const ConnectionLayer: React.FC = React.memo(() => {
 
   useStage((stage) => {
     const handleAutoCreateNode = () => {
-      setSelectedConnectionId(''); // 清空当前选择的连接线
-
       if (workingConnectionRef.current) {
         // 正在选择
         // TODO: 自动创建并连接默认入口/出口
@@ -113,12 +110,6 @@ export const ConnectionLayer: React.FC = React.memo(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         endConnect();
-      }
-
-      if (e.key === 'Backspace' && selectedConnectionIdRef.current) {
-        useConnectionStore
-          .getState()
-          .removeConnection(selectedConnectionIdRef.current);
       }
     };
 
@@ -166,10 +157,15 @@ export const ConnectionLayer: React.FC = React.memo(() => {
             from={info.from}
             to={info.to}
             direction={'out-in'}
-            isActive={connection.id === selectedConnectionId}
+            isActive={selectedConnectionIds.includes(connection.id)}
             onClick={(e) => {
               e.cancelBubble = true;
-              setSelectedConnectionId(connection.id);
+
+              if (!e.evt.metaKey) {
+                useUIStore.getState().clearSelectedStatus();
+              }
+
+              useUIStore.getState().addSelectedConnections([connection.id]);
             }}
           />
         );

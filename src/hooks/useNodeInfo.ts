@@ -1,17 +1,21 @@
-import { useMemoizedFn } from 'ahooks';
-import Konva from 'konva';
-import { useNodeStore } from '../store/node';
+import { TaichuNode, TaichuNodeDefinition, useNodeStore } from '../store/node';
 
 /**
  * 获取节点信息
  */
-export function useNodeInfo(nodeId: string) {
-  const { nodeMap, nodeDefinition, updateNodePos } = useNodeStore();
+export function useNodeInfo(nodeId: string): {
+  node: TaichuNode | undefined;
+  definition: TaichuNodeDefinition | undefined;
+} {
+  const { nodeMap, nodeDefinition } = useNodeStore();
   const node = nodeMap[nodeId];
 
-  const updatePos = useMemoizedFn((position: Konva.Vector2d) => {
-    updateNodePos(nodeId, position);
-  });
+  if (!node) {
+    return {
+      node: undefined,
+      definition: undefined,
+    };
+  }
 
-  return { node, definition: nodeDefinition[node.name], updatePos };
+  return { node, definition: nodeDefinition[node.name] };
 }

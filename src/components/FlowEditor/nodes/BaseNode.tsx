@@ -1,35 +1,28 @@
 import React from 'react';
-import { Group, Rect, Text } from 'react-konva';
+import { Rect, Text } from 'react-konva';
 import { useNodeInfo } from '../../../hooks/useNodeInfo';
 import { useConnectionStore } from '../../../store/connection';
 import { TaichuNodeComponentProps } from '../../../store/node';
+import { useUIStore } from '../../../store/ui';
 import { color } from '../../../utils/color';
+import { BaseNodeWrapper } from './BaseNodeWrapper';
 import { Pin } from './pin/Pin';
 
 export const BaseNode: React.FC<TaichuNodeComponentProps> = React.memo(
   (props) => {
     const nodeId = props.id;
-    const { node, definition, updatePos } = useNodeInfo(nodeId);
+    const { node, definition } = useNodeInfo(nodeId);
+    const { selectedNodeIds } = useUIStore();
+
+    if (!node || !definition) {
+      return null;
+    }
+
     const { width, height, label } = definition;
     const { x, y } = node.position;
 
     return (
-      <Group
-        x={x}
-        y={y}
-        draggable={true}
-        onDragStart={(e) => {
-          e.cancelBubble = true;
-        }}
-        onDragMove={(e) => {
-          e.cancelBubble = true;
-          updatePos(e.target.position());
-        }}
-        onDragEnd={(e) => {
-          e.cancelBubble = true;
-          updatePos(e.target.position());
-        }}
-      >
+      <BaseNodeWrapper x={x} y={y} nodeId={nodeId}>
         <Rect
           width={width}
           height={height}
@@ -38,6 +31,9 @@ export const BaseNode: React.FC<TaichuNodeComponentProps> = React.memo(
           shadowColor="black"
           shadowBlur={10}
           shadowOpacity={0.5}
+          stroke="white"
+          strokeWidth={selectedNodeIds.includes(nodeId) ? 4 : 0}
+          fillAfterStrokeEnabled={true}
           fillLinearGradientStartPoint={{ x: 0, y: 0 }}
           fillLinearGradientEndPoint={{ x: width, y: height }}
           fillLinearGradientColorStops={[
@@ -95,7 +91,7 @@ export const BaseNode: React.FC<TaichuNodeComponentProps> = React.memo(
             }}
           />
         ))}
-      </Group>
+      </BaseNodeWrapper>
     );
   }
 );

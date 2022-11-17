@@ -4,6 +4,7 @@ import { persist } from 'zustand/middleware';
 import Konva from 'konva';
 import { nanoid } from 'nanoid';
 import { set as _set } from 'lodash-es';
+import { useConnectionStore } from './connection';
 
 type TaichuNodeType = 'begin' | 'return' | 'function' | 'logic';
 
@@ -80,6 +81,7 @@ interface NodeState {
    * 设置节点数据
    */
   setNodeData: (nodeId: string, key: string, value: unknown) => void;
+  removeNode: (nodeId: string) => void;
 }
 
 export const useNodeStore = create<NodeState>()(
@@ -161,6 +163,22 @@ export const useNodeStore = create<NodeState>()(
           }
 
           _set(node, ['data', key], value);
+        });
+      },
+      removeNode: (nodeId) => {
+        set((state) => {
+          useConnectionStore
+            .getState()
+            .connections.filter(
+              (connection) =>
+                connection.fromNodeId === nodeId ||
+                connection.toNodeId === nodeId
+            )
+            .forEach((item) => {
+              useConnectionStore.getState().removeConnection(item.id);
+            });
+
+          delete state.nodeMap[nodeId];
         });
       },
     })),
