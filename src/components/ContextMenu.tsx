@@ -170,7 +170,9 @@ export const ContextMenuWrapper = React.forwardRef<
   ContextMenuWrapperProps
 >((props, ref) => {
   const [popupVisible, setPopupVisible] = useState(false);
-  const { workingConnection } = useConnectionStore();
+  const workingConnection = useConnectionStore(
+    (state) => state.workingConnection
+  );
 
   return (
     <Trigger

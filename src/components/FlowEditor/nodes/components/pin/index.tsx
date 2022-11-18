@@ -11,9 +11,7 @@ export const Pin: React.FC<{
   onConnectionStart: () => void;
 }> = React.memo((props) => {
   const { type, position, component, name } = props.definition;
-  const { checkIsConnected } = useConnectionStore();
-
-  const connected = checkIsConnected(props.nodeId, name);
+  const connected = useConnectionStore().checkIsConnected(props.nodeId, name);
 
   return (
     <Group>

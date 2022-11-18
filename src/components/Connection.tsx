@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import Konva from 'konva';
 import { Line } from 'react-konva';
 
@@ -11,27 +11,35 @@ interface ConnectionProps {
 }
 export const Connection: React.FC<ConnectionProps> = React.memo((props) => {
   const { from, to, direction, isActive, onClick } = props;
-  const dir = direction === 'out-in' ? 1 : -1;
+  const [hover, setHover] = useState(false);
 
-  let holdLen = (to.x - from.x) / 3; // 确保初始方向正确
-  const diffY = Math.abs(to.y - from.y);
-  holdLen = dir * (Math.abs(holdLen) + diffY / 4);
+  const points = useMemo(() => {
+    const dir = direction === 'out-in' ? 1 : -1;
 
-  const mid1 = {
-    x: from.x + holdLen,
-    y: from.y,
-  };
-  const mid2 = {
-    x: to.x - holdLen,
-    y: to.y,
-  };
+    let holdLen = (to.x - from.x) / 3; // 确保初始方向正确
+    const diffY = Math.abs(to.y - from.y);
+    holdLen = dir * (Math.abs(holdLen) + diffY / 4);
+
+    const mid1 = {
+      x: from.x + holdLen,
+      y: from.y,
+    };
+    const mid2 = {
+      x: to.x - holdLen,
+      y: to.y,
+    };
+
+    return [from.x, from.y, mid1.x, mid1.y, mid2.x, mid2.y, to.x, to.y];
+  }, [from, to, direction]);
 
   return (
     <Line
-      strokeWidth={isActive ? 4 : 2}
+      strokeWidth={isActive || hover ? 4 : 2}
       stroke="white"
       bezier={true}
-      points={[from.x, from.y, mid1.x, mid1.y, mid2.x, mid2.y, to.x, to.y]}
+      points={points}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
       onClick={onClick}
     />
   );

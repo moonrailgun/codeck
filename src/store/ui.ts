@@ -29,13 +29,12 @@ export const useUIStore = create<UIState>()(
       });
     },
     addSelectedConnections: (connectionIds) => {
-      set(
-        (state) =>
-          (state.selectedConnectionIds = uniq([
-            ...state.selectedConnectionIds,
-            ...connectionIds,
-          ]))
-      );
+      set((state) => {
+        state.selectedConnectionIds = uniq([
+          ...state.selectedConnectionIds,
+          ...connectionIds,
+        ]);
+      });
     },
     clearSelectedStatus: () => {
       set((state) => {
