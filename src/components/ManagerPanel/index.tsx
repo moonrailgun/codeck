@@ -10,6 +10,7 @@ import {
 import { variableTypes } from '../../utils/consts';
 import { useVariableStore, VariableItem } from '../../store/variable';
 import { values } from 'lodash-es';
+import { useNodeStore } from '../../store/node';
 const FormItem = Form.Item;
 
 export const ManagerPanel: React.FC = React.memo(() => {
@@ -20,6 +21,14 @@ export const ManagerPanel: React.FC = React.memo(() => {
 
   return (
     <div>
+      <div>
+        <Button onClick={() => useNodeStore.getState().resetNode()}>
+          Reset
+        </Button>
+      </div>
+
+      <Divider />
+
       <Button
         long={true}
         onClick={() => setShowVariableCreator((state) => !state)}

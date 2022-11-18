@@ -2,9 +2,10 @@ import create from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { persist } from 'zustand/middleware';
 import Konva from 'konva';
-import { nanoid } from 'nanoid';
-import { set as _set } from 'lodash-es';
+import { keys, set as _set } from 'lodash-es';
 import { useConnectionStore } from './connection';
+import { generateNodeId } from '../utils/string-helper';
+import { BeginNodeDefinition } from '../components/FlowEditor/nodes/definitions/begin';
 
 type TaichuNodeType = 'begin' | 'return' | 'function' | 'logic';
 
@@ -82,21 +83,24 @@ interface NodeState {
    */
   setNodeData: (nodeId: string, key: string, value: unknown) => void;
   removeNode: (nodeId: string) => void;
+  resetNode: () => void;
 }
+
+const defaultNodeMap = {
+  begin: {
+    id: 'begin',
+    name: 'begin',
+    position: {
+      x: 10,
+      y: 10,
+    },
+  },
+};
 
 export const useNodeStore = create<NodeState>()(
   persist(
     immer((set, get) => ({
-      nodeMap: {
-        begin: {
-          id: 'begin',
-          name: 'begin',
-          position: {
-            x: 10,
-            y: 10,
-          },
-        },
-      },
+      nodeMap: defaultNodeMap,
       nodeDefinition: {},
       regNode: (definition: TaichuNodeDefinition) => {
         set((state) => {
@@ -145,7 +149,7 @@ export const useNodeStore = create<NodeState>()(
       },
       createNode: (nodeName, position, data) => {
         set((state) => {
-          const id = nanoid();
+          const id = generateNodeId();
           state.nodeMap[id] = {
             id,
             name: nodeName,
@@ -180,6 +184,14 @@ export const useNodeStore = create<NodeState>()(
 
           delete state.nodeMap[nodeId];
         });
+      },
+      resetNode: () => {
+        const { nodeMap, removeNode } = get();
+        keys(nodeMap)
+          .filter((id) => id !== BeginNodeDefinition.name)
+          .forEach((id) => {
+            removeNode(id);
+          });
       },
     })),
     {

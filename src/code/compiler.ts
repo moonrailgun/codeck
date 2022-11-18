@@ -1,4 +1,5 @@
 import { isUndefined, values } from 'lodash-es';
+import { VarGetNodeDefinition } from '../components/FlowEditor/nodes/definitions/varget';
 import { ConnectInfo, useConnectionStore } from '../store/connection';
 import { TaichuNode, useNodeStore } from '../store/node';
 import { useVariableStore } from '../store/variable';
@@ -56,21 +57,17 @@ export class CodeCompiler {
             return null;
           }
 
-          const fromNodeDef = this.nodeDefinition[fromNode.name];
-          if (!fromNodeDef) {
-            return null;
+          // Hardcode for varget
+          if (fromNode.name === VarGetNodeDefinition.name) {
+            return fromNode.data?.name ?? '';
           }
 
-          return (
-            fromNodeDef.code?.({
-              node: fromNode,
-              buildPinVarName,
-              getConnectionInput: (pinName: string, nodeId?: string) =>
-                getConnectionInput(pinName, nodeId ?? fromNode.id),
-            }) ?? ''
+          const pinVarName = buildPinVarName(
+            connection.fromNodePinName,
+            connection.fromNodeId
           );
 
-          // return this.nodeMap[]
+          return pinVarName;
         };
         codeText += codeFn({
           node,

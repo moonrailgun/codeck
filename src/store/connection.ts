@@ -1,8 +1,8 @@
-import { nanoid } from 'nanoid';
 import create from 'zustand';
 import { TaichuNodePortType } from './node';
 import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
+import { generateNodeId } from '../utils/string-helper';
 
 export interface ConnectInfo {
   id: string;
@@ -82,14 +82,14 @@ export const useConnectionStore = create<ConnectionState>()(
             ...connections,
             workingConnection.fromDirection === 'out-in'
               ? {
-                  id: nanoid(),
+                  id: generateNodeId(),
                   fromNodeId: workingConnection.fromNodeId,
                   fromNodePinName: workingConnection.fromNodePinName,
                   toNodeId: fromNodeId,
                   toNodePinName: fromNodePinName,
                 }
               : {
-                  id: nanoid(),
+                  id: generateNodeId(),
                   fromNodeId: fromNodeId,
                   fromNodePinName: fromNodePinName,
                   toNodeId: workingConnection.fromNodeId,

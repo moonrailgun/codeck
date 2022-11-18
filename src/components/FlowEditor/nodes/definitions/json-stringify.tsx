@@ -66,9 +66,9 @@ export const JSONStringifyNodeDefinition: TaichuNodeDefinition = {
       },
     },
   ],
-  code: ({ node, buildPinVarName }) => {
-    return `let ${buildPinVarName('output')} = JSON.stringify("${
-      node.data?.input ?? ''
-    }");\n`;
+  code: ({ node, buildPinVarName, getConnectionInput }) => {
+    return `let ${buildPinVarName('output')} = JSON.stringify(${
+      getConnectionInput('input') ?? '""'
+    });\n`;
   },
 };

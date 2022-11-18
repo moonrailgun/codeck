@@ -22,7 +22,4 @@ export const VarGetNodeDefinition: TaichuNodeDefinition = {
       },
     },
   ],
-  code: ({ node }) => {
-    return `${node.data?.name}`;
-  },
 };
