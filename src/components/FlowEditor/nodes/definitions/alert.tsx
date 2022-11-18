@@ -56,8 +56,8 @@ export const AlertNodeDefinition: TaichuNodeDefinition = {
     },
   ],
   code: ({ node, getConnectionInput }) => {
-    return `alert("${
+    return `alert(${
       getConnectionInput('message') ?? JSON.stringify(node.data?.message ?? '')
-    }");\n`;
+    });\n`;
   },
 };
