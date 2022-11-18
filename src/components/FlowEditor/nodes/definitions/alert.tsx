@@ -6,10 +6,7 @@ import {
   STANDARD_PIN_EXEC_IN,
   STANDARD_PIN_EXEC_OUT,
 } from '../../../../utils/consts';
-import { PinLabel } from '../components/pin/Label';
-import { NodeInputText } from '../components/input/Text';
-import { Group } from 'react-konva';
-import { useNodeDataValue } from '../../../../hooks/useNodeData';
+import { TextInputPreset } from '../components/preset/TextInputPreset';
 
 export const AlertNodeDefinition: TaichuNodeDefinition = {
   name: 'alert',
@@ -29,20 +26,21 @@ export const AlertNodeDefinition: TaichuNodeDefinition = {
       },
     },
     {
-      name: 'input',
+      name: 'message',
       type: 'port',
       position: {
         x: 14,
         y: 50,
       },
       component: ({ nodeId }) => {
-        const [message, setMessage] = useNodeDataValue(nodeId, 'message');
-
         return (
-          <Group x={32} y={44}>
-            <PinLabel label={'message'} />
-            <NodeInputText y={20} value={message ?? ''} onChange={setMessage} />
-          </Group>
+          <TextInputPreset
+            nodeId={nodeId}
+            x={32}
+            y={44}
+            name="message"
+            label="message"
+          />
         );
       },
     },

@@ -7,9 +7,7 @@ import {
   STANDARD_PIN_EXEC_OUT,
 } from '../../../../utils/consts';
 import { PinLabel } from '../components/pin/Label';
-import { NodeInputText } from '../components/input/Text';
 import { Group } from 'react-konva';
-import { useNodeDataValue } from '../../../../hooks/useNodeData';
 import { buildPinPos } from '../../../../utils/position-helper';
 
 const width = 240;
@@ -20,7 +18,7 @@ export const JSONStringifyNodeDefinition: TaichuNodeDefinition = {
   type: 'function',
   component: BaseNode,
   width,
-  height: 100,
+  height: 65,
   category: DEFAULT_CORE_CATEGORY,
   inputs: [
     {
@@ -39,14 +37,7 @@ export const JSONStringifyNodeDefinition: TaichuNodeDefinition = {
         y: 50,
       },
       component: ({ nodeId }) => {
-        const [input, setInput] = useNodeDataValue(nodeId, 'input');
-
-        return (
-          <Group x={32} y={44}>
-            <PinLabel label={'input'} />
-            <NodeInputText y={20} value={input ?? ''} onChange={setInput} />
-          </Group>
-        );
+        return <PinLabel label={'input'} x={32} y={44} />;
       },
     },
   ],

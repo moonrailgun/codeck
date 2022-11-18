@@ -6,11 +6,8 @@ import {
   STANDARD_PIN_EXEC_IN,
   STANDARD_PIN_EXEC_OUT,
 } from '../../../../utils/consts';
-import { PinLabel } from '../components/pin/Label';
-import { NodeInputText } from '../components/input/Text';
-import { Group } from 'react-konva';
-import { useNodeDataValue } from '../../../../hooks/useNodeData';
 import { buildPinPos } from '../../../../utils/position-helper';
+import { TextInputPreset } from '../components/preset/TextInputPreset';
 
 export const LogNodeDefinition: TaichuNodeDefinition = {
   name: 'log',
@@ -30,20 +27,21 @@ export const LogNodeDefinition: TaichuNodeDefinition = {
       },
     },
     {
-      name: 'input',
+      name: 'message',
       type: 'port',
       position: {
         x: buildPinPos(150, 'input'),
         y: 50,
       },
       component: ({ nodeId }) => {
-        const [message, setMessage] = useNodeDataValue(nodeId, 'message');
-
         return (
-          <Group x={32} y={44}>
-            <PinLabel label={'message'} />
-            <NodeInputText y={20} value={message ?? ''} onChange={setMessage} />
-          </Group>
+          <TextInputPreset
+            nodeId={nodeId}
+            x={32}
+            y={44}
+            name="message"
+            label="message"
+          />
         );
       },
     },
@@ -60,7 +58,7 @@ export const LogNodeDefinition: TaichuNodeDefinition = {
   ],
   code: ({ node, getConnectionInput }) => {
     return `console.log(${
-      getConnectionInput('input') ?? JSON.stringify(node.data?.message ?? '')
+      getConnectionInput('message') ?? JSON.stringify(node.data?.message ?? '')
     });\n`;
   },
 };
