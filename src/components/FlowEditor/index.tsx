@@ -32,6 +32,10 @@ export const FlowEditor: React.FC = React.memo(() => {
       if (e.key === 'Backspace') {
         useUIStore.getState().deleteAllSelected();
       }
+
+      if (e.key === 'f') {
+        useStageStore.getState().resetPosition();
+      }
     };
 
     window.addEventListener('keydown', handleKeydown);
@@ -56,6 +60,9 @@ export const FlowEditor: React.FC = React.memo(() => {
   const handleWheel = useMemoizedFn((e: Konva.KonvaEventObject<WheelEvent>) => {
     e.evt.preventDefault();
     const stage = e.target as Konva.Stage;
+    if (!stage) {
+      return;
+    }
 
     const oldScale = stage.scaleX();
     const pointer = stage.getPointerPosition();

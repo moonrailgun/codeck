@@ -1,5 +1,7 @@
 import create from 'zustand';
 import Konva from 'konva';
+import { useNodeStore } from './node';
+import { values } from 'lodash-es';
 
 interface StageState {
   stageRef: Konva.Stage | null;
@@ -22,6 +24,10 @@ interface StageState {
    * 获取鼠标在stage上的坐标
    */
   getRelativePointerPosition: () => Konva.Vector2d;
+  /**
+   * 重置到左上角
+   */
+  resetPosition: () => void;
 }
 
 export const useStageStore = create<StageState>((set, get) => ({
@@ -80,5 +86,28 @@ export const useStageStore = create<StageState>((set, get) => ({
     const { calcAbsolutePositionToRelative, getPointerPosition } = get();
 
     return calcAbsolutePositionToRelative(getPointerPosition());
+  },
+
+  resetPosition: () => {
+    const nodeList = values(useNodeStore.getState().nodeMap);
+
+    if (nodeList.length === 0) {
+      return;
+    }
+
+    const minPos = nodeList.reduce(
+      (min, curr) => {
+        return {
+          x: Math.min(min.x, curr.position.x),
+          y: Math.min(min.y, curr.position.y),
+        };
+      },
+      {
+        x: Infinity,
+        y: Infinity,
+      }
+    );
+
+    get().setPosition({ x: -minPos.x + 40, y: -minPos.y + 40 });
   },
 }));
