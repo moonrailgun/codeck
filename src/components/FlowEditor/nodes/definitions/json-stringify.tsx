@@ -11,6 +11,7 @@ import { Group } from 'react-konva';
 import { buildPinPos } from '../../../../utils/position-helper';
 
 const width = 240;
+const height = 65;
 
 export const JSONStringifyNodeDefinition: TaichuNodeDefinition = {
   name: 'json-stringify',
@@ -18,7 +19,7 @@ export const JSONStringifyNodeDefinition: TaichuNodeDefinition = {
   type: 'function',
   component: BaseNode,
   width,
-  height: 65,
+  height,
   category: DEFAULT_CORE_CATEGORY,
   inputs: [
     {

@@ -62,13 +62,39 @@ export class CodeCompiler {
             return fromNode.data?.name ?? '';
           }
 
-          const pinVarName = buildPinVarName(
-            connection.fromNodePinName,
-            connection.fromNodeId
-          );
+          const fromNodeDef = this.nodeDefinition[fromNode.name];
+          if (!fromNodeDef) {
+            return null;
+          }
 
-          return pinVarName;
+          const outputDef = fromNodeDef.outputs.find(
+            (output) => output.name === connection.fromNodePinName
+          );
+          if (!outputDef) {
+            return null;
+          }
+
+          if (outputDef.code) {
+            // 自定义输出代码生成逻辑
+            return (
+              outputDef.code({
+                node: fromNode,
+                buildPinVarName,
+                getConnectionInput: (pinName: string, nodeId?: string) =>
+                  getConnectionInput(pinName, nodeId ?? fromNode.id),
+              }) ?? ''
+            );
+          } else {
+            // 直接取值
+            const pinVarName = buildPinVarName(
+              connection.fromNodePinName,
+              connection.fromNodeId
+            );
+
+            return pinVarName;
+          }
         };
+
         codeText += codeFn({
           node,
           buildPinVarName,

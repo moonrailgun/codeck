@@ -2,19 +2,19 @@ import React from 'react';
 import { Group } from 'react-konva';
 import { useNodeDataValue } from '../../../../../hooks/useNodeData';
 import { useConnectionStore } from '../../../../../store/connection';
-import { NodeInputText } from '../input/Text';
+import { NodeInputNumber } from '../input/Number';
 import { PinLabel } from '../pin/Label';
 
-interface TextInputPresetProps {
+interface NumberInputPresetProps {
   nodeId: string;
   name: string;
   label: string;
   x: number;
   y: number;
 }
-export const TextInputPreset: React.FC<TextInputPresetProps> = React.memo(
+export const NumberInputPreset: React.FC<NumberInputPresetProps> = React.memo(
   (props) => {
-    const [text, setText] = useNodeDataValue(props.nodeId, props.name);
+    const [text = 0, setText] = useNodeDataValue(props.nodeId, props.name);
     const connected = useConnectionStore().checkIsConnected(
       props.nodeId,
       props.name
@@ -24,10 +24,14 @@ export const TextInputPreset: React.FC<TextInputPresetProps> = React.memo(
       <Group x={props.x} y={props.y}>
         <PinLabel label={props.label} />
         {connected ? null : (
-          <NodeInputText y={20} value={text ?? ''} onChange={setText} />
+          <NodeInputNumber
+            y={20}
+            value={Number(text)}
+            onChange={(val) => setText(Number(val))}
+          />
         )}
       </Group>
     );
   }
 );
-TextInputPreset.displayName = 'TextInputPreset';
+NumberInputPreset.displayName = 'NumberInputPreset';

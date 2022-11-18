@@ -9,6 +9,12 @@ import { BeginNodeDefinition } from '../components/FlowEditor/nodes/definitions/
 
 type TaichuNodeType = 'begin' | 'return' | 'function' | 'logic';
 
+type CodeFn = (ctx: {
+  node: TaichuNode;
+  buildPinVarName: (pinName: string, nodeId?: string) => string;
+  getConnectionInput: (pinName: string, nodeId?: string) => string | null;
+}) => string;
+
 export interface TaichuNode {
   id: string;
   name: string; // 节点名, 指向 TaichuNodeDefinition
@@ -45,16 +51,12 @@ export interface TaichuNodeDefinition {
    */
   hidden?: boolean;
   inputs: TaichuNodePinDefinition[];
-  outputs: TaichuNodePinDefinition[];
+  outputs: (TaichuNodePinDefinition & { code?: CodeFn })[];
   component: React.ComponentType<TaichuNodeComponentProps>;
   /**
    * 节点代码生成逻辑
    */
-  code?: (ctx: {
-    node: TaichuNode;
-    buildPinVarName: (pinName: string, nodeId?: string) => string;
-    getConnectionInput: (pinName: string, nodeId?: string) => string | null;
-  }) => string;
+  code?: CodeFn;
 }
 
 interface NodeState {

@@ -2,7 +2,7 @@ import React from 'react';
 import { Html } from 'react-konva-utils';
 import { NodeInputBase, NodeInputProps } from './Base';
 
-export const NodeInputText: React.FC<NodeInputProps> = React.memo((props) => {
+export const NodeInputNumber: React.FC<NodeInputProps> = React.memo((props) => {
   return (
     <NodeInputBase
       {...props}
@@ -16,6 +16,7 @@ export const NodeInputText: React.FC<NodeInputProps> = React.memo((props) => {
               height,
               border: '1px solid white',
             }}
+            type="number"
             autoFocus={true}
             placeholder={value}
             value={value}
@@ -27,4 +28,4 @@ export const NodeInputText: React.FC<NodeInputProps> = React.memo((props) => {
     />
   );
 });
-NodeInputText.displayName = 'NodeInputText';
+NodeInputNumber.displayName = 'NodeInputNumber';

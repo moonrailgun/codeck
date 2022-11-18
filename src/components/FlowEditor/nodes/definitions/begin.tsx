@@ -3,15 +3,19 @@ import {
   DEFAULT_CORE_CATEGORY,
   STANDARD_PIN_EXEC_OUT,
 } from '../../../../utils/consts';
+import { buildPinPos } from '../../../../utils/position-helper';
 import { BaseNode } from '../BaseNode';
+
+const width = 150;
+const height = 65;
 
 export const BeginNodeDefinition: TaichuNodeDefinition = {
   name: 'begin',
   label: 'Begin',
   type: 'begin',
   component: BaseNode,
-  width: 150,
-  height: 65,
+  width,
+  height,
   category: DEFAULT_CORE_CATEGORY,
   hidden: true,
   inputs: [],
@@ -20,7 +24,7 @@ export const BeginNodeDefinition: TaichuNodeDefinition = {
       name: STANDARD_PIN_EXEC_OUT,
       type: 'exec',
       position: {
-        x: 136,
+        x: buildPinPos(width, 'output'),
         y: 16,
       },
     },
