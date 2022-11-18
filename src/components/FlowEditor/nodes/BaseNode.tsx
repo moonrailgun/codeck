@@ -6,7 +6,7 @@ import { TaichuNodeComponentProps } from '../../../store/node';
 import { useUIStore } from '../../../store/ui';
 import { color } from '../../../utils/color';
 import { BaseNodeWrapper } from './BaseNodeWrapper';
-import { Pin } from './pin/Pin';
+import { Pin } from './components/pin';
 
 export const BaseNode: React.FC<TaichuNodeComponentProps> = React.memo(
   (props) => {

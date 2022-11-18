@@ -1,8 +1,7 @@
-import { useMemoizedFn } from 'ahooks';
 import React, { useCallback, useState } from 'react';
 import { Group, Rect, Text } from 'react-konva';
 import { Html } from 'react-konva-utils';
-import { useEditValue } from '../../../../hooks/useEditValue';
+import { useEditValue } from '../../../../../hooks/useEditValue';
 
 const defaultWidth = 80;
 const defaultHeight = 16;

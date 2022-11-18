@@ -6,8 +6,8 @@ import {
   STANDARD_PIN_EXEC_IN,
   STANDARD_PIN_EXEC_OUT,
 } from '../../../../utils/consts';
-import { PinLabel } from '../pin/Label';
-import { NodeInputText } from '../input/Text';
+import { PinLabel } from '../components/pin/Label';
+import { NodeInputText } from '../components/input/Text';
 import { Group } from 'react-konva';
 import { useNodeDataValue } from '../../../../hooks/useNodeData';
 import { buildPinPos } from '../../../../utils/position-helper';

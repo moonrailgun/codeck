@@ -7,8 +7,8 @@ import {
   STANDARD_PIN_EXEC_OUT,
 } from '../../../../utils/consts';
 import { BaseNode } from '../BaseNode';
-import { NodeInputText } from '../input/Text';
-import { PinLabel } from '../pin/Label';
+import { NodeInputText } from '../components/input/Text';
+import { PinLabel } from '../components/pin/Label';
 
 export const VarSetNodeDefinition: TaichuNodeDefinition = {
   name: 'varset',

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Group } from 'react-konva';
-import { useConnectionStore } from '../../../../store/connection';
-import { TaichuNodePinDefinition } from '../../../../store/node';
+import { useConnectionStore } from '../../../../../store/connection';
+import { TaichuNodePinDefinition } from '../../../../../store/node';
 import { ExecPin } from './ExecPin';
 import { PortPin } from './PortPin';
 
