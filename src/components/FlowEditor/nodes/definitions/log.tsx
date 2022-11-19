@@ -5,8 +5,8 @@ import {
   DEFAULT_CORE_CATEGORY,
   STANDARD_PIN_EXEC_IN,
   STANDARD_PIN_EXEC_OUT,
-} from '../../../../utils/consts';
-import { buildPinPos } from '../../../../utils/position-helper';
+} from '@/utils/consts';
+import { buildPinPosX } from '@/utils/position-helper';
 import { TextInputPreset } from '../components/preset/TextInputPreset';
 
 export const LogNodeDefinition: TaichuNodeDefinition = {
@@ -22,7 +22,7 @@ export const LogNodeDefinition: TaichuNodeDefinition = {
       name: STANDARD_PIN_EXEC_IN,
       type: 'exec',
       position: {
-        x: buildPinPos(150, 'input'),
+        x: buildPinPosX(150, 'input'),
         y: 16,
       },
     },
@@ -30,7 +30,7 @@ export const LogNodeDefinition: TaichuNodeDefinition = {
       name: 'message',
       type: 'port',
       position: {
-        x: buildPinPos(150, 'input'),
+        x: buildPinPosX(150, 'input'),
         y: 50,
       },
       component: ({ nodeId }) => {
@@ -51,7 +51,7 @@ export const LogNodeDefinition: TaichuNodeDefinition = {
       name: STANDARD_PIN_EXEC_OUT,
       type: 'exec',
       position: {
-        x: buildPinPos(150, 'output'),
+        x: buildPinPosX(150, 'output'),
         y: 16,
       },
     },

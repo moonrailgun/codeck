@@ -5,16 +5,20 @@ import {
   DEFAULT_CORE_CATEGORY,
   STANDARD_PIN_EXEC_IN,
   STANDARD_PIN_EXEC_OUT,
-} from '../../../../utils/consts';
+} from '@/utils/consts';
 import { TextInputPreset } from '../components/preset/TextInputPreset';
+import { buildPinPosX } from '@/utils/position-helper';
+
+const width = 150;
+const height = 100;
 
 export const AlertNodeDefinition: TaichuNodeDefinition = {
   name: 'alert',
   label: 'Alert',
   type: 'function',
   component: BaseNode,
-  width: 150,
-  height: 100,
+  width,
+  height,
   category: DEFAULT_CORE_CATEGORY,
   inputs: [
     {
@@ -29,7 +33,7 @@ export const AlertNodeDefinition: TaichuNodeDefinition = {
       name: 'message',
       type: 'port',
       position: {
-        x: 14,
+        x: buildPinPosX(width, 'input'),
         y: 50,
       },
       component: ({ nodeId }) => {
@@ -50,7 +54,7 @@ export const AlertNodeDefinition: TaichuNodeDefinition = {
       name: STANDARD_PIN_EXEC_OUT,
       type: 'exec',
       position: {
-        x: 136,
+        x: buildPinPosX(width, 'output'),
         y: 16,
       },
     },

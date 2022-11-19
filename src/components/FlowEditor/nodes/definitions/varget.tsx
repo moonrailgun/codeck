@@ -1,5 +1,5 @@
 import { TaichuNodeDefinition } from '../../../../store/node';
-import { DEFAULT_CORE_CATEGORY } from '../../../../utils/consts';
+import { DEFAULT_CORE_CATEGORY } from '@/utils/consts';
 import { VariableNode } from '../VariableNode';
 
 export const VarGetNodeDefinition: TaichuNodeDefinition = {

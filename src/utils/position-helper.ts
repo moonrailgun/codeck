@@ -1,4 +1,4 @@
-export function buildPinPos(width: number, type: 'input' | 'output') {
+export function buildPinPosX(width: number, type: 'input' | 'output') {
   if (type === 'output') {
     return width - 14;
   }

@@ -5,18 +5,21 @@ import {
   DEFAULT_CORE_CATEGORY,
   STANDARD_PIN_EXEC_IN,
   STANDARD_PIN_EXEC_OUT,
-} from '../../../../utils/consts';
+} from '@/utils/consts';
 import { BaseNode } from '../BaseNode';
 import { NodeInputText } from '../components/input/Text';
 import { PinLabel } from '../components/pin/Label';
+
+const width = 150;
+const height = 90;
 
 export const VarSetNodeDefinition: TaichuNodeDefinition = {
   name: 'varset',
   label: 'Set Variable',
   type: 'function',
   component: BaseNode,
-  width: 150,
-  height: 90,
+  width,
+  height,
   category: DEFAULT_CORE_CATEGORY,
   hidden: true,
   inputs: [

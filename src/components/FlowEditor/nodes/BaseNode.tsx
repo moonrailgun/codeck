@@ -1,3 +1,4 @@
+import { NODE_TITLE_HEIGHT } from '@/utils/consts';
 import React from 'react';
 import { Rect, Text } from 'react-konva';
 import { useNodeInfo } from '../../../hooks/useNodeInfo';
@@ -46,7 +47,7 @@ export const BaseNode: React.FC<TaichuNodeComponentProps> = React.memo(
 
         <Rect
           width={width}
-          height={34}
+          height={NODE_TITLE_HEIGHT}
           fill={color.node[definition.type]}
           cornerRadius={[5, 5, 0, 0]}
         />

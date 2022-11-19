@@ -1,11 +1,12 @@
 import React from 'react';
-import { TaichuNodeDefinition } from '../../../../../store/node';
+import { TaichuNodeDefinition } from '@/store/node';
 import { BaseNode } from '../../BaseNode';
-import { DEFAULT_LOGIC_CATEGORY } from '../../../../../utils/consts';
-import { buildPinPos } from '../../../../../utils/position-helper';
+import { DEFAULT_LOGIC_CATEGORY } from '@/utils/consts';
+import { buildPinPosX } from '@/utils/position-helper';
 import { NumberInputPreset } from '../../components/preset/NumberInputPreset';
 
 const width = 150;
+const height = 132;
 
 export const AddNodeDefinition: TaichuNodeDefinition = {
   name: 'add',
@@ -13,7 +14,7 @@ export const AddNodeDefinition: TaichuNodeDefinition = {
   type: 'logic',
   component: BaseNode,
   width,
-  height: 132,
+  height,
   category: DEFAULT_LOGIC_CATEGORY,
   inputs: [
     {
@@ -60,7 +61,7 @@ export const AddNodeDefinition: TaichuNodeDefinition = {
       name: 'output',
       type: 'port',
       position: {
-        x: buildPinPos(width, 'output'),
+        x: buildPinPosX(width, 'output'),
         y: 56,
       },
       code: ({ node, getConnectionInput }) => {

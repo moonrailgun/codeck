@@ -5,10 +5,10 @@ import {
   DEFAULT_CORE_CATEGORY,
   STANDARD_PIN_EXEC_IN,
   STANDARD_PIN_EXEC_OUT,
-} from '../../../../utils/consts';
+} from '@/utils/consts';
 import { PinLabel } from '../components/pin/Label';
 import { Group } from 'react-konva';
-import { buildPinPos } from '../../../../utils/position-helper';
+import { buildPinPosX } from '@/utils/position-helper';
 
 const width = 240;
 const height = 65;
@@ -26,7 +26,7 @@ export const JSONStringifyNodeDefinition: TaichuNodeDefinition = {
       name: STANDARD_PIN_EXEC_IN,
       type: 'exec',
       position: {
-        x: buildPinPos(width, 'input'),
+        x: buildPinPosX(width, 'input'),
         y: 16,
       },
     },
@@ -34,7 +34,7 @@ export const JSONStringifyNodeDefinition: TaichuNodeDefinition = {
       name: 'input',
       type: 'port',
       position: {
-        x: buildPinPos(width, 'input'),
+        x: buildPinPosX(width, 'input'),
         y: 50,
       },
       component: ({ nodeId }) => {
@@ -47,7 +47,7 @@ export const JSONStringifyNodeDefinition: TaichuNodeDefinition = {
       name: STANDARD_PIN_EXEC_OUT,
       type: 'exec',
       position: {
-        x: buildPinPos(width, 'output'),
+        x: buildPinPosX(width, 'output'),
         y: 16,
       },
     },
@@ -55,7 +55,7 @@ export const JSONStringifyNodeDefinition: TaichuNodeDefinition = {
       name: 'output',
       type: 'port',
       position: {
-        x: buildPinPos(width, 'output'),
+        x: buildPinPosX(width, 'output'),
         y: 50,
       },
       component: ({ nodeId }) => {
