@@ -9,8 +9,8 @@ interface NumberInputPresetProps {
   nodeId: string;
   name: string;
   label: string;
-  x: number;
-  y: number;
+  x?: number;
+  y?: number;
 }
 export const NumberInputPreset: React.FC<NumberInputPresetProps> = React.memo(
   (props) => {

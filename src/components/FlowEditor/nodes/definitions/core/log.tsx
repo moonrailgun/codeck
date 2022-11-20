@@ -38,13 +38,7 @@ export const LogNodeDefinition: TaichuNodeDefinition = {
       },
       component: ({ nodeId }) => {
         return (
-          <TextInputPreset
-            nodeId={nodeId}
-            x={32}
-            y={44}
-            name="message"
-            label="message"
-          />
+          <TextInputPreset nodeId={nodeId} name="message" label="message" />
         );
       },
     },

@@ -10,7 +10,7 @@ import { PinLabel } from '../../components/pin/Label';
 import { Group } from 'react-konva';
 import { buildPinPosX, buildPinPosY } from '@/utils/position-helper';
 
-const width = 240;
+const width = 180;
 const height = 65;
 
 export const JSONStringifyNodeDefinition: TaichuNodeDefinition = {
@@ -38,7 +38,7 @@ export const JSONStringifyNodeDefinition: TaichuNodeDefinition = {
         y: buildPinPosY(2),
       },
       component: ({ nodeId }) => {
-        return <PinLabel label={'input'} x={32} y={44} />;
+        return <PinLabel label={'input'} />;
       },
     },
   ],
@@ -60,7 +60,7 @@ export const JSONStringifyNodeDefinition: TaichuNodeDefinition = {
       },
       component: ({ nodeId }) => {
         return (
-          <Group x={170} y={44}>
+          <Group x={-70}>
             <PinLabel label={'output'} />
           </Group>
         );

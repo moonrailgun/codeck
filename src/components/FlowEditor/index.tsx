@@ -29,12 +29,14 @@ export const FlowEditor: React.FC = React.memo(() => {
     }
 
     const handleKeydown = (e: KeyboardEvent) => {
-      if (e.key === 'Backspace') {
+      if (e.key === 'Backspace' || e.key === 'Delete') {
         useUIStore.getState().deleteAllSelected();
+        return;
       }
 
       if (e.key === 'f') {
         useStageStore.getState().resetPosition();
+        return;
       }
     };
 

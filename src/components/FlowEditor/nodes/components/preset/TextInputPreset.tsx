@@ -9,8 +9,8 @@ interface TextInputPresetProps {
   nodeId: string;
   name: string;
   label: string;
-  x: number;
-  y: number;
+  x?: number;
+  y?: number;
 }
 export const TextInputPreset: React.FC<TextInputPresetProps> = React.memo(
   (props) => {

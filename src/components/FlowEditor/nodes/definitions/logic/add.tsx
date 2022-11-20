@@ -26,13 +26,7 @@ export const AddNodeDefinition: TaichuNodeDefinition = {
       },
       component: ({ nodeId }) => {
         return (
-          <NumberInputPreset
-            nodeId={nodeId}
-            x={32}
-            y={44}
-            name="input1"
-            label="input1"
-          />
+          <NumberInputPreset nodeId={nodeId} name="input1" label="input1" />
         );
       },
     },
@@ -45,13 +39,7 @@ export const AddNodeDefinition: TaichuNodeDefinition = {
       },
       component: ({ nodeId }) => {
         return (
-          <NumberInputPreset
-            nodeId={nodeId}
-            x={32}
-            y={84}
-            name="input2"
-            label="input2"
-          />
+          <NumberInputPreset nodeId={nodeId} name="input2" label="input2" />
         );
       },
     },
