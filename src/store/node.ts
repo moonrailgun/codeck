@@ -5,7 +5,7 @@ import Konva from 'konva';
 import { keys, set as _set } from 'lodash-es';
 import { useConnectionStore } from './connection';
 import { generateNodeId } from '../utils/string-helper';
-import { BeginNodeDefinition } from '../components/FlowEditor/nodes/definitions/begin';
+import { BeginNodeDefinition } from '@/components/FlowEditor/nodes/definitions/core/begin';
 
 type TaichuNodeType = 'begin' | 'return' | 'function' | 'logic';
 

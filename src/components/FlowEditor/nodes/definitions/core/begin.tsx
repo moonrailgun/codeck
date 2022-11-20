@@ -1,7 +1,7 @@
-import { TaichuNodeDefinition } from '../../../../store/node';
+import { TaichuNodeDefinition } from '@/store/node';
 import { DEFAULT_CORE_CATEGORY, STANDARD_PIN_EXEC_OUT } from '@/utils/consts';
 import { buildPinPosX, buildPinPosY } from '@/utils/position-helper';
-import { BaseNode } from '../BaseNode';
+import { BaseNode } from '../../BaseNode';
 
 const width = 150;
 const height = 65;

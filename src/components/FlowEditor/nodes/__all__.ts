@@ -1,8 +1,8 @@
 import { useNodeStore } from '../../../store/node';
-import { AlertNodeDefinition } from './definitions/alert';
-import { BeginNodeDefinition } from './definitions/begin';
-import { JSONStringifyNodeDefinition } from './definitions/json-stringify';
-import { LogNodeDefinition } from './definitions/log';
+import { AlertNodeDefinition } from './definitions/core/alert';
+import { BeginNodeDefinition } from './definitions/core/begin';
+import { JSONStringifyNodeDefinition } from './definitions/core/json-stringify';
+import { LogNodeDefinition } from './definitions/core/log';
 import { AddNodeDefinition } from './definitions/logic/add';
 import { VarGetNodeDefinition } from './definitions/varget';
 import { VarSetNodeDefinition } from './definitions/varset';

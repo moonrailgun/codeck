@@ -1,20 +1,20 @@
 import React from 'react';
-import { TaichuNodeDefinition } from '../../../../store/node';
-import { BaseNode } from '../BaseNode';
+import { TaichuNodeDefinition } from '@/store/node';
+import { BaseNode } from '../../BaseNode';
 import {
   DEFAULT_CORE_CATEGORY,
   STANDARD_PIN_EXEC_IN,
   STANDARD_PIN_EXEC_OUT,
 } from '@/utils/consts';
+import { TextInputPreset } from '../../components/preset/TextInputPreset';
 import { buildPinPosX, buildPinPosY } from '@/utils/position-helper';
-import { TextInputPreset } from '../components/preset/TextInputPreset';
 
 const width = 150;
-const height = 90;
+const height = 100;
 
-export const LogNodeDefinition: TaichuNodeDefinition = {
-  name: 'log',
-  label: 'Log',
+export const AlertNodeDefinition: TaichuNodeDefinition = {
+  name: 'alert',
+  label: 'Alert',
   type: 'function',
   component: BaseNode,
   width,
@@ -25,7 +25,7 @@ export const LogNodeDefinition: TaichuNodeDefinition = {
       name: STANDARD_PIN_EXEC_IN,
       type: 'exec',
       position: {
-        x: buildPinPosX(150, 'input'),
+        x: buildPinPosX(width, 'input'),
         y: buildPinPosY(1),
       },
     },
@@ -33,7 +33,7 @@ export const LogNodeDefinition: TaichuNodeDefinition = {
       name: 'message',
       type: 'port',
       position: {
-        x: buildPinPosX(150, 'input'),
+        x: buildPinPosX(width, 'input'),
         y: buildPinPosY(2),
       },
       component: ({ nodeId }) => {
@@ -54,13 +54,13 @@ export const LogNodeDefinition: TaichuNodeDefinition = {
       name: STANDARD_PIN_EXEC_OUT,
       type: 'exec',
       position: {
-        x: buildPinPosX(150, 'output'),
+        x: buildPinPosX(width, 'output'),
         y: buildPinPosY(1),
       },
     },
   ],
   code: ({ node, getConnectionInput }) => {
-    return `console.log(${
+    return `alert(${
       getConnectionInput('message') ?? JSON.stringify(node.data?.message ?? '')
     });\n`;
   },
