@@ -4,6 +4,10 @@ import { BeginNodeDefinition } from './definitions/core/begin';
 import { JSONStringifyNodeDefinition } from './definitions/core/json-stringify';
 import { LogNodeDefinition } from './definitions/core/log';
 import { AddNodeDefinition } from './definitions/logic/add';
+import { DividedNodeDefinition } from './definitions/logic/divided';
+import { ModNodeDefinition } from './definitions/logic/mod';
+import { MultiplyNodeDefinition } from './definitions/logic/multiply';
+import { SubtractNodeDefinition } from './definitions/logic/subtract';
 import { VarGetNodeDefinition } from './definitions/varget';
 import { VarSetNodeDefinition } from './definitions/varset';
 
@@ -19,3 +23,7 @@ regNode(JSONStringifyNodeDefinition);
 
 // Logic
 regNode(AddNodeDefinition);
+regNode(SubtractNodeDefinition);
+regNode(MultiplyNodeDefinition);
+regNode(DividedNodeDefinition);
+regNode(ModNodeDefinition);

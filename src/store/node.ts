@@ -9,7 +9,7 @@ import { BeginNodeDefinition } from '@/components/FlowEditor/nodes/definitions/c
 
 type TaichuNodeType = 'begin' | 'return' | 'function' | 'logic';
 
-type CodeFn = (ctx: {
+export type CodeFn = (ctx: {
   node: TaichuNode;
   buildPinVarName: (pinName: string, nodeId?: string) => string;
   getConnectionInput: (pinName: string, nodeId?: string) => string | null;

@@ -1,11 +1,11 @@
 import { TaichuNodeDefinition } from '@/store/node';
 import { buildCombinedLogicDefinition } from './_combined';
 
-export const AddNodeDefinition: TaichuNodeDefinition =
+export const SubtractNodeDefinition: TaichuNodeDefinition =
   buildCombinedLogicDefinition({
-    name: 'add',
-    label: 'Add',
+    name: 'subtract',
+    label: 'Subtract',
     outputCode(input1, input2) {
-      return `(${input1} + ${input2})`;
+      return `(${input1} - ${input2})`;
     },
   });
