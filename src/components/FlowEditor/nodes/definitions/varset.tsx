@@ -9,6 +9,7 @@ import {
 import { BaseNode } from '../BaseNode';
 import { NodeInputText } from '../components/input/Text';
 import { PinLabel } from '../components/pin/Label';
+import { buildPinPosX, buildPinPosY } from '@/utils/position-helper';
 
 const width = 150;
 const height = 90;
@@ -27,16 +28,16 @@ export const VarSetNodeDefinition: TaichuNodeDefinition = {
       name: STANDARD_PIN_EXEC_IN,
       type: 'exec',
       position: {
-        x: 14,
-        y: 16,
+        x: buildPinPosX(width, 'input'),
+        y: buildPinPosY(1),
       },
     },
     {
       name: 'variable',
       type: 'port',
       position: {
-        x: 14,
-        y: 50,
+        x: buildPinPosX(width, 'input'),
+        y: buildPinPosY(1),
       },
       component: ({ nodeId }) => {
         const { name } = useNodeData(nodeId);
@@ -56,8 +57,8 @@ export const VarSetNodeDefinition: TaichuNodeDefinition = {
       name: STANDARD_PIN_EXEC_OUT,
       type: 'exec',
       position: {
-        x: 136,
-        y: 16,
+        x: buildPinPosX(width, 'output'),
+        y: buildPinPosY(1),
       },
     },
   ],

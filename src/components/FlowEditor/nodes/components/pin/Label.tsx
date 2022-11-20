@@ -10,8 +10,8 @@ export const PinLabel: React.FC<PinLabelProps> = React.memo((props) => {
   return (
     <Text
       text={props.label}
-      x={props.x}
-      y={props.y}
+      x={props.x ?? 0}
+      y={props.y ?? 0}
       fill="white"
       fontSize={14}
     />

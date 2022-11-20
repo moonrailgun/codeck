@@ -1,6 +1,6 @@
 import { TaichuNodeDefinition } from '../../../../store/node';
 import { DEFAULT_CORE_CATEGORY, STANDARD_PIN_EXEC_OUT } from '@/utils/consts';
-import { buildPinPosX } from '@/utils/position-helper';
+import { buildPinPosX, buildPinPosY } from '@/utils/position-helper';
 import { BaseNode } from '../BaseNode';
 
 const width = 150;
@@ -22,7 +22,7 @@ export const BeginNodeDefinition: TaichuNodeDefinition = {
       type: 'exec',
       position: {
         x: buildPinPosX(width, 'output'),
-        y: 16,
+        y: buildPinPosY(1),
       },
     },
   ],

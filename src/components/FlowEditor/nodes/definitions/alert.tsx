@@ -7,7 +7,7 @@ import {
   STANDARD_PIN_EXEC_OUT,
 } from '@/utils/consts';
 import { TextInputPreset } from '../components/preset/TextInputPreset';
-import { buildPinPosX } from '@/utils/position-helper';
+import { buildPinPosX, buildPinPosY } from '@/utils/position-helper';
 
 const width = 150;
 const height = 100;
@@ -25,8 +25,8 @@ export const AlertNodeDefinition: TaichuNodeDefinition = {
       name: STANDARD_PIN_EXEC_IN,
       type: 'exec',
       position: {
-        x: 14,
-        y: 16,
+        x: buildPinPosX(width, 'input'),
+        y: buildPinPosY(1),
       },
     },
     {
@@ -34,7 +34,7 @@ export const AlertNodeDefinition: TaichuNodeDefinition = {
       type: 'port',
       position: {
         x: buildPinPosX(width, 'input'),
-        y: 50,
+        y: buildPinPosY(2),
       },
       component: ({ nodeId }) => {
         return (
@@ -55,7 +55,7 @@ export const AlertNodeDefinition: TaichuNodeDefinition = {
       type: 'exec',
       position: {
         x: buildPinPosX(width, 'output'),
-        y: 16,
+        y: buildPinPosY(1),
       },
     },
   ],
