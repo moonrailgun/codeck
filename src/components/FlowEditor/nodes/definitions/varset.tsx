@@ -37,14 +37,14 @@ export const VarSetNodeDefinition: TaichuNodeDefinition = {
       type: 'port',
       position: {
         x: buildPinPosX(width, 'input'),
-        y: buildPinPosY(1),
+        y: buildPinPosY(2),
       },
       component: ({ nodeId }) => {
         const { name } = useNodeData(nodeId);
         const [value, setValue] = useNodeDataValue(nodeId, 'manual');
 
         return (
-          <Group x={32} y={44}>
+          <Group>
             <PinLabel label={name} />
             <NodeInputText y={20} value={value ?? ''} onChange={setValue} />
           </Group>
