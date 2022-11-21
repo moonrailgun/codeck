@@ -35,71 +35,17 @@ export class CodeCompiler {
     // 主流程代码
     while (currentNode !== null) {
       const codeFn = this.nodeDefinition[currentNode.name].code;
+      const node = currentNode;
       if (codeFn) {
-        const node = currentNode;
         const buildPinVarName = (pinName: string, nodeId?: string) => {
-          return `_${nodeId ?? node.id}_${pinName}`;
-        };
-        const getConnectionInput = (
-          pinName: string,
-          nodeId: string
-        ): string | null => {
-          const connection: ConnectInfo | undefined = this.connections.find(
-            (item) => item.toNodeId === nodeId && item.toNodePinName === pinName
-          );
-          if (!connection) {
-            return null;
-          }
-
-          const fromNode: TaichuNode | undefined =
-            this.nodeMap[connection.fromNodeId];
-          if (!fromNode) {
-            return null;
-          }
-
-          // Hardcode for varget
-          if (fromNode.name === VarGetNodeDefinition.name) {
-            return fromNode.data?.name ?? '';
-          }
-
-          const fromNodeDef = this.nodeDefinition[fromNode.name];
-          if (!fromNodeDef) {
-            return null;
-          }
-
-          const outputDef = fromNodeDef.outputs.find(
-            (output) => output.name === connection.fromNodePinName
-          );
-          if (!outputDef) {
-            return null;
-          }
-
-          if (outputDef.code) {
-            // 自定义输出代码生成逻辑
-            return (
-              outputDef.code({
-                node: fromNode,
-                buildPinVarName,
-                getConnectionInput: (pinName: string, nodeId?: string) =>
-                  getConnectionInput(pinName, nodeId ?? fromNode.id),
-              }) ?? ''
-            );
-          } else {
-            // 直接取值
-            const pinVarName = buildPinVarName(
-              connection.fromNodePinName,
-              connection.fromNodeId
-            );
-
-            return pinVarName;
-          }
+          return this.buildPinVarName(pinName, nodeId ?? node.id);
         };
 
         codeText += codeFn({
           node,
           buildPinVarName,
           getConnectionInput: (pinName: string, nodeId?: string) =>
-            getConnectionInput(pinName, nodeId ?? node.id),
+            this.getConnectionInput(pinName, nodeId ?? node.id),
         });
       }
 
@@ -107,6 +53,63 @@ export class CodeCompiler {
     }
 
     return codeText;
+  }
+
+  buildPinVarName(pinName: string, nodeId: string) {
+    return `_${nodeId}_${pinName}`;
+  }
+
+  getConnectionInput(pinName: string, nodeId: string): string | null {
+    const connection: ConnectInfo | undefined = this.connections.find(
+      (item) => item.toNodeId === nodeId && item.toNodePinName === pinName
+    );
+    if (!connection) {
+      return null;
+    }
+
+    const fromNode: TaichuNode | undefined =
+      this.nodeMap[connection.fromNodeId];
+    if (!fromNode) {
+      return null;
+    }
+
+    // Hardcode for varget
+    if (fromNode.name === VarGetNodeDefinition.name) {
+      return fromNode.data?.name ?? '';
+    }
+
+    const fromNodeDef = this.nodeDefinition[fromNode.name];
+    if (!fromNodeDef) {
+      return null;
+    }
+
+    const outputDef = fromNodeDef.outputs.find(
+      (output) => output.name === connection.fromNodePinName
+    );
+    if (!outputDef) {
+      return null;
+    }
+
+    if (outputDef.code) {
+      // 自定义输出代码生成逻辑
+      return (
+        outputDef.code({
+          node: fromNode,
+          buildPinVarName: (pinName: string, nodeId?: string) =>
+            this.buildPinVarName(pinName, nodeId ?? fromNode.id),
+          getConnectionInput: (pinName: string, nodeId?: string) =>
+            this.getConnectionInput(pinName, nodeId ?? fromNode.id),
+        }) ?? ''
+      );
+    } else {
+      // 直接取值
+      const pinVarName = this.buildPinVarName(
+        connection.fromNodePinName,
+        connection.fromNodeId
+      );
+
+      return pinVarName;
+    }
   }
 
   generateVariable(): string {
