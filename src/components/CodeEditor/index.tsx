@@ -4,6 +4,7 @@ import { useNodeStore } from '../../store/node';
 import { useConnectionStore } from '../../store/connection';
 import { CodeCompiler } from '../../code/compiler';
 import { useVariableStore } from '../../store/variable';
+import { Message } from '@arco-design/web-react';
 
 export const CodeEditor: React.FC = React.memo(() => {
   const { nodeMap, nodeDefinition } = useNodeStore();
@@ -17,6 +18,7 @@ export const CodeEditor: React.FC = React.memo(() => {
       return text;
     } catch (err) {
       console.warn(err);
+      Message.warning('Code Compile Failed.');
     }
   }, [nodeMap, nodeDefinition, connections, variableMap]);
 

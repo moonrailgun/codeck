@@ -3,6 +3,7 @@ import { AlertNodeDefinition } from './definitions/core/alert';
 import { BeginNodeDefinition } from './definitions/core/begin';
 import { JSONStringifyNodeDefinition } from './definitions/core/json-stringify';
 import { LogNodeDefinition } from './definitions/core/log';
+import { LoopNodeDefinition } from './definitions/core/loop';
 import { AddNodeDefinition } from './definitions/logic/add';
 import { DividedNodeDefinition } from './definitions/logic/divided';
 import { ModNodeDefinition } from './definitions/logic/mod';
@@ -20,6 +21,7 @@ regNode(VarGetNodeDefinition);
 regNode(VarSetNodeDefinition);
 regNode(AlertNodeDefinition);
 regNode(JSONStringifyNodeDefinition);
+regNode(LoopNodeDefinition);
 
 // Logic
 regNode(AddNodeDefinition);

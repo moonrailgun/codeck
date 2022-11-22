@@ -13,6 +13,7 @@ export type CodeFn = (ctx: {
   node: TaichuNode;
   buildPinVarName: (pinName: string, nodeId?: string) => string;
   getConnectionInput: (pinName: string, nodeId?: string) => string | null;
+  getConnectionExecOutput: (pinName: string, nodeId?: string) => string | null;
 }) => string;
 
 export interface TaichuNode {

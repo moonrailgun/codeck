@@ -28,9 +28,19 @@ export class CodeCompiler {
   generate() {
     const begin = this.findBegin();
     let codeText = '';
-    let currentNode: TaichuNode | null = this.getExecNext(begin.id);
 
     codeText += this.generateVariable() + '\n\n';
+    codeText += this.generateCodeFromNode(this.getExecNext(begin.id));
+
+    return codeText;
+  }
+
+  /**
+   * 从某个开始节点生成代码
+   */
+  generateCodeFromNode(startNode: TaichuNode | null) {
+    let codeText = '';
+    let currentNode: TaichuNode | null = startNode;
 
     // 主流程代码
     while (currentNode !== null) {
@@ -46,6 +56,8 @@ export class CodeCompiler {
           buildPinVarName,
           getConnectionInput: (pinName: string, nodeId?: string) =>
             this.getConnectionInput(pinName, nodeId ?? node.id),
+          getConnectionExecOutput: (pinName: string, nodeId?: string) =>
+            this.getConnectionExecOutput(pinName, nodeId ?? node.id),
         });
       }
 
@@ -99,6 +111,8 @@ export class CodeCompiler {
             this.buildPinVarName(pinName, nodeId ?? fromNode.id),
           getConnectionInput: (pinName: string, nodeId?: string) =>
             this.getConnectionInput(pinName, nodeId ?? fromNode.id),
+          getConnectionExecOutput: (pinName: string, nodeId?: string) =>
+            this.getConnectionExecOutput(pinName, nodeId ?? fromNode.id),
         }) ?? ''
       );
     } else {
@@ -110,6 +124,15 @@ export class CodeCompiler {
 
       return pinVarName;
     }
+  }
+
+  getConnectionExecOutput(pinName: string, nodeId: string): string | null {
+    const execNode = this.getExecNext(nodeId, pinName);
+    if (!execNode) {
+      return null;
+    }
+
+    return this.generateCodeFromNode(execNode);
   }
 
   generateVariable(): string {
@@ -141,16 +164,17 @@ export class CodeCompiler {
     return nodes[0];
   }
 
-  private getExecNext(nodeId: string): TaichuNode | null {
+  private getExecNext(
+    nodeId: string,
+    pinName = STANDARD_PIN_EXEC_OUT
+  ): TaichuNode | null {
     const node = this.nodeMap[nodeId];
     if (!node) {
       return null;
     }
 
     const execNextConnection = this.connections.filter(
-      (conn) =>
-        conn.fromNodeId === nodeId &&
-        conn.fromNodePinName === STANDARD_PIN_EXEC_OUT
+      (conn) => conn.fromNodeId === nodeId && conn.fromNodePinName === pinName
     );
     if (execNextConnection.length === 0) {
       return null;
@@ -162,6 +186,6 @@ export class CodeCompiler {
       );
     }
 
-    return this.nodeMap[execNextConnection[0].toNodeId];
+    return this.nodeMap[execNextConnection[0].toNodeId] ?? null;
   }
 }
