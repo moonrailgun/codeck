@@ -87,7 +87,7 @@ const ContextMenu: React.FC<{ onClose: () => void }> = React.memo((props) => {
         />
 
         <div className="overflow-auto" style={{ maxHeight: 400 }}>
-          <Tree size="mini" className="h-full">
+          <Tree size="mini" className="h-full" blockNode={true}>
             {Array.isArray(matchedVariable) && matchedVariable.length > 0 && (
               <Tree.Node title="Variable">
                 {matchedVariable.map((item) => (

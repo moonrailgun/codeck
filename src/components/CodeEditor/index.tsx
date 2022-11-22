@@ -7,14 +7,20 @@ import { useVariableStore } from '../../store/variable';
 import { Message } from '@arco-design/web-react';
 
 export const CodeEditor: React.FC = React.memo(() => {
-  const { nodeMap, nodeDefinition } = useNodeStore();
-  const { connections } = useConnectionStore();
-  const { variableMap } = useVariableStore();
+  const { nodeMap, nodeDefinition } = useNodeStore((state) => ({
+    nodeMap: state.nodeMap,
+    nodeDefinition: state.nodeDefinition,
+  }));
+  const { connections } = useConnectionStore((state) => ({
+    connections: state.connections,
+  }));
+  const { variableMap } = useVariableStore((state) => ({
+    variableMap: state.variableMap,
+  }));
 
   const code = useMemo(() => {
     try {
       const text = new CodeCompiler().generate();
-
       return text;
     } catch (err) {
       console.warn(err);

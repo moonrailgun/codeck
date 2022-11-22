@@ -22,6 +22,7 @@ export const BaseNodeWrapper: React.FC<
     <Group
       x={props.x}
       y={props.y}
+      name="node"
       draggable={true}
       onClick={(e) => {
         e.cancelBubble = true;

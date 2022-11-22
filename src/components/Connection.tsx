@@ -9,6 +9,10 @@ interface ConnectionProps {
   isActive?: boolean;
   onClick?: (evt: Konva.KonvaEventObject<MouseEvent>) => void;
 }
+
+/**
+ * 连接线
+ */
 export const Connection: React.FC<ConnectionProps> = React.memo((props) => {
   const { from, to, direction, isActive, onClick } = props;
   const [hover, setHover] = useState(false);
@@ -34,6 +38,7 @@ export const Connection: React.FC<ConnectionProps> = React.memo((props) => {
 
   return (
     <Line
+      name="connection"
       strokeWidth={isActive || hover ? 4 : 2}
       stroke="white"
       bezier={true}
