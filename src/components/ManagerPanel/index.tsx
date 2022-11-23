@@ -6,11 +6,15 @@ import {
   Select,
   Divider,
   Collapse,
+  Space,
 } from '@arco-design/web-react';
 import { variableTypes } from '../../utils/consts';
 import { useVariableStore, VariableItem } from '../../store/variable';
 import { values } from 'lodash-es';
 import { useNodeStore } from '../../store/node';
+import { CodeCompiler } from '@/code/compiler';
+import { openRunCodeModal } from '../modal/RunCode';
+
 const FormItem = Form.Item;
 
 export const ManagerPanel: React.FC = React.memo(() => {
@@ -21,11 +25,18 @@ export const ManagerPanel: React.FC = React.memo(() => {
 
   return (
     <div>
-      <div>
+      <Space>
         <Button onClick={() => useNodeStore.getState().resetNode()}>
           Reset
         </Button>
-      </div>
+
+        <Button
+          type="primary"
+          onClick={() => openRunCodeModal(new CodeCompiler().generate())}
+        >
+          Run
+        </Button>
+      </Space>
 
       <Divider />
 
