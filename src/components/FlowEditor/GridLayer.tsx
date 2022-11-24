@@ -5,15 +5,12 @@ import { useStageStore } from '../../store/stage';
 const stepSize = 40;
 
 export const GridLayer: React.FC = React.memo(() => {
-  const { width, height, position, scale } = useStageStore();
-
-  // find the x & y size of the grid
-  const xSize = width / scale.x;
-  const ySize = height / scale.y;
-
-  // compute the number of steps required on each axis.
-  const xSteps = Math.round(xSize / stepSize);
-  const ySteps = Math.round(ySize / stepSize);
+  const { width, height, position, scale } = useStageStore((state) => ({
+    width: state.width,
+    height: state.height,
+    position: state.position,
+    scale: state.scale,
+  }));
 
   const stageRect = {
     x1: 0,
@@ -46,11 +43,19 @@ export const GridLayer: React.FC = React.memo(() => {
   };
 
   const fullRect = {
-    x1: Math.min(stageRect.x1, gridRect.x1),
-    y1: Math.min(stageRect.y1, gridRect.y1),
-    x2: Math.max(stageRect.x2, gridRect.x2),
-    y2: Math.max(stageRect.y2, gridRect.y2),
+    x1: Math.min(viewRect.x1, gridRect.x1),
+    y1: Math.min(viewRect.y1, gridRect.y1),
+    x2: Math.max(viewRect.x2, gridRect.x2),
+    y2: Math.max(viewRect.y2, gridRect.y2),
   };
+
+  // find the x & y size of the grid
+  const xSize = fullRect.x2 - fullRect.x1;
+  const ySize = fullRect.y2 - fullRect.y1;
+
+  // compute the number of steps required on each axis.
+  const xSteps = Math.round(xSize / stepSize) + 1;
+  const ySteps = Math.round(ySize / stepSize) + 1;
 
   return (
     <Layer
@@ -70,6 +75,7 @@ export const GridLayer: React.FC = React.memo(() => {
           strokeWidth={1}
         />
       ))}
+
       {Array.from({ length: ySteps }).map((_, i) => (
         <Line
           key={`y-${i}`}

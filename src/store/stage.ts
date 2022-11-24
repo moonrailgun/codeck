@@ -10,6 +10,7 @@ interface StageState {
   scale: Konva.Vector2d;
   position: Konva.Vector2d;
   setStageRef: (stageRef: Konva.Stage | null) => void;
+  setSize: (width: number, height: number) => void;
   setScale: (newScale: number) => void;
   setPosition: (position: Konva.Vector2d) => void;
   unscale: (position: Konva.Vector2d) => Konva.Vector2d;
@@ -44,6 +45,9 @@ export const useStageStore = create<StageState>((set, get) => ({
   },
   setStageRef: (stageRef) => {
     set({ stageRef });
+  },
+  setSize: (width, height) => {
+    set({ width, height });
   },
   setScale: (newScale) => {
     set({

@@ -130,7 +130,7 @@ export const ConnectionLayer: React.FC = React.memo(() => {
 
   let workingConnectionEl: React.ReactNode = null;
   if (workingConnection) {
-    const fromPos = unscale(getWorkingConnectionFromPos());
+    const fromPos = getWorkingConnectionFromPos();
     const toPos = getRelativePointerPosition();
 
     workingConnectionEl = (

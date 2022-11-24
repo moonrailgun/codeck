@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { Stage } from 'react-konva';
 import Konva from 'konva';
 import { GridLayer } from './GridLayer';
-import { useMemoizedFn } from 'ahooks';
+import { useMemoizedFn, useSize } from 'ahooks';
 import { useStageStore } from '../../store/stage';
 import { NodeLayer } from './NodeLayer';
 import { ConnectionLayer } from './ConnectionLayer';
@@ -14,10 +14,26 @@ import './nodes/__all__';
 const scaleBy = 1.05;
 
 export const FlowEditor: React.FC = React.memo(() => {
-  const { width, height, scale, setStageRef, setScale, position, setPosition } =
-    useStageStore();
+  const {
+    width,
+    height,
+    scale,
+    setStageRef,
+    setSize,
+    setScale,
+    position,
+    setPosition,
+  } = useStageStore();
   const stageRef = useRef<Konva.Stage>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const size = useSize(containerRef.current);
+
+  useEffect(() => {
+    if (size) {
+      setSize(size.width, size.height);
+    }
+  }, [size]);
 
   useEffect(() => {
     setStageRef(stageRef.current);
