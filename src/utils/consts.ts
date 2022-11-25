@@ -16,3 +16,7 @@ export const variableTypes = [
   'object',
   'array',
 ] as const;
+
+export const SHAPE_NAME_OF_NODE = 'node';
+
+export const SHAPE_NAME_OF_CONNECTION = 'connection';

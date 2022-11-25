@@ -11,23 +11,16 @@ import { useStage } from '../../hooks/useStage';
 import { useUIStore } from '../../store/ui';
 import './nodes/__all__';
 
-const scaleBy = 1.05;
+const scaleBy = 1.05; // 缩放系数
 
 export const FlowEditor: React.FC = React.memo(() => {
-  const {
-    width,
-    height,
-    scale,
-    setStageRef,
-    setSize,
-    setScale,
-    position,
-    setPosition,
-  } = useStageStore();
+  const { width, height, scale, setStageRef, setSize, position } =
+    useStageStore();
   const stageRef = useRef<Konva.Stage>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const size = useSize(containerRef.current);
+  const { handleWheel, handleUpdatePos } = useStageEventHandler();
 
   useEffect(() => {
     if (size) {
@@ -39,41 +32,32 @@ export const FlowEditor: React.FC = React.memo(() => {
     setStageRef(stageRef.current);
   }, []);
 
-  useEffect(() => {
-    if (!containerRef.current) {
-      return;
-    }
+  return (
+    <ContextMenuWrapper ref={containerRef} className="h-full w-full">
+      <Stage
+        ref={stageRef}
+        className="h-full w-full"
+        width={width}
+        height={height}
+        scale={scale}
+        x={position.x}
+        y={position.y}
+        onWheel={handleWheel}
+        onDragMove={handleUpdatePos}
+        onDragEnd={handleUpdatePos}
+        draggable={true}
+      >
+        <GridLayer />
+        <NodeLayer />
+        <ConnectionLayer />
+      </Stage>
+    </ContextMenuWrapper>
+  );
+});
+FlowEditor.displayName = 'FlowEditor';
 
-    const handleKeydown = (e: KeyboardEvent) => {
-      if (e.key === 'Backspace' || e.key === 'Delete') {
-        useUIStore.getState().deleteAllSelected();
-        return;
-      }
-
-      if (e.key === 'f') {
-        useStageStore.getState().resetPosition();
-        return;
-      }
-    };
-
-    window.addEventListener('keydown', handleKeydown);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeydown);
-    };
-  }, []);
-
-  useStage((stage) => {
-    const handleClick = (e: Konva.KonvaEventObject<MouseEvent>) => {
-      useUIStore.getState().clearSelectedStatus();
-    };
-
-    stage.on('click', handleClick);
-
-    return () => {
-      stage.off('click', handleClick);
-    };
-  });
+function useStageEventHandler() {
+  const { setScale, setPosition } = useStageStore();
 
   const handleWheel = useMemoizedFn((e: Konva.KonvaEventObject<WheelEvent>) => {
     e.evt.preventDefault();
@@ -119,26 +103,42 @@ export const FlowEditor: React.FC = React.memo(() => {
     }
   );
 
-  return (
-    <ContextMenuWrapper ref={containerRef} className="h-full w-full">
-      <Stage
-        ref={stageRef}
-        className="h-full w-full"
-        width={width}
-        height={height}
-        scale={scale}
-        x={position.x}
-        y={position.y}
-        onWheel={handleWheel}
-        onDragMove={handleUpdatePos}
-        onDragEnd={handleUpdatePos}
-        draggable={true}
-      >
-        <GridLayer />
-        <NodeLayer />
-        <ConnectionLayer />
-      </Stage>
-    </ContextMenuWrapper>
-  );
-});
-FlowEditor.displayName = 'FlowEditor';
+  useStage((stage) => {
+    const handleClick = (e: Konva.KonvaEventObject<MouseEvent>) => {
+      useUIStore.getState().clearSelectedStatus();
+    };
+
+    stage.on('click', handleClick);
+
+    return () => {
+      stage.off('click', handleClick);
+    };
+  });
+
+  useStage((stage) => {
+    const container = stage.container();
+    if (!container) {
+      return;
+    }
+
+    const handleKeydown = (e: KeyboardEvent) => {
+      if (e.key === 'Backspace' || e.key === 'Delete') {
+        useUIStore.getState().deleteAllSelected();
+        return;
+      }
+
+      if (e.key === 'f') {
+        useStageStore.getState().resetPosition();
+        return;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeydown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeydown);
+    };
+  });
+
+  return { handleWheel, handleUpdatePos };
+}

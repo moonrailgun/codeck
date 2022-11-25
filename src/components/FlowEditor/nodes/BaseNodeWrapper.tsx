@@ -1,3 +1,4 @@
+import { SHAPE_NAME_OF_NODE } from '@/utils/consts';
 import Konva from 'konva';
 import React, { PropsWithChildren, useCallback } from 'react';
 import { Group } from 'react-konva';
@@ -22,7 +23,8 @@ export const BaseNodeWrapper: React.FC<
     <Group
       x={props.x}
       y={props.y}
-      name="node"
+      nodeId={props.nodeId}
+      name={SHAPE_NAME_OF_NODE}
       draggable={true}
       onClick={(e) => {
         e.cancelBubble = true;
