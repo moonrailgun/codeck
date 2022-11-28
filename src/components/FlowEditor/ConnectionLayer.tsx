@@ -148,6 +148,7 @@ export const ConnectionLayer: React.FC = React.memo(() => {
       {connections.map((connection) => {
         const info = getConnectionFromToPos(connection);
         if (!info) {
+          console.warn('Connection info not found', connection);
           return null;
         }
 
@@ -161,7 +162,7 @@ export const ConnectionLayer: React.FC = React.memo(() => {
             onClick={(e) => {
               e.cancelBubble = true;
 
-              if (!e.evt.metaKey) {
+              if (!e.evt.shiftKey) {
                 useUIStore.getState().clearSelectedStatus();
               }
 

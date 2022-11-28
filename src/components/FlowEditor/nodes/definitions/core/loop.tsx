@@ -87,6 +87,6 @@ export const LoopNodeDefinition: TaichuNodeDefinition = {
   ${
     getConnectionExecOutput('body')?.trim().split('\n').join('\n  ') ?? '' // 为了确保有合适的缩进
   }
-}`;
+}\n`;
   },
 };

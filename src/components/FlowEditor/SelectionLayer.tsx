@@ -14,107 +14,113 @@ export const SelectionLayer: React.FC = React.memo(() => {
   useStage((stage) => {
     let isSelecting = false;
 
-    stage.on(
-      'mousedown touchstart',
-      (e: Konva.KonvaEventObject<MouseEvent | TouchEvent>) => {
-        // do nothing if we mousedown on any shape
-        if (e.target !== stage) {
-          return;
-        }
-
-        if (stage.draggable() === true) {
-          return;
-        }
-
-        e.evt.preventDefault();
-        // const pointerPosition = stage.getPointerPosition();
-        const pointerPosition = useStageStore
-          .getState()
-          .getRelativePointerPosition();
-
-        console.log('pointerPosition', pointerPosition);
-        if (!pointerPosition) {
-          return;
-        }
-
-        setRect({
-          x1: pointerPosition.x,
-          y1: pointerPosition.y,
-          x2: pointerPosition.x,
-          y2: pointerPosition.y,
-        });
-
-        setVisible(true);
-        isSelecting = true;
+    const handleMouseDown = (
+      e: Konva.KonvaEventObject<MouseEvent | TouchEvent>
+    ) => {
+      // do nothing if we mousedown on any shape
+      if (e.target !== stage) {
+        return;
       }
-    );
 
-    stage.on(
-      'mousemove touchmove',
-      (e: Konva.KonvaEventObject<MouseEvent | TouchEvent>) => {
-        // do nothing if we didn't start selection
-        if (!isSelecting) {
-          return;
-        }
-        e.evt.preventDefault();
-
-        // const pointerPosition = stage.getPointerPosition();
-        const pointerPosition = useStageStore
-          .getState()
-          .getRelativePointerPosition();
-        if (!pointerPosition) {
-          return;
-        }
-
-        setRect((state) => ({
-          ...state,
-          x2: pointerPosition.x,
-          y2: pointerPosition.y,
-        }));
+      if (stage.draggable() === true) {
+        return;
       }
-    );
 
-    stage.on(
-      'mouseup touchend',
-      (e: Konva.KonvaEventObject<MouseEvent | TouchEvent>) => {
-        // do nothing if we didn't start selection
-        if (!isSelecting) {
-          return;
-        }
-        e.evt.preventDefault();
+      e.evt.preventDefault();
+      // const pointerPosition = stage.getPointerPosition();
+      const pointerPosition = useStageStore
+        .getState()
+        .getRelativePointerPosition();
 
-        // update visibility in timeout, so we can check it in click event
-        setTimeout(() => {
-          setVisible(false);
-          isSelecting = false;
-        });
-
-        const shapes = stage.find(`.${SHAPE_NAME_OF_NODE}`);
-        const box = selectionRef.current?.getClientRect();
-        if (!box) {
-          return;
-        }
-
-        const selected = shapes.filter((shape) => {
-          const intersected = Konva.Util.haveIntersection(
-            box,
-            shape.getClientRect({
-              skipShadow: true,
-              skipStroke: true,
-            })
-          );
-          return intersected;
-        });
-
-        useUIStore
-          .getState()
-          .addSelectedNodes(
-            selected
-              .filter((node) => Boolean(node.attrs['nodeId']))
-              .map((node) => node.attrs['nodeId'])
-          );
+      if (!pointerPosition) {
+        return;
       }
-    );
+
+      setRect({
+        x1: pointerPosition.x,
+        y1: pointerPosition.y,
+        x2: pointerPosition.x,
+        y2: pointerPosition.y,
+      });
+
+      setVisible(true);
+      isSelecting = true;
+    };
+
+    const handleMouseMove = (
+      e: Konva.KonvaEventObject<MouseEvent | TouchEvent>
+    ) => {
+      // do nothing if we didn't start selection
+      if (!isSelecting) {
+        return;
+      }
+      e.evt.preventDefault();
+
+      // const pointerPosition = stage.getPointerPosition();
+      const pointerPosition = useStageStore
+        .getState()
+        .getRelativePointerPosition();
+      if (!pointerPosition) {
+        return;
+      }
+
+      setRect((state) => ({
+        ...state,
+        x2: pointerPosition.x,
+        y2: pointerPosition.y,
+      }));
+    };
+
+    const handleMouseUp = (
+      e: Konva.KonvaEventObject<MouseEvent | TouchEvent>
+    ) => {
+      // do nothing if we didn't start selection
+      if (!isSelecting) {
+        return;
+      }
+      e.evt.preventDefault();
+
+      // update visibility in timeout, so we can check it in click event
+      setTimeout(() => {
+        setVisible(false);
+        isSelecting = false;
+      });
+
+      const shapes = stage.find(`.${SHAPE_NAME_OF_NODE}`);
+      const box = selectionRef.current?.getClientRect();
+      if (!box) {
+        return;
+      }
+
+      const selected = shapes.filter((shape) => {
+        const intersected = Konva.Util.haveIntersection(
+          box,
+          shape.getClientRect({
+            skipShadow: true,
+            skipStroke: true,
+          })
+        );
+        return intersected;
+      });
+
+      useUIStore
+        .getState()
+        .addSelectedNodes(
+          selected
+            .filter((node) => Boolean(node.attrs['nodeId']))
+            .map((node) => node.attrs['nodeId'])
+        );
+    };
+
+    stage.on('mousedown touchstart', handleMouseDown);
+    stage.on('mousemove touchmove', handleMouseMove);
+    stage.on('mouseup touchend', handleMouseUp);
+
+    return () => {
+      stage.off('mousedown touchstart', handleMouseDown);
+      stage.off('mousemove touchmove', handleMouseMove);
+      stage.off('mouseup touchend', handleMouseUp);
+    };
   });
 
   return (

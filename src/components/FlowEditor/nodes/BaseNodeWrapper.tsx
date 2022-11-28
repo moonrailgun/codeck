@@ -29,7 +29,7 @@ export const BaseNodeWrapper: React.FC<
       onClick={(e) => {
         e.cancelBubble = true;
 
-        if (!e.evt.metaKey) {
+        if (!e.evt.shiftKey) {
           useUIStore.getState().clearSelectedStatus();
         }
 

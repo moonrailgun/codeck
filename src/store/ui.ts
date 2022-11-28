@@ -1,4 +1,4 @@
-import { uniq } from 'lodash-es';
+import { uniq, without } from 'lodash-es';
 import create from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { useConnectionStore } from './connection';
@@ -25,15 +25,32 @@ export const useUIStore = create<UIState>()(
     selectedConnectionIds: [] as string[],
     addSelectedNodes: (nodeIds) => {
       set((state) => {
-        state.selectedNodeIds = uniq([...state.selectedNodeIds, ...nodeIds]);
+        if (
+          nodeIds.length === 1 &&
+          [...state.selectedNodeIds].includes(nodeIds[0])
+        ) {
+          state.selectedNodeIds = without(state.selectedNodeIds, nodeIds[0]);
+        } else {
+          state.selectedNodeIds = uniq([...state.selectedNodeIds, ...nodeIds]);
+        }
       });
     },
     addSelectedConnections: (connectionIds) => {
       set((state) => {
-        state.selectedConnectionIds = uniq([
-          ...state.selectedConnectionIds,
-          ...connectionIds,
-        ]);
+        if (
+          connectionIds.length === 1 &&
+          state.selectedConnectionIds.includes(connectionIds[0])
+        ) {
+          state.selectedConnectionIds = without(
+            state.selectedConnectionIds,
+            connectionIds[0]
+          );
+        } else {
+          state.selectedConnectionIds = uniq([
+            ...state.selectedConnectionIds,
+            ...connectionIds,
+          ]);
+        }
       });
     },
     clearSelectedStatus: () => {
