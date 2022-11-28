@@ -1,6 +1,10 @@
+import {
+  resetFlowEditorCursorStyle,
+  setFlowEditorCursorStyle,
+} from '@/utils/pointer-helper';
 import React, { useCallback, useState } from 'react';
 import { Group, Rect, Text } from 'react-konva';
-import { useEditValue } from '../../../../../hooks/useEditValue';
+import { useEditValue } from '@/hooks/useEditValue';
 
 const defaultWidth = 80;
 const defaultHeight = 16;
@@ -39,11 +43,11 @@ export const NodeInputBase: React.FC<NodeInputBaseProps> = React.memo(
     }, [submitValue]);
 
     const handleMouseEnter = useCallback(() => {
-      document.body.style.cursor = 'text';
+      setFlowEditorCursorStyle('text');
     }, []);
 
     const handleMouseLeave = useCallback(() => {
-      document.body.style.cursor = 'default';
+      resetFlowEditorCursorStyle();
     }, []);
 
     return (

@@ -1,15 +1,19 @@
-import React, { useEffect, useLayoutEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Stage } from 'react-konva';
 import Konva from 'konva';
 import { GridLayer } from './GridLayer';
 import { useMemoizedFn, useSize } from 'ahooks';
-import { useStageStore } from '../../store/stage';
+import { useStageStore } from '@/store/stage';
 import { NodeLayer } from './NodeLayer';
 import { ConnectionLayer } from './ConnectionLayer';
 import { ContextMenuWrapper } from '../ContextMenu';
-import { useStage } from '../../hooks/useStage';
-import { useUIStore } from '../../store/ui';
+import { useStage } from '@/hooks/useStage';
+import { useUIStore } from '@/store/ui';
 import './nodes/__all__';
+import {
+  resetFlowEditorCursorStyle,
+  setFlowEditorCursorStyle,
+} from '@/utils/pointer-helper';
 
 const scaleBy = 1.05; // 缩放系数
 
@@ -20,7 +24,7 @@ export const FlowEditor: React.FC = React.memo(() => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const size = useSize(containerRef.current);
-  const { handleWheel, handleUpdatePos } = useStageEventHandler();
+  const { draggable, handleWheel, handleUpdatePos } = useStageEventHandler();
 
   useEffect(() => {
     if (size) {
@@ -36,7 +40,7 @@ export const FlowEditor: React.FC = React.memo(() => {
     <ContextMenuWrapper ref={containerRef} className="h-full w-full">
       <Stage
         ref={stageRef}
-        className="h-full w-full"
+        className="h-full w-full flow-editor"
         width={width}
         height={height}
         scale={scale}
@@ -45,7 +49,7 @@ export const FlowEditor: React.FC = React.memo(() => {
         onWheel={handleWheel}
         onDragMove={handleUpdatePos}
         onDragEnd={handleUpdatePos}
-        draggable={true}
+        draggable={draggable}
       >
         <GridLayer />
         <NodeLayer />
@@ -58,6 +62,7 @@ FlowEditor.displayName = 'FlowEditor';
 
 function useStageEventHandler() {
   const { setScale, setPosition } = useStageStore();
+  const [draggable, setDraggable] = useState(false);
 
   const handleWheel = useMemoizedFn((e: Konva.KonvaEventObject<WheelEvent>) => {
     e.evt.preventDefault();
@@ -122,23 +127,39 @@ function useStageEventHandler() {
     }
 
     const handleKeydown = (e: KeyboardEvent) => {
-      if (e.key === 'Backspace' || e.key === 'Delete') {
+      if (e.code === 'Backspace' || e.code === 'Delete') {
         useUIStore.getState().deleteAllSelected();
         return;
       }
 
-      if (e.key === 'f') {
+      if (e.code === 'KeyF') {
         useStageStore.getState().resetPosition();
+        return;
+      }
+
+      if (e.code === 'Space') {
+        setDraggable(true);
+        setFlowEditorCursorStyle('grab');
+        return;
+      }
+    };
+
+    const handleKeyUp = (e: KeyboardEvent) => {
+      if (e.code === 'Space') {
+        setDraggable(false);
+        resetFlowEditorCursorStyle();
         return;
       }
     };
 
     window.addEventListener('keydown', handleKeydown);
+    window.addEventListener('keyup', handleKeyUp);
 
     return () => {
       window.removeEventListener('keydown', handleKeydown);
+      window.removeEventListener('keyup', handleKeyUp);
     };
   });
 
-  return { handleWheel, handleUpdatePos };
+  return { draggable, handleWheel, handleUpdatePos };
 }
