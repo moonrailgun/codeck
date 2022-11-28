@@ -57,7 +57,7 @@ export const BaseNode: React.FC<TaichuNodeComponentProps> = React.memo(
           y={8}
           fontSize={16}
           text={label}
-          width={width}
+          width={width - 30 * 2}
           height={34}
           fill="white"
         />

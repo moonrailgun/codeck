@@ -14,6 +14,7 @@ import {
   resetFlowEditorCursorStyle,
   setFlowEditorCursorStyle,
 } from '@/utils/pointer-helper';
+import { SelectionLayer } from './SelectionLayer';
 
 const scaleBy = 1.05; // 缩放系数
 
@@ -54,6 +55,7 @@ export const FlowEditor: React.FC = React.memo(() => {
         <GridLayer />
         <NodeLayer />
         <ConnectionLayer />
+        <SelectionLayer />
       </Stage>
     </ContextMenuWrapper>
   );
