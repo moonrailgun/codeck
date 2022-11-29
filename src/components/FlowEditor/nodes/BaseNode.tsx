@@ -72,6 +72,11 @@ export const BaseNode: React.FC<TaichuNodeComponentProps> = React.memo(
                 .getState()
                 .startConnect(props.id, inputPin.name, inputPin.type, 'in-out');
             }}
+            onConnectionEnd={() => {
+              useConnectionStore
+                .getState()
+                .endConnect(props.id, inputPin.name, inputPin.type, 'in-out');
+            }}
           />
         ))}
 
@@ -89,6 +94,11 @@ export const BaseNode: React.FC<TaichuNodeComponentProps> = React.memo(
                   outputPin.type,
                   'out-in'
                 );
+            }}
+            onConnectionEnd={() => {
+              useConnectionStore
+                .getState()
+                .endConnect(props.id, outputPin.name, outputPin.type, 'out-in');
             }}
           />
         ))}

@@ -9,6 +9,7 @@ interface ExecPinProps {
   y: number;
   connected: boolean;
   onConnectionStart: (e: Konva.KonvaEventObject<Event>) => void;
+  onConnectionEnd: (e: Konva.KonvaEventObject<Event>) => void;
 }
 
 export const ExecPin: React.FC<ExecPinProps> = React.memo((props) => {
@@ -41,7 +42,7 @@ export const ExecPin: React.FC<ExecPinProps> = React.memo((props) => {
         setStrokeWidth(2);
       }}
       onMouseDown={props.onConnectionStart}
-      onMouseUp={props.onConnectionStart}
+      onMouseUp={props.onConnectionEnd}
     />
   );
 });

@@ -67,8 +67,9 @@ function getPinPos(nodeId: string, nodePinName: string) {
  * 因为线条的刷新频率比较高，所以单独放一个layer
  */
 export const ConnectionLayer: React.FC = React.memo(() => {
-  const { connections, workingConnection, endConnect } = useConnectionStore();
-  const { getRelativePointerPosition, unscale } = useStageStore();
+  const { connections, workingConnection, cancelConnect } =
+    useConnectionStore();
+  const { getRelativePointerPosition } = useStageStore();
   useNodeStore(); // 这只是为了确保node位置更新了这个layer也能被渲染
   const { selectedConnectionIds } = useUIStore();
 
@@ -109,14 +110,14 @@ export const ConnectionLayer: React.FC = React.memo(() => {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        endConnect();
+        cancelConnect();
       }
     };
 
     const handleContextMenu = (e: MouseEvent) => {
       if (workingConnectionRef.current) {
         // 正在选择
-        endConnect();
+        cancelConnect();
       }
     };
 
@@ -137,7 +138,7 @@ export const ConnectionLayer: React.FC = React.memo(() => {
       <Connection
         from={fromPos}
         to={toPos}
-        direction={workingConnection.fromDirection}
+        direction={workingConnection.fromNodeDirection}
       />
     );
   }

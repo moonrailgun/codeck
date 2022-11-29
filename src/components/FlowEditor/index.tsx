@@ -15,6 +15,7 @@ import {
   setFlowEditorCursorStyle,
 } from '@/utils/pointer-helper';
 import { SelectionLayer } from './SelectionLayer';
+import { useConnectionStore } from '@/store/connection';
 
 const scaleBy = 1.05; // 缩放系数
 
@@ -110,18 +111,30 @@ function useStageEventHandler() {
     }
   );
 
+  /**
+   * Stage 事件
+   */
   useStage((stage) => {
     const handleClick = (e: Konva.KonvaEventObject<MouseEvent>) => {
       useUIStore.getState().clearSelectedStatus();
     };
 
+    const handleMouseUp = (e: Konva.KonvaEventObject<MouseEvent>) => {
+      useConnectionStore.getState().cancelConnect();
+    };
+
     stage.on('click', handleClick);
+    stage.on('mouseup', handleMouseUp);
 
     return () => {
       stage.off('click', handleClick);
+      stage.off('mouseup', handleMouseUp);
     };
   });
 
+  /**
+   * window事件
+   */
   useStage((stage) => {
     const container = stage.container();
     if (!container) {

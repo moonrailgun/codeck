@@ -11,7 +11,6 @@ import { Pin } from './components/pin';
 
 export const VariableNode: React.FC<TaichuNodeComponentProps> = React.memo(
   (props) => {
-    const { startConnect } = useConnectionStore();
     const nodeId = props.id;
     const { node, definition } = useNodeInfo(nodeId);
     const { name } = useNodeData(nodeId);
@@ -63,7 +62,14 @@ export const VariableNode: React.FC<TaichuNodeComponentProps> = React.memo(
             nodeId={nodeId}
             definition={inputPin}
             onConnectionStart={() => {
-              startConnect(props.id, inputPin.name, inputPin.type, 'in-out');
+              useConnectionStore
+                .getState()
+                .startConnect(props.id, inputPin.name, inputPin.type, 'in-out');
+            }}
+            onConnectionEnd={() => {
+              useConnectionStore
+                .getState()
+                .endConnect(props.id, inputPin.name, inputPin.type, 'in-out');
             }}
           />
         ))}
@@ -74,7 +80,19 @@ export const VariableNode: React.FC<TaichuNodeComponentProps> = React.memo(
             nodeId={nodeId}
             definition={outputPin}
             onConnectionStart={() => {
-              startConnect(props.id, outputPin.name, outputPin.type, 'out-in');
+              useConnectionStore
+                .getState()
+                .startConnect(
+                  props.id,
+                  outputPin.name,
+                  outputPin.type,
+                  'out-in'
+                );
+            }}
+            onConnectionEnd={() => {
+              useConnectionStore
+                .getState()
+                .endConnect(props.id, outputPin.name, outputPin.type, 'out-in');
             }}
           />
         ))}

@@ -10,6 +10,7 @@ interface PortPinProps {
   y: number;
   connected: boolean;
   onConnectionStart: (e: Konva.KonvaEventObject<Event>) => void;
+  onConnectionEnd: (e: Konva.KonvaEventObject<Event>) => void;
 }
 
 export const PortPin: React.FC<PortPinProps> = React.memo((props) => {
@@ -31,7 +32,7 @@ export const PortPin: React.FC<PortPinProps> = React.memo((props) => {
           setStrokeWidth(2);
         }}
         onMouseDown={props.onConnectionStart}
-        onMouseUp={props.onConnectionStart}
+        onMouseUp={props.onConnectionEnd}
       />
 
       {/* 用于装饰的小三角 */}
