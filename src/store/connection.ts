@@ -103,17 +103,17 @@ export const useConnectionStore = create<ConnectionState>()(
         set((state) => {
           // exec只能一对一
           // port能够一对多(但是不能多对1)
-          console.log(fromNodePinType, fromNodeDirection);
-          if (
-            toNodePinType === 'exec' ||
-            (fromNodePinType === 'port' && fromNodeDirection === 'in-out')
-          ) {
+          if (fromNodePinType === 'exec') {
             const list = state.connections.filter(
               (conn) =>
                 (conn.fromNodeId === fromNodeId &&
                   conn.fromNodePinName === fromNodePinName) ||
                 (conn.toNodeId === fromNodeId &&
-                  conn.toNodePinName === fromNodePinName)
+                  conn.toNodePinName === fromNodePinName) ||
+                (conn.fromNodeId === toNodeId &&
+                  conn.fromNodePinName === toNodePinName) ||
+                (conn.toNodeId === toNodeId &&
+                  conn.toNodePinName === toNodePinName)
             );
 
             if (list.length > 0) {
