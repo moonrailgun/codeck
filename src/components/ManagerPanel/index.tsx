@@ -8,6 +8,7 @@ import {
   Collapse,
   Space,
 } from '@arco-design/web-react';
+import { IconGithub, IconPlayArrow } from '@arco-design/web-react/icon';
 import { variableTypes } from '../../utils/consts';
 import { useVariableStore, VariableItem } from '../../store/variable';
 import { values } from 'lodash-es';
@@ -24,65 +25,75 @@ export const ManagerPanel: React.FC = React.memo(() => {
   const variableList = values(variableMap);
 
   return (
-    <div>
-      <Space>
-        <Button onClick={() => useNodeStore.getState().resetNode()}>
-          Reset
-        </Button>
+    <div className="p-2 h-full flex flex-col">
+      <div className="flex-1 overflow-auto">
+        <Space>
+          <Button onClick={() => useNodeStore.getState().resetNode()}>
+            Reset
+          </Button>
+
+          <Button
+            type="primary"
+            icon={<IconPlayArrow />}
+            onClick={() => openRunCodeModal(new CodeCompiler().generate())}
+          >
+            Run
+          </Button>
+        </Space>
+
+        <Divider />
 
         <Button
-          type="primary"
-          onClick={() => openRunCodeModal(new CodeCompiler().generate())}
+          long={true}
+          onClick={() => setShowVariableCreator((state) => !state)}
         >
-          Run
+          Create Variable
         </Button>
-      </Space>
-
-      <Divider />
-
-      <Button
-        long={true}
-        onClick={() => setShowVariableCreator((state) => !state)}
-      >
-        Create Variable
-      </Button>
-      {showVariableCreator && (
-        <div className="px-2">
-          <VariableForm
-            isCreate={true}
-            initialValues={{ name: '', type: variableTypes[0] }}
-            submitLabel="Create"
-            onSubmit={(values: VariableItem) => {
-              createVariable(values.name, values.type, values.defaultValue);
-            }}
-          />
-        </div>
-      )}
-
-      <Divider />
-
-      <div className="text-lg font-bold mb-2">
-        Variables ({variableList.length})
-      </div>
-
-      <Collapse bordered={true} lazyload={true} accordion={true}>
-        {variableList.map((item) => (
-          <Collapse.Item key={item.name} header={item.name} name={item.name}>
+        {showVariableCreator && (
+          <div className="px-2">
             <VariableForm
-              isCreate={false}
-              initialValues={item}
-              submitLabel="Update"
+              isCreate={true}
+              initialValues={{ name: '', type: variableTypes[0] }}
+              submitLabel="Create"
               onSubmit={(values: VariableItem) => {
-                console.log('values', values);
+                createVariable(values.name, values.type, values.defaultValue);
               }}
             />
+          </div>
+        )}
 
-            <Button status="danger" onClick={() => deleteVariable(item.name)}>
-              Delete
-            </Button>
-          </Collapse.Item>
-        ))}
-      </Collapse>
+        <Divider />
+
+        <div className="text-lg font-bold mb-2">
+          Variables ({variableList.length})
+        </div>
+
+        <Collapse bordered={true} lazyload={true} accordion={true}>
+          {variableList.map((item) => (
+            <Collapse.Item key={item.name} header={item.name} name={item.name}>
+              <VariableForm
+                isCreate={false}
+                initialValues={item}
+                submitLabel="Update"
+                onSubmit={(values: VariableItem) => {
+                  console.log('values', values);
+                }}
+              />
+
+              <Button status="danger" onClick={() => deleteVariable(item.name)}>
+                Delete
+              </Button>
+            </Collapse.Item>
+          ))}
+        </Collapse>
+      </div>
+
+      <div className="text-right">
+        <Button
+          icon={<IconGithub />}
+          onClick={() => window.open('https://github.com/moonrailgun/taichu')}
+        />
+      </div>
     </div>
   );
 });
