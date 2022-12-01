@@ -22,7 +22,7 @@ function HomepageHeader() {
             介绍
           </Link>
 
-          <a className="button button--success button--lg" href="/playground">
+          <a className="button button--success button--lg" href="/playground/">
             快速开始
           </a>
         </div>
