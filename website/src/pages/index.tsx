@@ -19,8 +19,12 @@ function HomepageHeader() {
             className="button button--secondary button--lg"
             to="/docs/intro"
           >
-            快速开始
+            介绍
           </Link>
+
+          <a className="button button--success button--lg" href="/playground">
+            快速开始
+          </a>
         </div>
       </div>
     </header>

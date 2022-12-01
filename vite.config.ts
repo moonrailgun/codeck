@@ -8,6 +8,10 @@ export default defineConfig({
   define: {
     'process.env': {},
   },
+  build: {
+    outDir: './website/static/playground',
+  },
+  base: './',
   resolve: {
     alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }], // 设置别名
   },
