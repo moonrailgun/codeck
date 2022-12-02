@@ -1,12 +1,16 @@
 {
   "name": "codeck",
-  "private": true,
-  "version": "0.0.0",
+  "files": [
+    "src",
+    "public"
+  ],
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
+    "release": "npm publish --registry https://registry.npmjs.com/",
     "test": "jest"
   },
   "dependencies": {
