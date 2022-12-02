@@ -7,31 +7,31 @@ import { useConnectionStore } from './connection';
 import { generateNodeId } from '../utils/string-helper';
 import { BeginNodeDefinition } from '@/components/FlowEditor/nodes/definitions/core/begin';
 
-type TaichuNodeType = 'begin' | 'return' | 'function' | 'logic';
+type CodeckNodeType = 'begin' | 'return' | 'function' | 'logic';
 
 export type CodeFn = (ctx: {
-  node: TaichuNode;
+  node: CodeckNode;
   buildPinVarName: (pinName: string, nodeId?: string) => string;
   getConnectionInput: (pinName: string, nodeId?: string) => string | null;
   getConnectionExecOutput: (pinName: string, nodeId?: string) => string | null;
 }) => string;
 
-export interface TaichuNode {
+export interface CodeckNode {
   id: string;
-  name: string; // 节点名, 指向 TaichuNodeDefinition
+  name: string; // 节点名, 指向 CodeckNodeDefinition
   position: Konva.Vector2d;
   data?: Record<string, any>; // node中存储的数据。比如用户输入
 }
 
-export interface TaichuNodeComponentProps {
+export interface CodeckNodeComponentProps {
   id: string;
 }
 
-export type TaichuNodePortType = 'port' | 'exec';
+export type CodeckNodePortType = 'port' | 'exec';
 
-export interface TaichuNodePinDefinition {
+export interface CodeckNodePinDefinition {
   name: string;
-  type: TaichuNodePortType;
+  type: CodeckNodePortType;
   position: Konva.Vector2d;
   defaultValue?: any;
   renderType?: string;
@@ -40,10 +40,10 @@ export interface TaichuNodePinDefinition {
   }>;
 }
 
-export interface TaichuNodeDefinition {
+export interface CodeckNodeDefinition {
   name: string;
   label: string;
-  type: TaichuNodeType;
+  type: CodeckNodeType;
   width: number;
   height: number;
   category: string;
@@ -51,9 +51,9 @@ export interface TaichuNodeDefinition {
    * 是否在右键菜单中隐藏
    */
   hidden?: boolean;
-  inputs: TaichuNodePinDefinition[];
-  outputs: (TaichuNodePinDefinition & { code?: CodeFn })[];
-  component: React.ComponentType<TaichuNodeComponentProps>;
+  inputs: CodeckNodePinDefinition[];
+  outputs: (CodeckNodePinDefinition & { code?: CodeFn })[];
+  component: React.ComponentType<CodeckNodeComponentProps>;
   /**
    * 节点代码生成逻辑
    */
@@ -61,25 +61,25 @@ export interface TaichuNodeDefinition {
 }
 
 interface NodeState {
-  nodeMap: Record<string, TaichuNode>;
-  nodeDefinition: Record<string, TaichuNodeDefinition>;
+  nodeMap: Record<string, CodeckNode>;
+  nodeDefinition: Record<string, CodeckNodeDefinition>;
   /**
    * 注册节点
    */
-  regNode: (definition: TaichuNodeDefinition) => void;
+  regNode: (definition: CodeckNodeDefinition) => void;
   /**
    * 更新节点位置
    */
   updateNodePos: (nodeId: string, position: Konva.Vector2d) => void;
-  getNodeDefinition: (nodeId: string) => TaichuNodeDefinition | null;
+  getNodeDefinition: (nodeId: string) => CodeckNodeDefinition | null;
   getPinDefinitionByName: (
     nodeId: string,
     pinName: string
-  ) => TaichuNodePinDefinition | null;
+  ) => CodeckNodePinDefinition | null;
   createNode: (
     nodeName: string,
     position: Konva.Vector2d,
-    data?: TaichuNode['data']
+    data?: CodeckNode['data']
   ) => void;
   /**
    * 设置节点数据
@@ -105,7 +105,7 @@ export const useNodeStore = create<NodeState>()(
     immer((set, get) => ({
       nodeMap: defaultNodeMap,
       nodeDefinition: {},
-      regNode: (definition: TaichuNodeDefinition) => {
+      regNode: (definition: CodeckNodeDefinition) => {
         set((state) => {
           if (state.nodeDefinition[definition.name]) {
             console.warn('This node is registered', definition.name);
@@ -138,7 +138,7 @@ export const useNodeStore = create<NodeState>()(
       },
       getPinDefinitionByName: (nodeId, pinName) => {
         const { getNodeDefinition } = get();
-        const definition: TaichuNodeDefinition | null =
+        const definition: CodeckNodeDefinition | null =
           getNodeDefinition(nodeId);
         if (!definition) {
           return null;

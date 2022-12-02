@@ -1,6 +1,6 @@
 import { Group } from 'react-konva';
 import { useNodeData, useNodeDataValue } from '../../../../hooks/useNodeData';
-import { TaichuNodeDefinition } from '../../../../store/node';
+import { CodeckNodeDefinition } from '../../../../store/node';
 import {
   DEFAULT_CORE_CATEGORY,
   STANDARD_PIN_EXEC_IN,
@@ -14,7 +14,7 @@ import { buildPinPosX, buildPinPosY } from '@/utils/position-helper';
 const width = 150;
 const height = 90;
 
-export const VarSetNodeDefinition: TaichuNodeDefinition = {
+export const VarSetNodeDefinition: CodeckNodeDefinition = {
   name: 'varset',
   label: 'Set Variable',
   type: 'function',

@@ -1,5 +1,5 @@
 import create from 'zustand';
-import { TaichuNodePortType } from './node';
+import { CodeckNodePortType } from './node';
 import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 import { generateNodeId } from '../utils/string-helper';
@@ -22,19 +22,19 @@ interface ConnectionState {
   workingConnection: {
     fromNodeId: string;
     fromNodePinName: string;
-    fromNodePinType: TaichuNodePortType;
+    fromNodePinType: CodeckNodePortType;
     fromNodeDirection: PinDirection;
   } | null;
   startConnect: (
     fromNodeId: string,
     fromNodePinName: string,
-    fromNodePinType: TaichuNodePortType,
+    fromNodePinType: CodeckNodePortType,
     fromNodeDirection: PinDirection
   ) => void;
   endConnect: (
     toNodeId: string,
     toNodePinName: string,
-    toNodePinType: TaichuNodePortType,
+    toNodePinType: CodeckNodePortType,
     toNodeDirection: PinDirection
   ) => void;
   cancelConnect: () => void;

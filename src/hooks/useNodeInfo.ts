@@ -1,11 +1,11 @@
-import { TaichuNode, TaichuNodeDefinition, useNodeStore } from '../store/node';
+import { CodeckNode, CodeckNodeDefinition, useNodeStore } from '../store/node';
 
 /**
  * 获取节点信息
  */
 export function useNodeInfo(nodeId: string): {
-  node: TaichuNode | undefined;
-  definition: TaichuNodeDefinition | undefined;
+  node: CodeckNode | undefined;
+  definition: CodeckNodeDefinition | undefined;
 } {
   const { nodeMap, nodeDefinition } = useNodeStore();
   const node = nodeMap[nodeId];

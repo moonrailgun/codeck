@@ -23,7 +23,7 @@ const FeatureList: FeatureItem[] = [
     Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
-        Taichu
+        codeck
         提供的是简单高效的编程体验，项目本身也是有一定的维护成本的，而太初就类似serverless，将这种成本降低到无
       </>
     ),

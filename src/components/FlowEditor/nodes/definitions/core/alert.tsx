@@ -1,5 +1,5 @@
 import React from 'react';
-import { TaichuNodeDefinition } from '@/store/node';
+import { CodeckNodeDefinition } from '@/store/node';
 import { BaseNode } from '../../BaseNode';
 import {
   DEFAULT_CORE_CATEGORY,
@@ -12,7 +12,7 @@ import { buildPinPosX, buildPinPosY } from '@/utils/position-helper';
 const width = 150;
 const height = 100;
 
-export const AlertNodeDefinition: TaichuNodeDefinition = {
+export const AlertNodeDefinition: CodeckNodeDefinition = {
   name: 'alert',
   label: 'Alert',
   type: 'function',

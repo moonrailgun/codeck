@@ -1,5 +1,5 @@
 import React from 'react';
-import { TaichuNodeDefinition } from '@/store/node';
+import { CodeckNodeDefinition } from '@/store/node';
 import { BaseNode } from '../../BaseNode';
 import {
   DEFAULT_CORE_CATEGORY,
@@ -12,7 +12,7 @@ import { TextInputPreset } from '../../components/preset/TextInputPreset';
 const width = 150;
 const height = 90;
 
-export const LogNodeDefinition: TaichuNodeDefinition = {
+export const LogNodeDefinition: CodeckNodeDefinition = {
   name: 'log',
   label: 'Log',
   type: 'function',

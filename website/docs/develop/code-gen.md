@@ -3,7 +3,7 @@ sidebar_position: 2
 title: 代码生成 Code Generator
 ---
 
-本节我们来看下 `太初Taichu` 是如何生成代码的
+本节我们来看下 `codeck` 是如何生成代码的
 
 我们以 `Log节点` 为例:
 
@@ -15,7 +15,7 @@ title: 代码生成 Code Generator
 
 ```tsx
 import React from 'react';
-import { TaichuNodeDefinition } from '@/store/node';
+import { CodeckNodeDefinition } from '@/store/node';
 import { BaseNode } from '../../BaseNode';
 import {
   DEFAULT_CORE_CATEGORY,
@@ -28,7 +28,7 @@ import { TextInputPreset } from '../../components/preset/TextInputPreset';
 const width = 150;
 const height = 90;
 
-export const LogNodeDefinition: TaichuNodeDefinition = {
+export const LogNodeDefinition: CodeckNodeDefinition = {
   name: 'log',
   label: 'Log',
   type: 'function',

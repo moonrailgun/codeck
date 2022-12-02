@@ -3,13 +3,13 @@ import React from 'react';
 import { Rect, Text } from 'react-konva';
 import { useNodeInfo } from '../../../hooks/useNodeInfo';
 import { useConnectionStore } from '../../../store/connection';
-import { TaichuNodeComponentProps } from '../../../store/node';
+import { CodeckNodeComponentProps } from '../../../store/node';
 import { useUIStore } from '../../../store/ui';
 import { color } from '../../../utils/color';
 import { BaseNodeWrapper } from './BaseNodeWrapper';
 import { Pin } from './components/pin';
 
-export const BaseNode: React.FC<TaichuNodeComponentProps> = React.memo(
+export const BaseNode: React.FC<CodeckNodeComponentProps> = React.memo(
   (props) => {
     const nodeId = props.id;
     const { node, definition } = useNodeInfo(nodeId);

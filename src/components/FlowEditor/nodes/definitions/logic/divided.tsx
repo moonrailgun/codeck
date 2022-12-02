@@ -1,7 +1,7 @@
-import { TaichuNodeDefinition } from '@/store/node';
+import { CodeckNodeDefinition } from '@/store/node';
 import { buildCombinedLogicDefinition } from './_combined';
 
-export const DividedNodeDefinition: TaichuNodeDefinition =
+export const DividedNodeDefinition: CodeckNodeDefinition =
   buildCombinedLogicDefinition({
     name: 'divided',
     label: 'Divided',

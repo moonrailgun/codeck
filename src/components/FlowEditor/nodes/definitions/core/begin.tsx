@@ -1,4 +1,4 @@
-import { TaichuNodeDefinition } from '@/store/node';
+import { CodeckNodeDefinition } from '@/store/node';
 import { DEFAULT_CORE_CATEGORY, STANDARD_PIN_EXEC_OUT } from '@/utils/consts';
 import { buildPinPosX, buildPinPosY } from '@/utils/position-helper';
 import { BaseNode } from '../../BaseNode';
@@ -6,7 +6,7 @@ import { BaseNode } from '../../BaseNode';
 const width = 150;
 const height = 65;
 
-export const BeginNodeDefinition: TaichuNodeDefinition = {
+export const BeginNodeDefinition: CodeckNodeDefinition = {
   name: 'begin',
   label: 'Begin',
   type: 'begin',

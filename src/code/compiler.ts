@@ -1,7 +1,7 @@
 import { isUndefined, values } from 'lodash-es';
 import { VarGetNodeDefinition } from '../components/FlowEditor/nodes/definitions/varget';
 import { ConnectInfo, useConnectionStore } from '../store/connection';
-import { TaichuNode, useNodeStore } from '../store/node';
+import { CodeckNode, useNodeStore } from '../store/node';
 import { useVariableStore } from '../store/variable';
 import { STANDARD_PIN_EXEC_OUT } from '../utils/consts';
 
@@ -38,9 +38,9 @@ export class CodeCompiler {
   /**
    * 从某个开始节点生成代码
    */
-  generateCodeFromNode(startNode: TaichuNode | null) {
+  generateCodeFromNode(startNode: CodeckNode | null) {
     let codeText = '';
-    let currentNode: TaichuNode | null = startNode;
+    let currentNode: CodeckNode | null = startNode;
 
     // 主流程代码
     while (currentNode !== null) {
@@ -79,7 +79,7 @@ export class CodeCompiler {
       return null;
     }
 
-    const fromNode: TaichuNode | undefined =
+    const fromNode: CodeckNode | undefined =
       this.nodeMap[connection.fromNodeId];
     if (!fromNode) {
       return null;
@@ -148,7 +148,7 @@ export class CodeCompiler {
       .join('\n');
   }
 
-  private findBegin(): TaichuNode {
+  private findBegin(): CodeckNode {
     const nodes = values(this.nodeMap).filter(
       (node) => this.nodeDefinition[node.name]?.type === 'begin'
     );
@@ -167,7 +167,7 @@ export class CodeCompiler {
   private getExecNext(
     nodeId: string,
     pinName = STANDARD_PIN_EXEC_OUT
-  ): TaichuNode | null {
+  ): CodeckNode | null {
     const node = this.nodeMap[nodeId];
     if (!node) {
       return null;

@@ -6,7 +6,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: '太初 Taichu',
+  title: 'Codeck',
   tagline: '基于JS的可视化蓝图编程引擎',
   url: 'https://your-docusaurus-test-site.com',
   baseUrl: '/',
@@ -17,7 +17,7 @@ const config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'moonrailgun', // Usually your GitHub org/user name.
-  projectName: 'taichu', // Usually your repo name.
+  projectName: 'codeck', // Usually your repo name.
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
@@ -57,7 +57,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: '太初 Taichu',
+        title: 'Codeck',
         logo: {
           alt: 'Logo',
           src: 'img/logo.svg',
@@ -71,7 +71,7 @@ const config = {
           },
           // {to: '/blog', label: 'Blog', position: 'left'},
           {
-            href: 'https://github.com/moonrailgun/taichu',
+            href: 'https://github.com/moonrailgun/codeck',
             label: 'GitHub',
             position: 'right',
           },
@@ -115,7 +115,7 @@ const config = {
               // },
               {
                 label: 'GitHub',
-                href: 'https://github.com/moonrailgun/taichu',
+                href: 'https://github.com/moonrailgun/codeck',
               },
             ],
           },

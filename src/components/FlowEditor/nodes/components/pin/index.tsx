@@ -1,13 +1,13 @@
 import React from 'react';
 import { Group } from 'react-konva';
 import { useConnectionStore } from '@/store/connection';
-import { TaichuNodePinDefinition } from '@/store/node';
+import { CodeckNodePinDefinition } from '@/store/node';
 import { ExecPin } from './ExecPin';
 import { PortPin } from './PortPin';
 
 export const Pin: React.FC<{
   nodeId: string;
-  definition: TaichuNodePinDefinition;
+  definition: CodeckNodePinDefinition;
   onConnectionStart: () => void;
   onConnectionEnd: () => void;
 }> = React.memo((props) => {

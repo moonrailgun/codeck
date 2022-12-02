@@ -1,5 +1,5 @@
 import React from 'react';
-import { TaichuNodeDefinition } from '@/store/node';
+import { CodeckNodeDefinition } from '@/store/node';
 import { BaseNode } from '../../BaseNode';
 import {
   DEFAULT_CORE_CATEGORY,
@@ -13,7 +13,7 @@ import { buildPinPosX, buildPinPosY } from '@/utils/position-helper';
 const width = 180;
 const height = 65;
 
-export const JSONStringifyNodeDefinition: TaichuNodeDefinition = {
+export const JSONStringifyNodeDefinition: CodeckNodeDefinition = {
   name: 'json-stringify',
   label: 'JSONStringify',
   type: 'function',

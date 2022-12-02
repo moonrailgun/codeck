@@ -91,7 +91,7 @@ export const ManagerPanel: React.FC = React.memo(() => {
       <div className="text-right">
         <Button
           icon={<IconGithub />}
-          onClick={() => window.open('https://github.com/moonrailgun/taichu')}
+          onClick={() => window.open('https://github.com/moonrailgun/codeck')}
         />
       </div>
     </div>

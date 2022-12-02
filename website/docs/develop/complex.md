@@ -11,7 +11,7 @@ title: 更加复杂的例子 More Complex Case
 
 ```tsx
 import React from 'react';
-import { TaichuNodeDefinition } from '@/store/node';
+import { CodeckNodeDefinition } from '@/store/node';
 import { BaseNode } from '../../BaseNode';
 import {
   DEFAULT_CORE_CATEGORY,
@@ -25,7 +25,7 @@ import { PinLabel } from '../../components/pin/Label';
 const width = 180;
 const height = 100;
 
-export const LoopNodeDefinition: TaichuNodeDefinition = {
+export const LoopNodeDefinition: CodeckNodeDefinition = {
   name: 'loop',
   label: 'Loop',
   type: 'function',

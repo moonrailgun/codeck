@@ -1,4 +1,4 @@
-import { TaichuNodeDefinition } from '../../../../store/node';
+import { CodeckNodeDefinition } from '../../../../store/node';
 import { DEFAULT_CORE_CATEGORY } from '@/utils/consts';
 import { VariableNode } from '../VariableNode';
 import { buildPinPosX, buildPinPosY } from '@/utils/position-helper';
@@ -6,7 +6,7 @@ import { buildPinPosX, buildPinPosY } from '@/utils/position-helper';
 const width = 150;
 const height = 65;
 
-export const VarGetNodeDefinition: TaichuNodeDefinition = {
+export const VarGetNodeDefinition: CodeckNodeDefinition = {
   name: 'varget',
   label: 'Value Get',
   type: 'logic',

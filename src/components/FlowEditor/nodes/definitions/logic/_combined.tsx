@@ -1,4 +1,4 @@
-import { TaichuNodeDefinition } from '@/store/node';
+import { CodeckNodeDefinition } from '@/store/node';
 import { DEFAULT_LOGIC_CATEGORY } from '@/utils/consts';
 import { buildPinPosX, buildPinPosY } from '@/utils/position-helper';
 import { BaseNode } from '../../BaseNode';
@@ -9,10 +9,10 @@ import { NumberInputPreset } from '../../components/preset/NumberInputPreset';
  * 把两个输入转换为一个输出
  */
 export function buildCombinedLogicDefinition(
-  options: Pick<TaichuNodeDefinition, 'name' | 'label'> & {
+  options: Pick<CodeckNodeDefinition, 'name' | 'label'> & {
     outputCode: (input1: string, input2: string) => string;
   }
-): TaichuNodeDefinition {
+): CodeckNodeDefinition {
   const width = 150;
   const height = 132;
 
