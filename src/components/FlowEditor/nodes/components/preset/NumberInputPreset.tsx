@@ -4,15 +4,9 @@ import { useNodeDataValue } from '../../../../../hooks/useNodeData';
 import { useConnectionStore } from '@/store/connection';
 import { NodeInputNumber } from '../input/Number';
 import { PinLabel } from '../pin/Label';
+import { BaseInputPresetProps } from './types';
 
-interface NumberInputPresetProps {
-  nodeId: string;
-  name: string;
-  label: string;
-  x?: number;
-  y?: number;
-}
-export const NumberInputPreset: React.FC<NumberInputPresetProps> = React.memo(
+export const NumberInputPreset: React.FC<BaseInputPresetProps> = React.memo(
   (props) => {
     const [text = 0, setText] = useNodeDataValue(props.nodeId, props.name);
     const connected = useConnectionStore().checkIsConnected(

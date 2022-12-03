@@ -1,4 +1,5 @@
 import { CodeckNodeDefinition } from '@/store/node';
+import { BooleanInputPreset } from '../../components/preset/BooleanInputPreset';
 import { buildCombinedLogicDefinition } from './_utils';
 
 /**
@@ -11,4 +12,6 @@ export const OrlNodeDefinition: CodeckNodeDefinition =
     outputCode(input1, input2) {
       return `(${input1} || ${input2})`;
     },
+    InputPreset: BooleanInputPreset,
+    defaultValue: false,
   });

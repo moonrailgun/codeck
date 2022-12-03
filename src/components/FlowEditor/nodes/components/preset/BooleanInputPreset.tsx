@@ -1,12 +1,12 @@
 import React from 'react';
 import { Group } from 'react-konva';
-import { useNodeDataValue } from '../../../../../hooks/useNodeData';
+import { useNodeDataValue } from '@/hooks/useNodeData';
 import { useConnectionStore } from '@/store/connection';
-import { NodeInputText } from '../input/Text';
 import { PinLabel } from '../pin/Label';
+import { NodeInputBoolean } from '../input/Boolean';
 import { BaseInputPresetProps } from './types';
 
-export const TextInputPreset: React.FC<BaseInputPresetProps> = React.memo(
+export const BooleanInputPreset: React.FC<BaseInputPresetProps> = React.memo(
   (props) => {
     const [text, setText] = useNodeDataValue(props.nodeId, props.name);
     const connected = useConnectionStore().checkIsConnected(
@@ -18,10 +18,10 @@ export const TextInputPreset: React.FC<BaseInputPresetProps> = React.memo(
       <Group x={props.x} y={props.y}>
         <PinLabel label={props.label} />
         {connected ? null : (
-          <NodeInputText y={20} value={text ?? ''} onChange={setText} />
+          <NodeInputBoolean y={20} value={text ?? ''} onChange={setText} />
         )}
       </Group>
     );
   }
 );
-TextInputPreset.displayName = 'TextInputPreset';
+BooleanInputPreset.displayName = 'BooleanInputPreset';

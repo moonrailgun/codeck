@@ -28,7 +28,7 @@ interface StageState {
   /**
    * 重置到左上角
    */
-  resetPosition: () => void;
+  focus: () => void;
 }
 
 export const useStageStore = create<StageState>((set, get) => ({
@@ -92,7 +92,7 @@ export const useStageStore = create<StageState>((set, get) => ({
     return calcAbsolutePositionToRelative(getPointerPosition());
   },
 
-  resetPosition: () => {
+  focus: () => {
     const nodeList = values(useNodeStore.getState().nodeMap);
 
     if (nodeList.length === 0) {
@@ -113,5 +113,6 @@ export const useStageStore = create<StageState>((set, get) => ({
     );
 
     get().setPosition({ x: -minPos.x + 40, y: -minPos.y + 40 });
+    get().setScale(1); // 重置缩放
   },
 }));

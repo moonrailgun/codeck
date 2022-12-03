@@ -3,6 +3,7 @@ import { DEFAULT_LOGIC_CATEGORY } from '@/utils/consts';
 import { buildPinPosX, buildPinPosY } from '@/utils/position-helper';
 import { BaseNode } from '../../BaseNode';
 import { NumberInputPreset } from '../../components/preset/NumberInputPreset';
+import { BaseInputPresetProps } from '../../components/preset/types';
 
 /**
  * 构建逻辑运算
@@ -10,11 +11,18 @@ import { NumberInputPreset } from '../../components/preset/NumberInputPreset';
  */
 export function buildCombinedLogicDefinition(
   options: Pick<CodeckNodeDefinition, 'name' | 'label'> & {
+    /**
+     * 输入组件预设
+     */
+    InputPreset?: React.ComponentType<BaseInputPresetProps>;
+    defaultValue?: any;
     outputCode: (input1: string, input2: string) => string;
   }
 ): CodeckNodeDefinition {
   const width = 150;
   const height = 132;
+  const InputPreset = options.InputPreset ?? NumberInputPreset;
+  const defaultValue = options.defaultValue ?? 0;
 
   return {
     name: options.name,
@@ -33,9 +41,7 @@ export function buildCombinedLogicDefinition(
           y: buildPinPosY(2),
         },
         component: ({ nodeId }) => {
-          return (
-            <NumberInputPreset nodeId={nodeId} name="input1" label="input1" />
-          );
+          return <InputPreset nodeId={nodeId} name="input1" label="input1" />;
         },
       },
       {
@@ -46,9 +52,7 @@ export function buildCombinedLogicDefinition(
           y: buildPinPosY(4),
         },
         component: ({ nodeId }) => {
-          return (
-            <NumberInputPreset nodeId={nodeId} name="input2" label="input2" />
-          );
+          return <InputPreset nodeId={nodeId} name="input2" label="input2" />;
         },
       },
     ],
@@ -62,8 +66,8 @@ export function buildCombinedLogicDefinition(
         },
         code: ({ node, getConnectionInput }) => {
           return options.outputCode(
-            getConnectionInput('input1') ?? node.data?.input1 ?? 0,
-            getConnectionInput('input2') ?? node.data?.input2 ?? 0
+            getConnectionInput('input1') ?? node.data?.input1 ?? defaultValue,
+            getConnectionInput('input2') ?? node.data?.input2 ?? defaultValue
           );
         },
       },

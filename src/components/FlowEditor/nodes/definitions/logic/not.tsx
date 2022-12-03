@@ -2,6 +2,7 @@ import { CodeckNodeDefinition } from '@/store/node';
 import { DEFAULT_LOGIC_CATEGORY } from '@/utils/consts';
 import { buildPinPosX, buildPinPosY } from '@/utils/position-helper';
 import { BaseNode } from '../../BaseNode';
+import { BooleanInputPreset } from '../../components/preset/BooleanInputPreset';
 import { NumberInputPreset } from '../../components/preset/NumberInputPreset';
 
 const width = 150;
@@ -27,7 +28,9 @@ export const NotNodeDefinition: CodeckNodeDefinition = {
         y: buildPinPosY(2),
       },
       component: ({ nodeId }) => {
-        return <NumberInputPreset nodeId={nodeId} name="input" label="input" />;
+        return (
+          <BooleanInputPreset nodeId={nodeId} name="input" label="input" />
+        );
       },
     },
   ],

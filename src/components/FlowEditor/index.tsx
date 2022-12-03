@@ -148,7 +148,7 @@ function useStageEventHandler() {
       }
 
       if (e.code === 'KeyF') {
-        useStageStore.getState().resetPosition();
+        useStageStore.getState().focus();
         return;
       }
 
