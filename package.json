@@ -7,10 +7,11 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port 7622",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "release": "npm publish --registry https://registry.npmjs.com/",
+    "website": "cd website && pnpm dev",
     "test": "jest"
   },
   "dependencies": {
