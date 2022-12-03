@@ -6,6 +6,7 @@ import { keys, set as _set } from 'lodash-es';
 import { useConnectionStore } from './connection';
 import { generateNodeId } from '../utils/string-helper';
 import { BeginNodeDefinition } from '@/components/FlowEditor/nodes/definitions/core/begin';
+import { LogNodeDefinition } from '@/components/FlowEditor/nodes/definitions/core/log';
 
 type CodeckNodeType = 'begin' | 'return' | 'function' | 'logic';
 
@@ -92,10 +93,21 @@ interface NodeState {
 const defaultNodeMap = {
   begin: {
     id: 'begin',
-    name: 'begin',
+    name: BeginNodeDefinition.name,
     position: {
       x: 10,
       y: 10,
+    },
+  },
+  log: {
+    id: 'log',
+    name: LogNodeDefinition.name,
+    position: {
+      x: 240,
+      y: 10,
+    },
+    data: {
+      message: 'Hello World',
     },
   },
 };
@@ -190,6 +202,7 @@ export const useNodeStore = create<NodeState>()(
       },
       resetNode: () => {
         const { nodeMap, removeNode } = get();
+
         keys(nodeMap)
           .filter((id) => id !== BeginNodeDefinition.name)
           .forEach((id) => {
