@@ -4,7 +4,6 @@ import { buildCombinedLogicDefinition } from './_utils';
 
 /**
  * 逻辑与
- * TODO: 应该是boolean输入框
  */
 export const AnlNodeDefinition: CodeckNodeDefinition =
   buildCombinedLogicDefinition({

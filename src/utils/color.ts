@@ -1,3 +1,5 @@
+// 选用的配色方案: https://flatuicolors.com/palette/us
+
 export const color = {
   nodeLabel: '#ffffff',
   nodeLabelBox: '#3282b8',
@@ -7,16 +9,16 @@ export const color = {
   },
   text: '#ffffff',
   variable: {
-    number: '#00d0fa',
-    string: '#ed1a95',
-    boolean: '#f30909',
-    array: '#ccff33',
-    data: '#ff7900',
+    number: '#00cec9',
+    string: '#fd79a8',
+    boolean: '#d63031', // 优化下配色，有点辣眼睛
+    array: '#55efc4',
+    data: '#fdcb6e',
   },
   node: {
-    begin: '#d8572a',
-    function: '#0353a4',
-    logic: '#7209b7',
-    return: '#bc4749',
+    begin: '#e17055',
+    function: '#0984e3',
+    logic: '#6c5ce7',
+    return: '#e84393',
   },
 };
