@@ -1,7 +1,7 @@
-import { useStage } from '@/hooks/useStage';
-import { useStageStore } from '@/store/stage';
-import { useUIStore } from '@/store/ui';
-import { SHAPE_NAME_OF_NODE } from '@/utils/consts';
+import { useStage } from '../../hooks/useStage';
+import { useStageStore } from '../../store/stage';
+import { useUIStore } from '../../store/ui';
+import { SHAPE_NAME_OF_NODE } from '../../utils/consts';
 import Konva from 'konva';
 import React, { useRef, useState } from 'react';
 import { Layer, Rect } from 'react-konva';

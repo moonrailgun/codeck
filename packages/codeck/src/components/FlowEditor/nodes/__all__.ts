@@ -1,4 +1,3 @@
-import { useNodeStore } from '../../../store/node';
 import { AlertNodeDefinition } from './definitions/core/alert';
 import { BeginNodeDefinition } from './definitions/core/begin';
 import { JSONStringifyNodeDefinition } from './definitions/core/json-stringify';
@@ -15,23 +14,37 @@ import { SubtractNodeDefinition } from './definitions/logic/subtract';
 import { VarGetNodeDefinition } from './definitions/varget';
 import { VarSetNodeDefinition } from './definitions/varset';
 
-const { regNode } = useNodeStore.getState();
+// definition
+export const builtinNodeDefinition = {
+  BeginNodeDefinition,
+  LogNodeDefinition,
+  VarGetNodeDefinition,
+  VarSetNodeDefinition,
+  AlertNodeDefinition,
+  JSONStringifyNodeDefinition,
+  LoopNodeDefinition,
+  AddNodeDefinition,
+  SubtractNodeDefinition,
+  MultiplyNodeDefinition,
+  DividedNodeDefinition,
+  ModNodeDefinition,
+  AnlNodeDefinition,
+  OrlNodeDefinition,
+  NotNodeDefinition,
+};
 
-// Core
-regNode(BeginNodeDefinition);
-regNode(LogNodeDefinition);
-regNode(VarGetNodeDefinition);
-regNode(VarSetNodeDefinition);
-regNode(AlertNodeDefinition);
-regNode(JSONStringifyNodeDefinition);
-regNode(LoopNodeDefinition);
+// node
+export { BaseNode } from './BaseNode';
+export { BaseNodeWrapper } from './BaseNodeWrapper';
+export { VariableNode } from './VariableNode';
 
-// Logic
-regNode(AddNodeDefinition);
-regNode(SubtractNodeDefinition);
-regNode(MultiplyNodeDefinition);
-regNode(DividedNodeDefinition);
-regNode(ModNodeDefinition);
-regNode(AnlNodeDefinition);
-regNode(OrlNodeDefinition);
-regNode(NotNodeDefinition);
+// input
+export { NodeInputBase } from './components/input/Base';
+export { NodeInputBoolean } from './components/input/Boolean';
+export { NodeInputNumber } from './components/input/Number';
+export { NodeInputText } from './components/input/Text';
+
+// preset
+export { BooleanInputPreset } from './components/preset/BooleanInputPreset';
+export { NumberInputPreset } from './components/preset/NumberInputPreset';
+export { TextInputPreset } from './components/preset/TextInputPreset';

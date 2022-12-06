@@ -5,11 +5,11 @@ import {
   DEFAULT_CORE_CATEGORY,
   STANDARD_PIN_EXEC_IN,
   STANDARD_PIN_EXEC_OUT,
-} from '@/utils/consts';
+} from '../../../../utils/consts';
 import { BaseNode } from '../BaseNode';
 import { NodeInputText } from '../components/input/Text';
 import { PinLabel } from '../components/pin/Label';
-import { buildPinPosX, buildPinPosY } from '@/utils/position-helper';
+import { buildPinPosX, buildPinPosY } from '../../../../utils/position-helper';
 
 const width = 150;
 const height = 90;

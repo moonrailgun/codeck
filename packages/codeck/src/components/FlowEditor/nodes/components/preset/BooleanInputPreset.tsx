@@ -1,7 +1,7 @@
 import React from 'react';
 import { Group } from 'react-konva';
-import { useNodeDataValue } from '@/hooks/useNodeData';
-import { useConnectionStore } from '@/store/connection';
+import { useNodeDataValue } from '../../../../../hooks/useNodeData';
+import { useConnectionStore } from '../../../../../store/connection';
 import { PinLabel } from '../pin/Label';
 import { NodeInputBoolean } from '../input/Boolean';
 import { BaseInputPresetProps } from './types';

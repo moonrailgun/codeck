@@ -1,4 +1,4 @@
-import { NODE_TITLE_HEIGHT } from '@/utils/consts';
+import { NODE_TITLE_HEIGHT } from '../../../utils/consts';
 import React from 'react';
 import { Rect, Text } from 'react-konva';
 import { useNodeInfo } from '../../../hooks/useNodeInfo';

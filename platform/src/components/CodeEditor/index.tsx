@@ -1,9 +1,11 @@
 import React, { useMemo } from 'react';
 import MonacoEditor from '@monaco-editor/react';
-import { useNodeStore } from '../../store/node';
-import { useConnectionStore } from '../../store/connection';
-import { CodeCompiler } from '../../code/compiler';
-import { useVariableStore } from '../../store/variable';
+import {
+  useNodeStore,
+  useConnectionStore,
+  CodeCompiler,
+  useVariableStore,
+} from 'codeck';
 import { Message } from '@arco-design/web-react';
 
 export const CodeEditor: React.FC = React.memo(() => {

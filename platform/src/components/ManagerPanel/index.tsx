@@ -9,11 +9,14 @@ import {
   Space,
 } from '@arco-design/web-react';
 import { IconGithub, IconPlayArrow } from '@arco-design/web-react/icon';
-import { variableTypes } from '../../utils/consts';
-import { useVariableStore, VariableItem } from '../../store/variable';
 import { values } from 'lodash-es';
-import { useNodeStore } from '../../store/node';
-import { CodeCompiler } from '@/code/compiler';
+import {
+  variableTypes,
+  CodeCompiler,
+  useNodeStore,
+  useVariableStore,
+  VariableItem,
+} from 'codeck';
 import { openRunCodeModal } from '../modal/RunCode';
 
 const FormItem = Form.Item;

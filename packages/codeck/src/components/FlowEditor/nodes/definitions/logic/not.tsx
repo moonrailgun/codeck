@@ -1,9 +1,11 @@
-import { CodeckNodeDefinition } from '@/store/node';
-import { DEFAULT_LOGIC_CATEGORY } from '@/utils/consts';
-import { buildPinPosX, buildPinPosY } from '@/utils/position-helper';
+import { CodeckNodeDefinition } from '../../../../../store/node';
+import { DEFAULT_LOGIC_CATEGORY } from '../../../../../utils/consts';
+import {
+  buildPinPosX,
+  buildPinPosY,
+} from '../../../../../utils/position-helper';
 import { BaseNode } from '../../BaseNode';
 import { BooleanInputPreset } from '../../components/preset/BooleanInputPreset';
-import { NumberInputPreset } from '../../components/preset/NumberInputPreset';
 
 const width = 150;
 const height = 90;

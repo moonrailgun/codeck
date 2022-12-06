@@ -9,7 +9,7 @@ export default defineConfig({
     'process.env': {},
   },
   build: {
-    outDir: '../../website/static/playground',
+    outDir: '../website/static/playground',
   },
   base: './',
   resolve: {

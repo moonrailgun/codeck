@@ -1,4 +1,4 @@
-import { SHAPE_NAME_OF_NODE } from '@/utils/consts';
+import { SHAPE_NAME_OF_NODE } from '../../../utils/consts';
 import Konva from 'konva';
 import React, { PropsWithChildren, useCallback } from 'react';
 import { Group } from 'react-konva';

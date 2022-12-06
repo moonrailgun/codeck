@@ -1,9 +1,9 @@
 import React from 'react';
 import { Allotment } from 'allotment';
 import { CodeEditor } from './components/CodeEditor';
-import { FlowEditor } from './components/FlowEditor';
-import 'allotment/dist/style.css';
 import { ManagerPanel } from './components/ManagerPanel';
+import { FlowEditor } from 'codeck';
+import 'allotment/dist/style.css';
 
 function App() {
   return (

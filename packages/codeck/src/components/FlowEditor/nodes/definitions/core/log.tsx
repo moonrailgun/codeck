@@ -1,12 +1,15 @@
 import React from 'react';
-import { CodeckNodeDefinition } from '@/store/node';
+import { CodeckNodeDefinition } from '../../../../../store/node';
 import { BaseNode } from '../../BaseNode';
 import {
   DEFAULT_CORE_CATEGORY,
   STANDARD_PIN_EXEC_IN,
   STANDARD_PIN_EXEC_OUT,
-} from '@/utils/consts';
-import { buildPinPosX, buildPinPosY } from '@/utils/position-helper';
+} from '../../../../../utils/consts';
+import {
+  buildPinPosX,
+  buildPinPosY,
+} from '../../../../../utils/position-helper';
 import { TextInputPreset } from '../../components/preset/TextInputPreset';
 
 const width = 150;

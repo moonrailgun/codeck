@@ -5,8 +5,8 @@ import Konva from 'konva';
 import { keys, set as _set } from 'lodash-es';
 import { useConnectionStore } from './connection';
 import { generateNodeId } from '../utils/string-helper';
-import { BeginNodeDefinition } from '@/components/FlowEditor/nodes/definitions/core/begin';
-import { LogNodeDefinition } from '@/components/FlowEditor/nodes/definitions/core/log';
+import { BeginNodeDefinition } from '../components/FlowEditor/nodes/definitions/core/begin';
+import { LogNodeDefinition } from '../components/FlowEditor/nodes/definitions/core/log';
 
 type CodeckNodeType = 'begin' | 'return' | 'function' | 'logic';
 
@@ -216,3 +216,11 @@ export const useNodeStore = create<NodeState>()(
     }
   )
 );
+
+/**
+ * 注册节点
+ * @param definition 节点定义
+ */
+export function regNode(definition: CodeckNodeDefinition) {
+  useNodeStore.getState().regNode(definition);
+}

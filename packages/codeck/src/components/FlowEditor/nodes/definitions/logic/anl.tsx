@@ -1,4 +1,4 @@
-import { CodeckNodeDefinition } from '@/store/node';
+import { CodeckNodeDefinition } from '../../../../../store/node';
 import { BooleanInputPreset } from '../../components/preset/BooleanInputPreset';
 import { buildCombinedLogicDefinition } from './_utils';
 

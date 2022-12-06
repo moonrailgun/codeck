@@ -1,4 +1,4 @@
-import { CodeckNodeDefinition } from '@/store/node';
+import { CodeckNodeDefinition } from '../../../../../store/node';
 import { buildCombinedLogicDefinition } from './_utils';
 
 export const ModNodeDefinition: CodeckNodeDefinition =

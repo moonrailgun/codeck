@@ -1,9 +1,7 @@
-import { useEditValue } from '@/hooks/useEditValue';
-import { color } from '@/utils/color';
+import { color } from '../../../../../utils/color';
 import React from 'react';
 import { Rect } from 'react-konva';
-import { Html } from 'react-konva-utils';
-import { NodeInputBase, NodeInputProps } from './Base';
+import { NodeInputProps } from './Base';
 
 const size = 10;
 

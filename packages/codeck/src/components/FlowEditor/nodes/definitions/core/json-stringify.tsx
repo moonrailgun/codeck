@@ -1,14 +1,17 @@
 import React from 'react';
-import { CodeckNodeDefinition } from '@/store/node';
+import { CodeckNodeDefinition } from '../../../../../store/node';
 import { BaseNode } from '../../BaseNode';
 import {
   DEFAULT_CORE_CATEGORY,
   STANDARD_PIN_EXEC_IN,
   STANDARD_PIN_EXEC_OUT,
-} from '@/utils/consts';
+} from '../../../../../utils/consts';
 import { PinLabel } from '../../components/pin/Label';
 import { Group } from 'react-konva';
-import { buildPinPosX, buildPinPosY } from '@/utils/position-helper';
+import {
+  buildPinPosX,
+  buildPinPosY,
+} from '../../../../../utils/position-helper';
 
 const width = 180;
 const height = 65;

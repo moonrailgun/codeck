@@ -3,19 +3,19 @@ import { Stage } from 'react-konva';
 import Konva from 'konva';
 import { GridLayer } from './GridLayer';
 import { useMemoizedFn, useSize } from 'ahooks';
-import { useStageStore } from '@/store/stage';
+import { useStageStore } from '../../store/stage';
 import { NodeLayer } from './NodeLayer';
 import { ConnectionLayer } from './ConnectionLayer';
 import { ContextMenuWrapper } from '../ContextMenu';
-import { useStage } from '@/hooks/useStage';
-import { useUIStore } from '@/store/ui';
+import { useStage } from '../../hooks/useStage';
+import { useUIStore } from '../../store/ui';
 import './nodes/__all__';
 import {
   resetFlowEditorCursorStyle,
   setFlowEditorCursorStyle,
-} from '@/utils/pointer-helper';
+} from '../../utils/pointer-helper';
 import { SelectionLayer } from './SelectionLayer';
-import { useConnectionStore } from '@/store/connection';
+import { useConnectionStore } from '../../store/connection';
 
 const scaleBy = 1.05; // 缩放系数
 
