@@ -67,7 +67,7 @@ const config = {
             type: 'doc',
             docId: 'intro',
             position: 'left',
-            label: '教程',
+            label: '介绍',
           },
           // {to: '/blog', label: 'Blog', position: 'left'},
           {

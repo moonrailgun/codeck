@@ -23,7 +23,7 @@ function HomepageHeader() {
           </Link>
 
           <a className="button button--success button--lg" href="/playground/">
-            快速开始
+            在线尝试
           </a>
         </div>
       </div>
