@@ -5,8 +5,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "pnpm build:codeck && pnpm build:website",
-    "build:codeck": "cd packages/codeck && pnpm build",
+    "build": "pnpm build:platform && pnpm build:website",
+    "build:platform": "cd platform && pnpm build",
     "build:website": "cd website && pnpm build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

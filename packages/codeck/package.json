@@ -8,6 +8,7 @@
   "main": "./lib/index.js",
   "scripts": {
     "build": "tsc",
+    "prepare": "tsc",
     "lint": "eslint ./src/**/*.{ts,tsx}",
     "release": "npm publish --registry https://registry.npmjs.com/",
     "test": "jest"
