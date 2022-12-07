@@ -5,6 +5,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "cd platform && pnpm dev",
+    "website": "cd website && pnpm dev",
     "build": "pnpm build:platform && pnpm build:website",
     "build:platform": "cd platform && pnpm build",
     "build:website": "cd website && pnpm build",
