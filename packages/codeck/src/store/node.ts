@@ -1,6 +1,5 @@
 import create from 'zustand';
 import { immer } from 'zustand/middleware/immer';
-import { persist } from 'zustand/middleware';
 import Konva from 'konva';
 import { keys, set as _set } from 'lodash-es';
 import { useConnectionStore } from './connection';
@@ -113,108 +112,100 @@ const defaultNodeMap = {
 };
 
 export const useNodeStore = create<NodeState>()(
-  persist(
-    immer((set, get) => ({
-      nodeMap: defaultNodeMap,
-      nodeDefinition: {},
-      regNode: (definition: CodeckNodeDefinition) => {
-        set((state) => {
-          if (state.nodeDefinition[definition.name]) {
-            console.warn('This node is registered', definition.name);
-            return;
-          }
+  immer((set, get) => ({
+    nodeMap: defaultNodeMap,
+    nodeDefinition: {},
+    regNode: (definition: CodeckNodeDefinition) => {
+      set((state) => {
+        if (state.nodeDefinition[definition.name]) {
+          console.warn('This node is registered', definition.name);
+          return;
+        }
 
-          state.nodeDefinition[definition.name] = definition;
-        });
-      },
-      updateNodePos: (nodeId: string, position: Konva.Vector2d) => {
-        set((state) => {
-          const node = state.nodeMap[nodeId];
-          if (!node) {
-            console.warn('Not found this node:', nodeId);
-            return;
-          }
-
-          node.position = position;
-        });
-      },
-      getNodeDefinition: (nodeId) => {
-        const { nodeMap, nodeDefinition } = get();
-        const node = nodeMap[nodeId];
+        state.nodeDefinition[definition.name] = definition;
+      });
+    },
+    updateNodePos: (nodeId: string, position: Konva.Vector2d) => {
+      set((state) => {
+        const node = state.nodeMap[nodeId];
         if (!node) {
-          return null;
+          console.warn('Not found this node:', nodeId);
+          return;
         }
 
-        const definition = nodeDefinition[node.name];
-        return definition ?? null;
-      },
-      getPinDefinitionByName: (nodeId, pinName) => {
-        const { getNodeDefinition } = get();
-        const definition: CodeckNodeDefinition | null =
-          getNodeDefinition(nodeId);
-        if (!definition) {
-          return null;
+        node.position = position;
+      });
+    },
+    getNodeDefinition: (nodeId) => {
+      const { nodeMap, nodeDefinition } = get();
+      const node = nodeMap[nodeId];
+      if (!node) {
+        return null;
+      }
+
+      const definition = nodeDefinition[node.name];
+      return definition ?? null;
+    },
+    getPinDefinitionByName: (nodeId, pinName) => {
+      const { getNodeDefinition } = get();
+      const definition: CodeckNodeDefinition | null = getNodeDefinition(nodeId);
+      if (!definition) {
+        return null;
+      }
+
+      return (
+        [...definition.inputs, ...definition.outputs].find(
+          (item) => item.name === pinName
+        ) ?? null
+      );
+    },
+    createNode: (nodeName, position, data) => {
+      set((state) => {
+        const id = generateNodeId();
+        state.nodeMap[id] = {
+          id,
+          name: nodeName,
+          position,
+          data,
+        };
+      });
+    },
+    setNodeData: (nodeId, key, value) => {
+      set((state) => {
+        const node = state.nodeMap[nodeId];
+        if (!node) {
+          console.warn('Not found node', nodeId);
+          return;
         }
 
-        return (
-          [...definition.inputs, ...definition.outputs].find(
-            (item) => item.name === pinName
-          ) ?? null
-        );
-      },
-      createNode: (nodeName, position, data) => {
-        set((state) => {
-          const id = generateNodeId();
-          state.nodeMap[id] = {
-            id,
-            name: nodeName,
-            position,
-            data,
-          };
-        });
-      },
-      setNodeData: (nodeId, key, value) => {
-        set((state) => {
-          const node = state.nodeMap[nodeId];
-          if (!node) {
-            console.warn('Not found node', nodeId);
-            return;
-          }
-
-          _set(node, ['data', key], value);
-        });
-      },
-      removeNode: (nodeId) => {
-        set((state) => {
-          useConnectionStore
-            .getState()
-            .connections.filter(
-              (connection) =>
-                connection.fromNodeId === nodeId ||
-                connection.toNodeId === nodeId
-            )
-            .forEach((item) => {
-              useConnectionStore.getState().removeConnection(item.id);
-            });
-
-          delete state.nodeMap[nodeId];
-        });
-      },
-      resetNode: () => {
-        const { nodeMap, removeNode } = get();
-
-        keys(nodeMap)
-          .filter((id) => id !== BeginNodeDefinition.name)
-          .forEach((id) => {
-            removeNode(id);
+        _set(node, ['data', key], value);
+      });
+    },
+    removeNode: (nodeId) => {
+      set((state) => {
+        useConnectionStore
+          .getState()
+          .connections.filter(
+            (connection) =>
+              connection.fromNodeId === nodeId || connection.toNodeId === nodeId
+          )
+          .forEach((item) => {
+            useConnectionStore.getState().removeConnection(item.id);
           });
-      },
-    })),
-    {
-      name: 'nodeMap',
-      partialize: (state) => ({ nodeMap: state.nodeMap }),
-    }
-  )
+
+        delete state.nodeMap[nodeId];
+      });
+    },
+    resetNode: () => {
+      const { nodeMap, removeNode } = get();
+
+      keys(nodeMap)
+        .filter((id) => id !== BeginNodeDefinition.name)
+        .forEach((id) => {
+          removeNode(id);
+        });
+    },
+  }))
 );
 
 /**

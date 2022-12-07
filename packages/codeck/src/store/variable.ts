@@ -1,5 +1,4 @@
 import create from 'zustand';
-import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 import { variableTypes } from '../utils/consts';
 
@@ -23,33 +22,27 @@ interface VariableState {
 }
 
 export const useVariableStore = create<VariableState>()(
-  persist(
-    immer((set, get) => ({
-      variableMap: {},
-      createVariable: (name, type, defaultValue) => {
-        set((state) => {
-          if (state.variableMap[name]) {
-            console.warn('This var has been created');
-            return;
-          }
+  immer((set, get) => ({
+    variableMap: {},
+    createVariable: (name, type, defaultValue) => {
+      set((state) => {
+        if (state.variableMap[name]) {
+          console.warn('This var has been created');
+          return;
+        }
 
-          state.variableMap[name] = {
-            name,
-            type,
-            defaultValue,
-          };
-        });
-      },
-      deleteVariable: (name) => {
-        set((state) => {
-          delete state.variableMap[name];
-        });
-        // TODO: 删除node
-      },
-    })),
-    {
-      name: 'variable',
-      partialize: (state) => ({ variableMap: state.variableMap }),
-    }
-  )
+        state.variableMap[name] = {
+          name,
+          type,
+          defaultValue,
+        };
+      });
+    },
+    deleteVariable: (name) => {
+      set((state) => {
+        delete state.variableMap[name];
+      });
+      // TODO: 删除node
+    },
+  }))
 );

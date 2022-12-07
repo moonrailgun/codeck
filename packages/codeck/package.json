@@ -7,6 +7,7 @@
   "type": "module",
   "main": "./lib/index.js",
   "scripts": {
+    "dev": "tsc --watch",
     "build": "tsc",
     "prepare": "tsc",
     "lint": "eslint ./src/**/*.{ts,tsx}",

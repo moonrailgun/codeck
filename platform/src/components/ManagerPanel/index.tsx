@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import {
   Button,
   Form,
@@ -7,8 +7,13 @@ import {
   Divider,
   Collapse,
   Space,
+  Message,
 } from '@arco-design/web-react';
-import { IconGithub, IconPlayArrow } from '@arco-design/web-react/icon';
+import {
+  IconGithub,
+  IconPlayArrow,
+  IconSave,
+} from '@arco-design/web-react/icon';
 import { values } from 'lodash-es';
 import {
   variableTypes,
@@ -16,8 +21,11 @@ import {
   useNodeStore,
   useVariableStore,
   VariableItem,
+  persist,
 } from 'codeck';
 import { openRunCodeModal } from '../modal/RunCode';
+import { useMemoizedFn } from 'ahooks';
+import { usePersist } from './persist';
 
 const FormItem = Form.Item;
 
@@ -27,21 +35,31 @@ export const ManagerPanel: React.FC = React.memo(() => {
 
   const variableList = values(variableMap);
 
+  const { save: handleSave } = usePersist();
+
   return (
     <div className="p-2 h-full flex flex-col">
       <div className="flex-1 overflow-auto">
-        <Space>
-          <Button onClick={() => useNodeStore.getState().resetNode()}>
-            Reset
-          </Button>
+        <Space direction="vertical">
+          <Space>
+            <Button onClick={() => useNodeStore.getState().resetNode()}>
+              Reset
+            </Button>
 
-          <Button
-            type="primary"
-            icon={<IconPlayArrow />}
-            onClick={() => openRunCodeModal(new CodeCompiler().generate())}
-          >
-            Run
-          </Button>
+            <Button
+              type="primary"
+              icon={<IconPlayArrow />}
+              onClick={() => openRunCodeModal(new CodeCompiler().generate())}
+            >
+              Run
+            </Button>
+          </Space>
+
+          <Space>
+            <Button icon={<IconSave />} onClick={handleSave}>
+              Save
+            </Button>
+          </Space>
         </Space>
 
         <Divider />

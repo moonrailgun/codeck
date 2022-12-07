@@ -5,7 +5,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cd platform && pnpm dev",
+    "dev": "concurrently --kill-others npm:dev:codeck npm:dev:platform",
+    "dev:codeck": "cd packages/codeck && pnpm dev",
+    "dev:platform": "cd platform && pnpm dev",
     "website": "cd website && pnpm dev",
     "build": "pnpm build:platform && pnpm build:website",
     "build:platform": "cd platform && pnpm build",
@@ -13,6 +15,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "Apache-2.0"
+  "author": "moonrailgun <moonrailgun@gmail.com>",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  }
 }

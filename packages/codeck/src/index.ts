@@ -5,5 +5,6 @@ export { regNode } from './store/node';
 export { CodeCompiler } from './code/compiler';
 export { variableTypes } from './utils/consts';
 
+export * as persist from './utils/persist';
 export * from './store/__all__';
 export * from './components/FlowEditor/nodes/__all__';
