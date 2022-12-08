@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="w-screen h-screen">
       <Allotment>
-        <Allotment.Pane preferredSize="20%">
+        <Allotment.Pane preferredSize="20%" minSize={250}>
           <ManagerPanel />
         </Allotment.Pane>
 

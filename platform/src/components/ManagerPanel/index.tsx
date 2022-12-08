@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Button,
   Form,
@@ -7,12 +7,14 @@ import {
   Divider,
   Collapse,
   Space,
-  Message,
+  Dropdown,
+  Menu,
 } from '@arco-design/web-react';
 import {
   IconGithub,
   IconPlayArrow,
   IconSave,
+  IconFolder,
 } from '@arco-design/web-react/icon';
 import { values } from 'lodash-es';
 import {
@@ -21,10 +23,8 @@ import {
   useNodeStore,
   useVariableStore,
   VariableItem,
-  persist,
 } from 'codeck';
 import { openRunCodeModal } from '../modal/RunCode';
-import { useMemoizedFn } from 'ahooks';
 import { usePersist } from './persist';
 
 const FormItem = Form.Item;
@@ -35,7 +35,12 @@ export const ManagerPanel: React.FC = React.memo(() => {
 
   const variableList = values(variableMap);
 
-  const { save: handleSave } = usePersist();
+  const {
+    open: handleOpen,
+    save: handleSave,
+    saveAs: handleSaveAs,
+    currentFileName,
+  } = usePersist();
 
   return (
     <div className="p-2 h-full flex flex-col">
@@ -56,10 +61,29 @@ export const ManagerPanel: React.FC = React.memo(() => {
           </Space>
 
           <Space>
-            <Button icon={<IconSave />} onClick={handleSave}>
-              Save
+            <Button icon={<IconFolder />} onClick={handleOpen}>
+              Open
             </Button>
+
+            <Dropdown.Button
+              type="primary"
+              droplist={
+                <Menu>
+                  <Menu.Item key="1" onClick={handleSaveAs}>
+                    Save As
+                  </Menu.Item>
+                </Menu>
+              }
+              buttonProps={{
+                icon: <IconSave />,
+              }}
+              onClick={handleSave}
+            >
+              Save
+            </Dropdown.Button>
           </Space>
+
+          <div>{currentFileName || 'Local Storage'}</div>
         </Space>
 
         <Divider />

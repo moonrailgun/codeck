@@ -67,17 +67,20 @@ importers:
     specifiers:
       '@arco-design/web-react': ^2.41.1
       '@monaco-editor/react': ^4.4.6
+      '@types/file-saver': ^2.0.5
       '@types/jest': ^29.2.3
       '@types/lodash-es': ^4.17.6
       '@types/react': ^18.0.24
       '@types/react-dom': ^18.0.8
       '@types/react-highlight-words': ^0.16.4
+      '@types/wicg-file-system-access': ^2020.9.5
       '@vitejs/plugin-react': ^2.2.0
       ahooks: ^3.7.2
       allotment: ^1.17.0
       autoprefixer: ^10.4.13
       codeck: workspace:^0.0.1
       concurrently: ^7.6.0
+      file-saver: ^2.0.5
       fuse.js: ^6.6.2
       immer: ^9.0.16
       jest: ^29.3.1
@@ -104,6 +107,7 @@ importers:
       ahooks: 3.7.2_react@18.2.0
       allotment: 1.17.0_biqbaboplfbrettd7655fr4n2y
       codeck: link:../packages/codeck
+      file-saver: 2.0.5
       fuse.js: 6.6.2
       immer: 9.0.16
       konva: 8.3.13
@@ -117,11 +121,13 @@ importers:
       react-konva-utils: 0.3.0_ycsaxglfwmvsphhhrpeabwxklq
       zustand: 4.1.4_immer@9.0.16+react@18.2.0
     devDependencies:
+      '@types/file-saver': 2.0.5
       '@types/jest': 29.2.3
       '@types/lodash-es': 4.17.6
       '@types/react': 18.0.25
       '@types/react-dom': 18.0.8
       '@types/react-highlight-words': 0.16.4
+      '@types/wicg-file-system-access': 2020.9.5
       '@vitejs/plugin-react': 2.2.0_vite@3.2.3
       autoprefixer: 10.4.13_postcss@8.4.18
       concurrently: 7.6.0
@@ -3432,6 +3438,10 @@ packages:
       '@types/serve-static': 1.15.0
     dev: false
 
+  /@types/file-saver/2.0.5:
+    resolution: {integrity: sha512-zv9kNf3keYegP5oThGLaPk8E081DFDuwfqjtiTzm6PoxChdJ1raSuADf2YGCVIyrSynLrgc8JWv296s7Q7pQSQ==}
+    dev: true
+
   /@types/graceful-fs/4.1.5:
     resolution: {integrity: sha512-anKkLmZZ+xm4p8JWBf4hElkM4XR+EZeA2M9BAkkTldmcyDY4mbdIJnRghDJH3Ov5ooY7/UAoENtmdMSkaAd7Cw==}
     dependencies:
@@ -3643,6 +3653,10 @@ packages:
   /@types/unist/2.0.6:
     resolution: {integrity: sha512-PBjIUxZHOuj0R15/xuwJYjFi+KZdNFrehocChv4g5hu6aFroHue8m0lBP0POdK2nKzbw0cgV1mws8+V/JAcEkQ==}
     dev: false
+
+  /@types/wicg-file-system-access/2020.9.5:
+    resolution: {integrity: sha512-UYK244awtmcUYQfs7FR8710MJcefL2WvkyHMjA8yJzxd1mo0Gfn88sRZ1Bls7hiUhA2w7ne1gpJ9T5g3G0wOyA==}
+    dev: true
 
   /@types/ws/8.5.3:
     resolution: {integrity: sha512-6YOoWjruKj1uLf3INHH7D3qTXwFfEsg1kf3c0uDdSBJwfa/llkwIjrAGV7j7mVgGNbzTQ3HiHKKDXl6bJPD97w==}
@@ -6441,6 +6455,10 @@ packages:
       loader-utils: 2.0.4
       schema-utils: 3.1.1
       webpack: 5.75.0
+    dev: false
+
+  /file-saver/2.0.5:
+    resolution: {integrity: sha512-P9bmyZ3h/PRG+Nzga+rbdI4OEpNDzAVyy74uVO9ATgzLK6VtAsYybF/+TOCvrc0MO793d6+42lLyZTw7/ArVzA==}
     dev: false
 
   /filesize/8.0.7:
