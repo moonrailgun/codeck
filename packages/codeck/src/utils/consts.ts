@@ -20,3 +20,5 @@ export const variableTypes = [
 export const SHAPE_NAME_OF_NODE = 'node';
 
 export const SHAPE_NAME_OF_CONNECTION = 'connection';
+
+export const BEGIN_NODE_ID = '$begin';

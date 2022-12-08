@@ -1,11 +1,12 @@
 import create from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import Konva from 'konva';
-import { keys, set as _set } from 'lodash-es';
+import { cloneDeep, set as _set } from 'lodash-es';
 import { useConnectionStore } from './connection';
 import { generateNodeId } from '../utils/string-helper';
 import { BeginNodeDefinition } from '../components/FlowEditor/nodes/definitions/core/begin';
 import { LogNodeDefinition } from '../components/FlowEditor/nodes/definitions/core/log';
+import { BEGIN_NODE_ID } from '../utils/consts';
 
 type CodeckNodeType = 'begin' | 'return' | 'function' | 'logic';
 
@@ -86,34 +87,38 @@ interface NodeState {
    */
   setNodeData: (nodeId: string, key: string, value: unknown) => void;
   removeNode: (nodeId: string) => void;
+  /**
+   * 重置
+   */
   resetNode: () => void;
 }
 
-const defaultNodeMap = {
-  begin: {
-    id: 'begin',
-    name: BeginNodeDefinition.name,
-    position: {
-      x: 10,
-      y: 10,
+const buildDefaultNodeMap = () =>
+  cloneDeep({
+    [BEGIN_NODE_ID]: {
+      id: BEGIN_NODE_ID,
+      name: BeginNodeDefinition.name,
+      position: {
+        x: 10,
+        y: 10,
+      },
     },
-  },
-  log: {
-    id: 'log',
-    name: LogNodeDefinition.name,
-    position: {
-      x: 240,
-      y: 10,
+    log: {
+      id: 'log',
+      name: LogNodeDefinition.name,
+      position: {
+        x: 240,
+        y: 10,
+      },
+      data: {
+        message: 'Hello World',
+      },
     },
-    data: {
-      message: 'Hello World',
-    },
-  },
-};
+  });
 
 export const useNodeStore = create<NodeState>()(
   immer((set, get) => ({
-    nodeMap: defaultNodeMap,
+    nodeMap: buildDefaultNodeMap(),
     nodeDefinition: {},
     regNode: (definition: CodeckNodeDefinition) => {
       set((state) => {
@@ -182,6 +187,11 @@ export const useNodeStore = create<NodeState>()(
       });
     },
     removeNode: (nodeId) => {
+      if (nodeId === BEGIN_NODE_ID) {
+        // 不能删除开始节点
+        return;
+      }
+
       set((state) => {
         useConnectionStore
           .getState()
@@ -197,13 +207,13 @@ export const useNodeStore = create<NodeState>()(
       });
     },
     resetNode: () => {
-      const { nodeMap, removeNode } = get();
+      set({
+        nodeMap: buildDefaultNodeMap(),
+      });
 
-      keys(nodeMap)
-        .filter((id) => id !== BeginNodeDefinition.name)
-        .forEach((id) => {
-          removeNode(id);
-        });
+      useConnectionStore.getState().connections.forEach((item) => {
+        useConnectionStore.getState().removeConnection(item.id);
+      });
     },
   }))
 );
