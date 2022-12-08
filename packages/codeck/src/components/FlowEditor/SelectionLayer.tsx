@@ -26,8 +26,6 @@ export const SelectionLayer: React.FC = React.memo(() => {
         return;
       }
 
-      e.evt.preventDefault();
-      // const pointerPosition = stage.getPointerPosition();
       const pointerPosition = useStageStore
         .getState()
         .getRelativePointerPosition();
@@ -78,7 +76,6 @@ export const SelectionLayer: React.FC = React.memo(() => {
       if (!isSelecting) {
         return;
       }
-      e.evt.preventDefault();
 
       // update visibility in timeout, so we can check it in click event
       setTimeout(() => {
@@ -115,11 +112,13 @@ export const SelectionLayer: React.FC = React.memo(() => {
     stage.on('mousedown touchstart', handleMouseDown);
     stage.on('mousemove touchmove', handleMouseMove);
     stage.on('mouseup touchend', handleMouseUp);
+    stage.on('mouseleave touchcancel', handleMouseUp);
 
     return () => {
       stage.off('mousedown touchstart', handleMouseDown);
       stage.off('mousemove touchmove', handleMouseMove);
       stage.off('mouseup touchend', handleMouseUp);
+      stage.off('mouseleave touchcancel', handleMouseUp);
     };
   });
 

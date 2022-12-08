@@ -47,20 +47,6 @@ export const ManagerPanel: React.FC = React.memo(() => {
       <div className="flex-1 overflow-auto">
         <Space direction="vertical">
           <Space>
-            <Button onClick={() => useNodeStore.getState().resetNode()}>
-              Reset
-            </Button>
-
-            <Button
-              type="primary"
-              icon={<IconPlayArrow />}
-              onClick={() => openRunCodeModal(new CodeCompiler().generate())}
-            >
-              Run
-            </Button>
-          </Space>
-
-          <Space>
             <Button icon={<IconFolder />} onClick={handleOpen}>
               Open
             </Button>
@@ -83,7 +69,21 @@ export const ManagerPanel: React.FC = React.memo(() => {
             </Dropdown.Button>
           </Space>
 
-          <div>{currentFileName || 'Local Storage'}</div>
+          <div>Current: {currentFileName || 'Local Storage'}</div>
+
+          <Space>
+            <Button onClick={() => useNodeStore.getState().resetNode()}>
+              Reset
+            </Button>
+
+            <Button
+              type="primary"
+              icon={<IconPlayArrow />}
+              onClick={() => openRunCodeModal(new CodeCompiler().generate())}
+            >
+              Run
+            </Button>
+          </Space>
         </Space>
 
         <Divider />

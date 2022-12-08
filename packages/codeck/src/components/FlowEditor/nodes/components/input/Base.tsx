@@ -37,7 +37,7 @@ export const NodeInputBase: React.FC<NodeInputBaseProps> = React.memo(
     );
 
     const handleBlur = useCallback(() => {
-      document.body.style.cursor = 'default';
+      resetFlowEditorCursorStyle();
       submitValue();
       setIsEditing(false);
     }, [submitValue]);
