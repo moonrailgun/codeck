@@ -1,14 +1,17 @@
 import { CodeckNodeDefinition } from '../../../../../store/node';
 import { DEFAULT_LOGIC_CATEGORY } from '../../../../../utils/consts';
 import {
+  buildNodeHeight,
   buildPinPosX,
   buildPinPosY,
-} from '../../../../../utils/position-helper';
+  defaultNodeWidth,
+} from '../../../../../utils/size-helper';
 import { BaseNode } from '../../BaseNode';
 import { BooleanInputPreset } from '../../components/preset/BooleanInputPreset';
+import React from 'react';
 
-const width = 150;
-const height = 90;
+const width = defaultNodeWidth;
+const height = buildNodeHeight(2);
 
 /**
  * 逻辑或

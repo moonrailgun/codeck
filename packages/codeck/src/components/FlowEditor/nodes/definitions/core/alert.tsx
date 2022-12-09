@@ -8,12 +8,14 @@ import {
 } from '../../../../../utils/consts';
 import { TextInputPreset } from '../../components/preset/TextInputPreset';
 import {
+  buildNodeHeight,
   buildPinPosX,
   buildPinPosY,
-} from '../../../../../utils/position-helper';
+  defaultNodeWidth,
+} from '../../../../../utils/size-helper';
 
-const width = 150;
-const height = 100;
+const width = defaultNodeWidth;
+const height = buildNodeHeight(2);
 
 export const AlertNodeDefinition: CodeckNodeDefinition = {
   name: 'alert',

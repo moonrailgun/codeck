@@ -7,14 +7,15 @@ import {
   STANDARD_PIN_EXEC_OUT,
 } from '../../../../../utils/consts';
 import {
+  buildNodeHeight,
   buildPinPosX,
   buildPinPosY,
-} from '../../../../../utils/position-helper';
+} from '../../../../../utils/size-helper';
 import { NumberInputPreset } from '../../components/preset/NumberInputPreset';
 import { PinLabel } from '../../components/pin/Label';
 
 const width = 180;
-const height = 100;
+const height = buildNodeHeight(2);
 
 export const LoopNodeDefinition: CodeckNodeDefinition = {
   name: 'loop',

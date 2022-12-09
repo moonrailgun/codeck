@@ -7,13 +7,15 @@ import {
   STANDARD_PIN_EXEC_OUT,
 } from '../../../../../utils/consts';
 import {
+  buildNodeHeight,
   buildPinPosX,
   buildPinPosY,
-} from '../../../../../utils/position-helper';
+  defaultNodeWidth,
+} from '../../../../../utils/size-helper';
 import { TextInputPreset } from '../../components/preset/TextInputPreset';
 
-const width = 150;
-const height = 90;
+const width = defaultNodeWidth;
+const height = buildNodeHeight(2);
 
 export const LogNodeDefinition: CodeckNodeDefinition = {
   name: 'log',

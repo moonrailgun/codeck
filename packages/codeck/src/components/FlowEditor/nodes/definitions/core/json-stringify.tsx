@@ -9,12 +9,13 @@ import {
 import { PinLabel } from '../../components/pin/Label';
 import { Group } from 'react-konva';
 import {
+  buildNodeHeight,
   buildPinPosX,
   buildPinPosY,
-} from '../../../../../utils/position-helper';
+} from '../../../../../utils/size-helper';
 
 const width = 180;
-const height = 65;
+const height = buildNodeHeight(1);
 
 export const JSONStringifyNodeDefinition: CodeckNodeDefinition = {
   name: 'json-stringify',

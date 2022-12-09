@@ -1,10 +1,15 @@
 import { CodeckNodeDefinition } from '../../../../store/node';
 import { DEFAULT_CORE_CATEGORY } from '../../../../utils/consts';
 import { VariableNode } from '../VariableNode';
-import { buildPinPosX, buildPinPosY } from '../../../../utils/position-helper';
+import {
+  buildNodeHeight,
+  buildPinPosX,
+  buildPinPosY,
+  defaultNodeWidth,
+} from '../../../../utils/size-helper';
 
-const width = 150;
-const height = 65;
+const width = defaultNodeWidth;
+const height = buildNodeHeight(1);
 
 export const VarGetNodeDefinition: CodeckNodeDefinition = {
   name: 'varget',

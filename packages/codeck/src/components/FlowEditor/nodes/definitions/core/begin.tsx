@@ -4,13 +4,15 @@ import {
   STANDARD_PIN_EXEC_OUT,
 } from '../../../../../utils/consts';
 import {
+  buildNodeHeight,
   buildPinPosX,
   buildPinPosY,
-} from '../../../../../utils/position-helper';
+  defaultNodeWidth,
+} from '../../../../../utils/size-helper';
 import { BaseNode } from '../../BaseNode';
 
-const width = 150;
-const height = 65;
+const width = defaultNodeWidth;
+const height = buildNodeHeight(1);
 
 export const BeginNodeDefinition: CodeckNodeDefinition = {
   name: 'begin',

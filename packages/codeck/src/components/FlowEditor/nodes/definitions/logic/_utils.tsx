@@ -1,9 +1,6 @@
 import { CodeckNodeDefinition } from '../../../../../store/node';
 import { DEFAULT_LOGIC_CATEGORY } from '../../../../../utils/consts';
-import {
-  buildPinPosX,
-  buildPinPosY,
-} from '../../../../../utils/position-helper';
+import { buildPinPosX, buildPinPosY } from '../../../../../utils/size-helper';
 import { BaseNode } from '../../BaseNode';
 import { NumberInputPreset } from '../../components/preset/NumberInputPreset';
 import { BaseInputPresetProps } from '../../components/preset/types';
