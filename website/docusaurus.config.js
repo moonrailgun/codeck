@@ -69,6 +69,11 @@ const config = {
             position: 'left',
             label: '介绍',
           },
+          {
+            href: 'pathname:///playground/',
+            position: 'left',
+            label: '在线试用',
+          },
           // {to: '/blog', label: 'Blog', position: 'left'},
           {
             href: 'https://github.com/moonrailgun/codeck',

@@ -22,8 +22,12 @@ function HomepageHeader() {
             介绍
           </Link>
 
-          <a className="button button--success button--lg" href="/playground/">
-            在线尝试
+          <a
+            className="button button--success button--lg"
+            href="/playground/"
+            target="__blank"
+          >
+            在线试用
           </a>
         </div>
       </div>
