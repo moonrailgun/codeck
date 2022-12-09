@@ -2,8 +2,20 @@ import 'immer'; // 这里是为了确保immer会被打包进去并且类型安�
 
 export { FlowEditor } from './components/FlowEditor';
 export { regNode } from './store/node';
+export type { CodeckNodeDefinition } from './store/node';
 export { CodeCompiler } from './code/compiler';
-export { variableTypes } from './utils/consts';
+export {
+  variableTypes,
+  STANDARD_PIN_EXEC_IN,
+  STANDARD_PIN_EXEC_OUT,
+} from './utils/consts';
+export {
+  buildPinPosX,
+  buildPinPosY,
+  defaultNodeWidth,
+  buildNodeHeight,
+} from './utils/size-helper';
+export { PinLabel } from './components/FlowEditor/nodes/components/pin/Label';
 
 export * as persist from './utils/persist';
 export * from './store/__all__';

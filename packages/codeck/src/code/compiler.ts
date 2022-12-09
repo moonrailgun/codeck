@@ -1,11 +1,18 @@
 import { isUndefined, values } from 'lodash-es';
 import { VarGetNodeDefinition } from '../components/FlowEditor/nodes/definitions/varget';
 import { ConnectInfo, useConnectionStore } from '../store/connection';
-import { CodeckNode, useNodeStore } from '../store/node';
+import {
+  CodeckNode,
+  CodeFunctionPrepare,
+  CodePrepare,
+  useNodeStore,
+} from '../store/node';
 import { useVariableStore } from '../store/variable';
 import { STANDARD_PIN_EXEC_OUT } from '../utils/consts';
 
 export class CodeCompiler {
+  prepare: CodePrepare[] = [];
+
   get nodeMap() {
     return useNodeStore.getState().nodeMap;
   }
@@ -29,8 +36,10 @@ export class CodeCompiler {
     const begin = this.findBegin();
     let codeText = '';
 
-    codeText += this.generateVariable() + '\n\n';
+    codeText += this.generateVariable();
     codeText += this.generateCodeFromNode(this.getExecNext(begin.id));
+
+    codeText = this.generatePrepareCode() + codeText; // 在头部追加 prepare code
 
     return codeText;
   }
@@ -44,8 +53,14 @@ export class CodeCompiler {
 
     // 主流程代码
     while (currentNode !== null) {
-      const codeFn = this.nodeDefinition[currentNode.name].code;
+      const definition = this.nodeDefinition[currentNode.name];
+      if (Array.isArray(definition.prepare) && definition.prepare.length > 0) {
+        this.prepare.push(...definition.prepare);
+      }
+
+      const codeFn = definition.code;
       const node = currentNode;
+
       if (codeFn) {
         const buildPinVarName = (pinName: string, nodeId?: string) => {
           return this.buildPinVarName(pinName, nodeId ?? node.id);
@@ -137,15 +152,84 @@ export class CodeCompiler {
 
   generateVariable(): string {
     const list = values(this.variableMap);
-    return list
-      .map((item) => {
-        if (isUndefined(item.defaultValue)) {
-          return `let ${item.name};`;
-        } else {
-          return `let ${item.name} = ${JSON.stringify(item.defaultValue)};`;
+    if (list.length === 0) {
+      return '';
+    }
+
+    return (
+      list
+        .map((item) => {
+          if (isUndefined(item.defaultValue)) {
+            return `let ${item.name};`;
+          } else {
+            return `let ${item.name} = ${JSON.stringify(item.defaultValue)};`;
+          }
+        })
+        .join('\n') + '\n\n'
+    );
+  }
+
+  generatePrepareCode(): string {
+    const imports: Record<string, [string, string][]> = {};
+    const functions: CodeFunctionPrepare[] = [];
+
+    this.prepare.forEach((item) => {
+      if (item.type === 'import') {
+        if (!imports[item.module]) {
+          imports[item.module] = [];
         }
-      })
-      .join('\n');
+
+        if (item.member) {
+          const member: [string, string] =
+            typeof item.member === 'string'
+              ? [item.member, item.member]
+              : item.member;
+
+          imports[item.module].push(member);
+        }
+      }
+
+      if (item.type === 'function') {
+        functions.push(item);
+      }
+    });
+
+    // generate code
+    let prepareCode = '';
+    const importEntries = Object.entries<[string, string][]>(imports);
+    if (Array.isArray(importEntries) && importEntries.length > 0) {
+      prepareCode +=
+        importEntries
+          .map(([module, members]) => {
+            if (members.length === 0) {
+              return `import '${module}';`;
+            }
+
+            return `import { ${members
+              .map((member) => {
+                if (member[0] !== 'default' && member[0] === member[1]) {
+                  return String(member);
+                } else {
+                  return `${member[0]} as ${member[1]}`;
+                }
+              })
+              .join(', ')} } from '${module}';`;
+          })
+          .join('\n') + '\n\n';
+    }
+    if (Array.isArray(functions) && functions.length > 0) {
+      prepareCode +=
+        functions
+          .map(
+            (func) =>
+              `function ${func.name}(${func.parameters.join(', ')}) { ${
+                func.body
+              } }`
+          )
+          .join('\n\n') + '\n\n';
+    }
+
+    return prepareCode;
   }
 
   private findBegin(): CodeckNode {

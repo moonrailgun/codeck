@@ -1,3 +1,4 @@
 import { regNode } from 'codeck';
+import { CreateConnectionNodeDefinition } from './nodes/createConnection';
 
-console.log('Hello World!', regNode);
+regNode(CreateConnectionNodeDefinition);

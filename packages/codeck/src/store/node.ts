@@ -41,6 +41,32 @@ export interface CodeckNodePinDefinition {
   }>;
 }
 
+export interface CodeImportPrepare {
+  type: 'import';
+
+  /**
+   * 导入模块名(依赖名，如: lodash)
+   */
+  module: string;
+
+  /**
+   * 导入模块的成员, 如果不填则为纯导入
+   * 如果有别名则为元组
+   * 特别的，如果是默认导入填写: ['default', 'anything']
+   */
+  member?: string | [string, string];
+  version?: string;
+}
+
+export interface CodeFunctionPrepare {
+  type: 'function';
+  name: string;
+  parameters: string[];
+  body: string;
+}
+
+export type CodePrepare = CodeImportPrepare | CodeFunctionPrepare;
+
 export interface CodeckNodeDefinition {
   name: string;
   label: string;
@@ -55,6 +81,10 @@ export interface CodeckNodeDefinition {
   inputs: CodeckNodePinDefinition[];
   outputs: (CodeckNodePinDefinition & { code?: CodeFn })[];
   component: React.ComponentType<CodeckNodeComponentProps>;
+  /**
+   * 代码生成的前置准备
+   */
+  prepare?: CodePrepare[];
   /**
    * 节点代码生成逻辑
    */
