@@ -18,5 +18,6 @@ export {
 export { PinLabel } from './components/FlowEditor/nodes/components/pin/Label';
 
 export * as persist from './utils/persist';
+export * as standard from './utils/standard';
 export * from './store/__all__';
 export * from './components/FlowEditor/nodes/__all__';
