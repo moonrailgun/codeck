@@ -4,11 +4,10 @@ import {
   buildPinPosX,
   buildPinPosY,
   CodeckNodeDefinition,
-  STANDARD_PIN_EXEC_IN,
-  STANDARD_PIN_EXEC_OUT,
   TextInputPreset,
   buildNodeHeight,
   PinLabel,
+  standard,
 } from 'codeck';
 import { EASEMOB_CATEGORY } from '../const';
 
@@ -16,7 +15,7 @@ const width = 200;
 const height = buildNodeHeight(2);
 
 export const CreateConnectionNodeDefinition: CodeckNodeDefinition = {
-  name: 'createConnection',
+  name: 'easemob:createConnection',
   label: 'CreateConnection',
   type: 'function',
   component: BaseNode,
@@ -24,14 +23,7 @@ export const CreateConnectionNodeDefinition: CodeckNodeDefinition = {
   height,
   category: EASEMOB_CATEGORY,
   inputs: [
-    {
-      name: STANDARD_PIN_EXEC_IN,
-      type: 'exec',
-      position: {
-        x: buildPinPosX(width, 'input'),
-        y: buildPinPosY(1),
-      },
-    },
+    standard.execPinInput(width),
     {
       name: 'appKey',
       type: 'port',
@@ -45,14 +37,7 @@ export const CreateConnectionNodeDefinition: CodeckNodeDefinition = {
     },
   ],
   outputs: [
-    {
-      name: STANDARD_PIN_EXEC_OUT,
-      type: 'exec',
-      position: {
-        x: buildPinPosX(width, 'output'),
-        y: buildPinPosY(1),
-      },
-    },
+    standard.execPinOutput(width),
     {
       name: 'conn',
       type: 'port',
