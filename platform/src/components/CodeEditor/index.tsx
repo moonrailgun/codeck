@@ -7,20 +7,22 @@ import {
   useVariableStore,
 } from 'codeck';
 import { Message } from '@arco-design/web-react';
+import { useRegistryStore } from '@/registry/store';
 
 export const CodeEditor: React.FC = React.memo(() => {
   const { nodeMap, nodeDefinition } = useNodeStore((state) => ({
     nodeMap: state.nodeMap,
     nodeDefinition: state.nodeDefinition,
   }));
-  const { connections } = useConnectionStore((state) => ({
-    connections: state.connections,
-  }));
-  const { variableMap } = useVariableStore((state) => ({
-    variableMap: state.variableMap,
-  }));
+  const connections = useConnectionStore((state) => state.connections);
+  const variableMap = useVariableStore((state) => state.variableMap);
+  const inited = useRegistryStore((state) => state.inited);
 
   const code = useMemo(() => {
+    if (inited === false) {
+      return '// [Plugin has not been inited]';
+    }
+
     try {
       const text = new CodeCompiler().generate();
       return text;
@@ -28,7 +30,7 @@ export const CodeEditor: React.FC = React.memo(() => {
       console.warn(err);
       Message.warning('Code Compile Failed.');
     }
-  }, [nodeMap, nodeDefinition, connections, variableMap]);
+  }, [nodeMap, nodeDefinition, connections, variableMap, inited]);
 
   return (
     <div className="h-full w-full">
