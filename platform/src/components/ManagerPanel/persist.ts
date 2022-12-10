@@ -3,6 +3,7 @@ import { useMemoizedFn } from 'ahooks';
 import { persist } from 'codeck';
 import { useLayoutEffect, useState } from 'react';
 import FileSaver from 'file-saver';
+import isHotkey from 'is-hotkey';
 
 /**
  * @returns 持久化相关逻辑
@@ -56,7 +57,7 @@ export function usePersist() {
 
   useLayoutEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.metaKey && e.key === 's') {
+      if (isHotkey('mod+s', e)) {
         e.preventDefault();
         e.stopPropagation();
 

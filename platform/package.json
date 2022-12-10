@@ -25,6 +25,7 @@
     "file-saver": "^2.0.5",
     "fuse.js": "^6.6.2",
     "immer": "^9.0.16",
+    "is-hotkey": "^0.2.0",
     "konva": "^8.3.13",
     "lodash-es": "^4.17.21",
     "monaco-editor": "^0.34.1",
@@ -38,6 +39,7 @@
   },
   "devDependencies": {
     "@types/file-saver": "^2.0.5",
+    "@types/is-hotkey": "^0.1.7",
     "@types/jest": "^29.2.3",
     "@types/lodash-es": "^4.17.6",
     "@types/react": "^18.0.24",

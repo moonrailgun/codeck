@@ -15,7 +15,10 @@ export {
   defaultNodeWidth,
   buildNodeHeight,
 } from './utils/size-helper';
-export { PinLabel } from './components/FlowEditor/nodes/components/pin/Label';
+export {
+  PinLabel,
+  OutputPinLabel,
+} from './components/FlowEditor/nodes/components/pin/Label';
 
 export * as persist from './utils/persist';
 export * as standard from './utils/standard';

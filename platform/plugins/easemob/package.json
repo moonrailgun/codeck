@@ -3,5 +3,7 @@
   "main": "src/index.ts",
   "version": "0.0.0",
   "private": true,
-  "dependencies": {}
+  "devDependencies": {
+    "easemob-websdk": "^4.1.2"
+  }
 }

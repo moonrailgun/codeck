@@ -16,7 +16,7 @@ const height = buildNodeHeight(2);
 
 export const CreateConnectionNodeDefinition: CodeckNodeDefinition = {
   name: 'easemob:createConnection',
-  label: 'CreateConnection',
+  label: '创建环信连接实例',
   type: 'function',
   component: BaseNode,
   width,

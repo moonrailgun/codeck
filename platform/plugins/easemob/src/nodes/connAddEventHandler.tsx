@@ -16,7 +16,7 @@ const height = buildNodeHeight(3);
 
 export const ConnAddEventHandlerNodeDefinition: CodeckNodeDefinition = {
   name: 'easemob:connAddEventHandler',
-  label: 'ConnAddEventHandler',
+  label: '创建环信事件监听器',
   type: 'function',
   component: BaseNode,
   width,
@@ -83,7 +83,15 @@ export const ConnAddEventHandlerNodeDefinition: CodeckNodeDefinition = {
     const conn = getConnectionInput('conn');
     const eventId =
       getConnectionInput('id') ?? JSON.stringify(node.data?.id ?? 'default');
-    const onTextMessage = getConnectionExecOutput('onTextMessage');
+    const onTextMessage =
+      getConnectionExecOutput('onTextMessage')
+        ?.trim()
+        .split('\n')
+        .join('\n    ') ?? '';
+
+    if (!conn) {
+      return '// 需要输入conn';
+    }
 
     return `${conn}.addEventHandler(${eventId}, {
   onMessage: (${data}) => {
