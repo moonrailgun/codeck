@@ -43,8 +43,10 @@ export { NodeInputBase } from './components/input/Base';
 export { NodeInputBoolean } from './components/input/Boolean';
 export { NodeInputNumber } from './components/input/Number';
 export { NodeInputText } from './components/input/Text';
+export { NodeInputSelect } from './components/input/Select';
 
 // preset
 export { BooleanInputPreset } from './components/preset/BooleanInputPreset';
 export { NumberInputPreset } from './components/preset/NumberInputPreset';
 export { TextInputPreset } from './components/preset/TextInputPreset';
+export { SelectInputPreset } from './components/preset/SelectInputPreset';

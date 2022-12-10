@@ -31,19 +31,26 @@ PinLabel.displayName = 'PinLabel';
 /**
  * 为输出位置的Pin特化的label组件
  */
-export const OutputPinLabel: React.FC<Pick<PinLabelProps, 'label' | 'width'>> =
-  React.memo((props) => {
-    const defaultLabelWidth = defaultNodeWidth / 2;
-    const width = props.width ?? defaultLabelWidth;
+export const OutputPinLabel: React.FC<{
+  label: string;
+  /**
+   * 因为Pin需要根据宽度定位来对齐右侧(因为渲染是从左到右的，需要宽度提前定位)
+   * 一般为节点宽度的一半
+   * @default number defaultNodeWidth / 2
+   */
+  width?: number;
+}> = React.memo((props) => {
+  const defaultLabelWidth = defaultNodeWidth / 2;
+  const width = props.width ?? defaultLabelWidth;
 
-    return (
-      <PinLabel
-        label={props.label}
-        x={-width - 30}
-        y={0}
-        align="right"
-        width={width}
-      />
-    );
-  });
+  return (
+    <PinLabel
+      label={props.label}
+      x={-width - 30}
+      y={0}
+      align="right"
+      width={width}
+    />
+  );
+});
 OutputPinLabel.displayName = 'OutputPinLabel';

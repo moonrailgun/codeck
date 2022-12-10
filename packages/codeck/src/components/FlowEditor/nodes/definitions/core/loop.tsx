@@ -86,11 +86,11 @@ export const LoopNodeDefinition: CodeckNodeDefinition = {
   }) => {
     const inc = buildPinVarName('inc');
     const times = getConnectionInput('times') ?? node.data?.times ?? 0;
+    const body =
+      getConnectionExecOutput('body')?.trim().split('\n').join('\n  ') ?? ''; // 为了确保有合适的缩进
 
     return `for (let ${inc} = 0; ${inc} < ${times}; ${inc}++) {
-  ${
-    getConnectionExecOutput('body')?.trim().split('\n').join('\n  ') ?? '' // 为了确保有合适的缩进
-  }
+  ${body}
 }\n`;
   },
 };
