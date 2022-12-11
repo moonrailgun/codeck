@@ -58,8 +58,10 @@ export const CreateConnectionNodeDefinition: CodeckNodeDefinition = {
     },
   ],
   code: ({ node, getConnectionInput, buildPinVarName }) => {
-    return `const ${buildPinVarName('conn')} = new WebIM.connection({appKey: ${
-      getConnectionInput('appKey') ?? JSON.stringify(node.data?.appKey ?? '')
-    }});\n`;
+    const appKey =
+      getConnectionInput('appKey') ?? JSON.stringify(node.data?.appKey ?? '');
+    const conn = buildPinVarName('conn');
+
+    return `const ${conn} = new WebIM.connection({appKey: ${appKey}});\n`;
   },
 };
