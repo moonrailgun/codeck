@@ -9,6 +9,7 @@ import {
   Space,
   Dropdown,
   Menu,
+  Radio,
 } from '@arco-design/web-react';
 import {
   IconGithub,
@@ -32,6 +33,7 @@ const FormItem = Form.Item;
 
 export const ManagerPanel: React.FC = React.memo(() => {
   const [showVariableCreator, setShowVariableCreator] = useState(false);
+  const [showBuildConfig, setShowBuildConfig] = useState(false);
   const { variableMap, createVariable, deleteVariable } = useVariableStore();
 
   const variableList = values(variableMap);
@@ -42,7 +44,6 @@ export const ManagerPanel: React.FC = React.memo(() => {
     saveAs: handleSaveAs,
     currentFileName,
   } = usePersist();
-  const { pack: handlePack } = usePack();
 
   return (
     <div className="p-2 h-full flex flex-col">
@@ -86,11 +87,17 @@ export const ManagerPanel: React.FC = React.memo(() => {
               Run
             </Button>
           </Space>
-
-          <Space>
-            <Button onClick={handlePack}>Pack</Button>
-          </Space>
         </Space>
+        <Divider />
+
+        <Button
+          long={true}
+          onClick={() => setShowBuildConfig((state) => !state)}
+        >
+          Build
+        </Button>
+
+        {showBuildConfig && <BuildConfig />}
 
         <Divider />
 
@@ -205,3 +212,45 @@ export const VariableForm: React.FC<{
   );
 });
 VariableForm.displayName = 'VariableForm';
+
+export const BuildConfig: React.FC = React.memo(() => {
+  const [platform, setPlatform] = useState<'web' | 'nodejs'>('web');
+  const [moduleType, setModuleType] = useState<'commonjs' | 'esmodule'>(
+    'esmodule'
+  );
+  const { pack: handlePack } = usePack({
+    platform,
+    moduleType,
+  });
+
+  return (
+    <div className="space-y-1 p-2">
+      <div>
+        <Radio.Group
+          type="button"
+          value={platform}
+          onChange={(val) => setPlatform(val)}
+        >
+          <Radio value="web">Web</Radio>
+          <Radio value="nodejs">Nodejs</Radio>
+        </Radio.Group>
+      </div>
+
+      <div>
+        <Radio.Group
+          type="button"
+          value={moduleType}
+          onChange={(val) => setModuleType(val)}
+        >
+          <Radio value="esmodule">ESModule</Radio>
+          <Radio value="commonjs">CommonJS</Radio>
+        </Radio.Group>
+      </div>
+
+      <div className="text-right">
+        <Button onClick={handlePack}>Pack</Button>
+      </div>
+    </div>
+  );
+});
+BuildConfig.displayName = 'BuildConfig';

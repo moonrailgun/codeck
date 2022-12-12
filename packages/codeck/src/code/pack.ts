@@ -36,8 +36,8 @@ npm start
 \`\`\`
 `
   );
-
   repo.file('index.js', code);
+
   if (platform === 'web') {
     repo.file(
       'index.html',
