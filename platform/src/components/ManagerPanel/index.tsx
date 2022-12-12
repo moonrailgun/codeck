@@ -26,6 +26,7 @@ import {
 } from 'codeck';
 import { openRunCodeModal } from '../modal/RunCode';
 import { usePersist } from './persist';
+import { usePack } from './pack';
 
 const FormItem = Form.Item;
 
@@ -41,6 +42,7 @@ export const ManagerPanel: React.FC = React.memo(() => {
     saveAs: handleSaveAs,
     currentFileName,
   } = usePersist();
+  const { pack: handlePack } = usePack();
 
   return (
     <div className="p-2 h-full flex flex-col">
@@ -83,6 +85,10 @@ export const ManagerPanel: React.FC = React.memo(() => {
             >
               Run
             </Button>
+          </Space>
+
+          <Space>
+            <Button onClick={handlePack}>Pack</Button>
           </Space>
         </Space>
 

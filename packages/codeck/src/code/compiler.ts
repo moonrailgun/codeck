@@ -11,7 +11,8 @@ import { useVariableStore } from '../store/variable';
 import { STANDARD_PIN_EXEC_OUT } from '../utils/consts';
 
 export class CodeCompiler {
-  prepare: CodePrepare[] = [];
+  prepares: CodePrepare[] = [];
+  moduleType: 'commonjs' | 'esmodule' = 'commonjs';
 
   get nodeMap() {
     return useNodeStore.getState().nodeMap;
@@ -55,7 +56,7 @@ export class CodeCompiler {
     while (currentNode !== null) {
       const definition = this.nodeDefinition[currentNode.name];
       if (Array.isArray(definition.prepare) && definition.prepare.length > 0) {
-        this.prepare.push(...definition.prepare);
+        this.prepares.push(...definition.prepare);
       }
 
       const codeFn = definition.code;
@@ -173,7 +174,7 @@ export class CodeCompiler {
     const imports: Record<string, [string, string][]> = {};
     const functions: CodeFunctionPrepare[] = [];
 
-    this.prepare.forEach((item) => {
+    this.prepares.forEach((item) => {
       if (item.type === 'import') {
         if (!imports[item.module]) {
           imports[item.module] = [];
@@ -201,19 +202,40 @@ export class CodeCompiler {
       prepareCode +=
         importEntries
           .map(([module, members]) => {
-            if (members.length === 0) {
-              return `import '${module}';`;
-            }
+            if (this.moduleType === 'commonjs') {
+              // commonjs
+              if (members.length === 0) {
+                return `require('${module}');`;
+              }
 
-            return `import { ${members
-              .map((member) => {
-                if (member[0] !== 'default' && member[0] === member[1]) {
-                  return String(member);
-                } else {
-                  return `${member[0]} as ${member[1]}`;
-                }
-              })
-              .join(', ')} } from '${module}';`;
+              return members
+                .map(
+                  (member) =>
+                    {
+                      if(member[0] === '*') {
+                        return `const ${member[1]} = require('${module}');`
+                      }else {
+                        return `const ${member[1]} = require('${module}').${member[0]};`
+                      }
+
+                )
+                .join('\n');
+            } else {
+              // esmodule
+              if (members.length === 0) {
+                return `import '${module}';`;
+              }
+
+              return `import { ${members
+                .map((member) => {
+                  if (member[0] !== 'default' && member[0] === member[1]) {
+                    return String(member);
+                  } else {
+                    return `${member[0]} as ${member[1]}`;
+                  }
+                })
+                .join(', ')} } from '${module}';`;
+            }
           })
           .join('\n') + '\n\n';
     }
