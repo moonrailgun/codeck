@@ -12,7 +12,7 @@ import { STANDARD_PIN_EXEC_OUT } from '../utils/consts';
 
 export class CodeCompiler {
   prepares: CodePrepare[] = [];
-  moduleType: 'commonjs' | 'esmodule' = 'commonjs';
+  moduleType: 'commonjs' | 'esmodule' = 'esmodule';
 
   get nodeMap() {
     return useNodeStore.getState().nodeMap;
@@ -209,16 +209,13 @@ export class CodeCompiler {
               }
 
               return members
-                .map(
-                  (member) =>
-                    {
-                      if(member[0] === '*') {
-                        return `const ${member[1]} = require('${module}');`
-                      }else {
-                        return `const ${member[1]} = require('${module}').${member[0]};`
-                      }
-
-                )
+                .map((member) => {
+                  if (member[0] === '*') {
+                    return `const ${member[1]} = require('${module}');`;
+                  } else {
+                    return `const ${member[1]} = require('${module}').${member[0]};`;
+                  }
+                })
                 .join('\n');
             } else {
               // esmodule
