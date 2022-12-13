@@ -1,9 +1,17 @@
+import { isEmpty } from 'lodash-es';
 import React from 'react';
 import { BaseNode } from '../components/FlowEditor/nodes/BaseNode';
 import {
   OutputPinLabel,
   PinLabel,
 } from '../components/FlowEditor/nodes/components/pin/Label';
+import { SelectInputPresetProps } from '../components/FlowEditor/nodes/components/preset/SelectInputPreset';
+import {
+  BooleanInputPreset,
+  NumberInputPreset,
+  SelectInputPreset,
+  TextInputPreset,
+} from '../components/FlowEditor/nodes/__all__';
 import { CodeckNodePinDefinition, CodeckNodeDefinition } from '../store/node';
 import { STANDARD_PIN_EXEC_IN, STANDARD_PIN_EXEC_OUT } from './consts';
 import {
@@ -36,6 +44,152 @@ export const execPinOutput = (width: number): CodeckNodePinDefinition => ({
     y: buildPinPosY(1),
   },
 });
+
+interface BasePinGenerateOptions {
+  name: string;
+  label?: string;
+  width: number;
+  /**
+   * y方向上的位置
+   */
+  position: number;
+}
+
+/**
+ * 标准数据端点
+ */
+function portPin(
+  options: BasePinGenerateOptions & {
+    defaultValue?: CodeckNodePinDefinition['defaultValue'];
+  }
+): {
+  input: {
+    base: () => CodeckNodePinDefinition;
+    text: () => CodeckNodePinDefinition;
+    number: () => CodeckNodePinDefinition;
+    boolean: () => CodeckNodePinDefinition;
+    select: (
+      selectOptions: SelectInputPresetProps['options']
+    ) => CodeckNodePinDefinition;
+  };
+  output: {
+    base: () => CodeckNodePinDefinition;
+  };
+} {
+  const buildBaseDef = (
+    direction: 'input' | 'output'
+  ): CodeckNodePinDefinition => ({
+    name: options.name,
+    type: 'port',
+    position: {
+      x: buildPinPosX(options.width, direction),
+      y: buildPinPosY(options.position),
+    },
+    defaultValue: options.defaultValue,
+  });
+
+  return {
+    input: {
+      base: () => ({
+        ...buildBaseDef('input'),
+        component: () => {
+          return <PinLabel label={options.label ?? options.name} />;
+        },
+      }),
+      text: () => ({
+        ...buildBaseDef('input'),
+        component: ({ nodeId }) => {
+          return (
+            <TextInputPreset
+              nodeId={nodeId}
+              name={options.name}
+              label={options.label ?? options.name}
+            />
+          );
+        },
+      }),
+      number: () => ({
+        ...buildBaseDef('input'),
+        component: ({ nodeId }) => {
+          return (
+            <NumberInputPreset
+              nodeId={nodeId}
+              name={options.name}
+              label={options.label ?? options.name}
+            />
+          );
+        },
+      }),
+      boolean: () => ({
+        ...buildBaseDef('input'),
+        component: ({ nodeId }) => {
+          return (
+            <BooleanInputPreset
+              nodeId={nodeId}
+              name={options.name}
+              label={options.label ?? options.name}
+            />
+          );
+        },
+      }),
+      select: (selectOptions: SelectInputPresetProps['options']) => ({
+        ...buildBaseDef('input'),
+        component: ({ nodeId }) => {
+          return (
+            <SelectInputPreset
+              nodeId={nodeId}
+              name={options.name}
+              label={options.label ?? options.name}
+              options={selectOptions}
+            />
+          );
+        },
+      }),
+    },
+    output: {
+      base: () => ({
+        ...buildBaseDef('output'),
+        component: () => {
+          return (
+            <OutputPinLabel
+              label={options.label ?? options.name}
+              width={options.width / 2}
+            />
+          );
+        },
+      }),
+    },
+  };
+}
+
+/**
+ * 自定义执行端点
+ */
+function execPin(options: BasePinGenerateOptions): {
+  input: () => CodeckNodePinDefinition;
+  output: () => CodeckNodePinDefinition;
+} {
+  return {
+    input: () => ({
+      ...portPin(options).input.base(),
+      type: 'exec',
+    }),
+    output: () => ({
+      ...portPin(options).output.base(),
+      type: 'exec',
+    }),
+  };
+}
+
+/**
+ * 标准端点生成逻辑
+ */
+export function pin(options: BasePinGenerateOptions) {
+  return {
+    exec: execPin(options),
+    port: portPin(options),
+  };
+}
 
 /**
  * 对象构造节点
@@ -102,13 +256,20 @@ export const objConstructNode = (
       const payload = buildPinVarName('payload');
 
       const getInput = (name: string) => {
-        return getConnectionInput(name) ?? node.data?.[name] ?? undefined;
+        return (
+          getConnectionInput(name) ??
+          JSON.stringify(node.data?.[name]) ??
+          undefined
+        );
       };
 
       // 必要性验证
       const invalidInput = options.inputList
         .filter((input) => input.required === true)
-        .filter((item) => getInput(item.name) === undefined);
+        .filter((item) => {
+          const d = getInput(item.name);
+          return isEmpty(d) || d === '""';
+        });
       if (invalidInput.length > 0) {
         return `// [${options.label}] required params: ${invalidInput
           .map((item) => item.label ?? item.name)

@@ -14,7 +14,7 @@ import { EASEMOB_CATEGORY } from '../const';
 
 // Docs: http://docs-im-beta.easemob.com/document/web/quickstart.html
 
-const width = 240;
+const width = 280;
 const height = buildNodeHeight(6);
 
 export const CreateConnectionNodeDefinition: CodeckNodeDefinition = {
