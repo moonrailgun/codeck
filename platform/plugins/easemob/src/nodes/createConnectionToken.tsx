@@ -17,9 +17,9 @@ import { EASEMOB_CATEGORY } from '../const';
 const width = 240;
 const height = buildNodeHeight(6);
 
-export const CreateConnectionNodeDefinition: CodeckNodeDefinition = {
+export const CreateConnectionTokenNodeDefinition: CodeckNodeDefinition = {
   name: 'easemob:createConnection',
-  label: 'FE 创建环信连接实例(密码登录)',
+  label: 'FE 创建环信连接实例(Token登录)',
   type: 'function',
   component: BaseNode,
   width,
@@ -52,16 +52,14 @@ export const CreateConnectionNodeDefinition: CodeckNodeDefinition = {
       },
     },
     {
-      name: 'password',
+      name: 'token',
       type: 'port',
       position: {
         x: buildPinPosX(width, 'input'),
         y: buildPinPosY(6),
       },
       component: ({ nodeId }) => {
-        return (
-          <TextInputPreset nodeId={nodeId} name="password" label="password" />
-        );
+        return <TextInputPreset nodeId={nodeId} name="token" label="token" />;
       },
     },
   ],
@@ -119,9 +117,8 @@ export const CreateConnectionNodeDefinition: CodeckNodeDefinition = {
     const username =
       getConnectionInput('username') ??
       JSON.stringify(node.data?.username ?? '');
-    const password =
-      getConnectionInput('password') ??
-      JSON.stringify(node.data?.password ?? '');
+    const token =
+      getConnectionInput('token') ?? JSON.stringify(node.data?.token ?? '');
     const conn = buildPinVarName('conn');
     const onLoginSuccess =
       getConnectionExecOutput('onLoginSuccess')
@@ -135,7 +132,7 @@ export const CreateConnectionNodeDefinition: CodeckNodeDefinition = {
         .join('\n    ') ?? '';
 
     return `const ${conn} = new WebIM.connection({appKey: ${appKey}});
-${conn}.open({user: ${username}, pwd: ${password}})
+${conn}.open({user: ${username}, accessToken: ${token}})
   .then(() => {
     ${onLoginSuccess}
   })

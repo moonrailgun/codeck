@@ -12,7 +12,7 @@ import { EASEMOB_CATEGORY } from '../const';
 export const CreateMessagePayloadNodeDefinition: CodeckNodeDefinition = {
   ...standard.objConstructNode({
     name: 'easemob:createMessagePayload',
-    label: '构造环信消息体',
+    label: 'FE 构造环信消息体',
     width: 180,
     height: buildNodeHeight(14),
     category: EASEMOB_CATEGORY,

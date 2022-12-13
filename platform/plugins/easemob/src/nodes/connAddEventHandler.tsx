@@ -16,7 +16,7 @@ const height = buildNodeHeight(3);
 
 export const ConnAddEventHandlerNodeDefinition: CodeckNodeDefinition = {
   name: 'easemob:connAddEventHandler',
-  label: '创建环信事件监听器',
+  label: 'FE 创建环信事件监听器',
   type: 'function',
   component: BaseNode,
   width,
