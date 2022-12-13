@@ -24,26 +24,30 @@ import {
 /**
  * 标准执行输入
  */
-export const execPinInput = (width: number): CodeckNodePinDefinition => ({
-  name: STANDARD_PIN_EXEC_IN,
-  type: 'exec',
-  position: {
-    x: buildPinPosX(width, 'input'),
-    y: buildPinPosY(1),
-  },
-});
+export function execPinInput(width: number): CodeckNodePinDefinition {
+  return {
+    name: STANDARD_PIN_EXEC_IN,
+    type: 'exec',
+    position: {
+      x: buildPinPosX(width, 'input'),
+      y: buildPinPosY(1),
+    },
+  };
+}
 
 /**
  * 标准执行输出
  */
-export const execPinOutput = (width: number): CodeckNodePinDefinition => ({
-  name: STANDARD_PIN_EXEC_OUT,
-  type: 'exec',
-  position: {
-    x: buildPinPosX(width, 'output'),
-    y: buildPinPosY(1),
-  },
-});
+export function execPinOutput(width: number): CodeckNodePinDefinition {
+  return {
+    name: STANDARD_PIN_EXEC_OUT,
+    type: 'exec',
+    position: {
+      x: buildPinPosX(width, 'output'),
+      y: buildPinPosY(1),
+    },
+  };
+}
 
 interface BasePinGenerateOptions {
   name: string;
