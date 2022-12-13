@@ -14,11 +14,11 @@ import { EASEMOB_CATEGORY } from '../const';
 
 // Docs: http://docs-im-beta.easemob.com/document/web/quickstart.html
 
-const width = 240;
+const width = 280;
 const height = buildNodeHeight(6);
 
 export const CreateConnectionTokenNodeDefinition: CodeckNodeDefinition = {
-  name: 'easemob:createConnection',
+  name: 'easemob:createConnectionToken',
   label: 'FE 创建环信连接实例(Token登录)',
   type: 'function',
   component: BaseNode,

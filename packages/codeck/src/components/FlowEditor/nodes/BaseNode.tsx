@@ -54,11 +54,13 @@ export const BaseNode: React.FC<CodeckNodeComponentProps> = React.memo(
 
         <Text
           x={30}
-          y={8}
+          y={0}
+          width={width - 30 * 2}
+          height={NODE_TITLE_HEIGHT}
+          align="left"
+          verticalAlign="middle"
           fontSize={16}
           text={label}
-          width={width - 30 * 2}
-          height={34}
           fill="white"
         />
 

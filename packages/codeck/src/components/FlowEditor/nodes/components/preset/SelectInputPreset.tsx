@@ -7,7 +7,7 @@ import { NodeInputSelect, NodeInputSelectProps } from '../input/Select';
 import { PinLabel } from '../pin/Label';
 import { BaseInputPresetProps } from './types';
 
-interface SelectInputPresetProps extends BaseInputPresetProps {
+export interface SelectInputPresetProps extends BaseInputPresetProps {
   options: NodeInputSelectProps['options'];
 }
 export const SelectInputPreset: React.FC<SelectInputPresetProps> = React.memo(

@@ -21,6 +21,7 @@ export const NodeInputText: React.FC<NodeInputProps> = React.memo((props) => {
             value={value}
             onChange={(e) => setValue(e.target.value)}
             onBlur={handleBlur}
+            onKeyDown={(e) => e.stopPropagation()}
           />
         </Html>
       )}

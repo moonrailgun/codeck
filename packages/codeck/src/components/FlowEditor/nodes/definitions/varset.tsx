@@ -1,3 +1,4 @@
+import React from 'react';
 import { Group } from 'react-konva';
 import { useNodeData, useNodeDataValue } from '../../../../hooks/useNodeData';
 import { CodeckNodeDefinition } from '../../../../store/node';
