@@ -102,6 +102,7 @@ interface NodeState {
    * 更新节点位置
    */
   updateNodePos: (nodeId: string, position: Konva.Vector2d) => void;
+  moveNode: (nodeId: string, deltaX: number, deltaY: number) => void;
   getNodeDefinition: (nodeId: string) => CodeckNodeDefinition | null;
   getPinDefinitionByName: (
     nodeId: string,
@@ -169,6 +170,18 @@ export const useNodeStore = create<NodeState>()(
         }
 
         node.position = position;
+      });
+    },
+    moveNode: (nodeId, deltaX, deltaY) => {
+      set((state) => {
+        const node = state.nodeMap[nodeId];
+        if (!node) {
+          console.warn('Not found this node:', nodeId);
+          return;
+        }
+
+        node.position.x += deltaX;
+        node.position.y += deltaY;
       });
     },
     getNodeDefinition: (nodeId) => {

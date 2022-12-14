@@ -8,6 +8,7 @@ interface UIState {
   selectedNodeIds: string[];
   selectedConnectionIds: string[];
   addSelectedNodes: (nodeIds: string[]) => void;
+  switchSelectNodes: (nodeIds: string[]) => void;
   addSelectedConnections: (connectionIds: string[]) => void;
   /**
    * 清除选中状态
@@ -17,6 +18,10 @@ interface UIState {
    * 删除选中节点和连线
    */
   deleteAllSelected: () => void;
+  /**
+   * 移动所有选中
+   */
+  moveSelected: (deltaX: number, deltaY: number) => void;
 }
 
 export const useUIStore = create<UIState>()(
@@ -24,6 +29,11 @@ export const useUIStore = create<UIState>()(
     selectedNodeIds: [] as string[],
     selectedConnectionIds: [] as string[],
     addSelectedNodes: (nodeIds) => {
+      set((state) => {
+        state.selectedNodeIds = uniq([...state.selectedNodeIds, ...nodeIds]);
+      });
+    },
+    switchSelectNodes: (nodeIds) => {
       set((state) => {
         if (
           nodeIds.length === 1 &&
@@ -70,6 +80,13 @@ export const useUIStore = create<UIState>()(
 
         state.selectedNodeIds = [];
         state.selectedConnectionIds = [];
+      });
+    },
+    moveSelected: (deltaX: number, deltaY: number) => {
+      const nodeIds = get().selectedNodeIds;
+
+      nodeIds.forEach((nodeId) => {
+        useNodeStore.getState().moveNode(nodeId, deltaX, deltaY);
       });
     },
   }))

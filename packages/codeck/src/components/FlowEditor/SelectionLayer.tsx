@@ -102,7 +102,7 @@ export const SelectionLayer: React.FC = React.memo(() => {
 
       useUIStore
         .getState()
-        .addSelectedNodes(
+        .switchSelectNodes(
           selected
             .filter((node) => Boolean(node.attrs['nodeId']))
             .map((node) => node.attrs['nodeId'])
