@@ -1,4 +1,4 @@
-import { isUndefined, values } from 'lodash-es';
+import { isUndefined, uniqBy, values } from 'lodash-es';
 import { VarGetNodeDefinition } from '../nodes/definitions/varget';
 import { ConnectInfo, useConnectionStore } from '../store/connection';
 import {
@@ -186,7 +186,10 @@ export class CodeCompiler {
               ? [item.member, item.member]
               : item.member;
 
-          imports[item.module].push(member);
+          imports[item.module] = uniqBy(
+            [...imports[item.module], member],
+            (item) => item.join(':')
+          );
         }
       }
 
