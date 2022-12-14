@@ -15,8 +15,8 @@ import { useStageStore } from '../store/stage';
 import Konva from 'konva';
 import { useConnectionStore } from '../store/connection';
 import { useVariableStore } from '../store/variable';
-import { VarGetNodeDefinition } from './FlowEditor/nodes/definitions/varget';
-import { VarSetNodeDefinition } from './FlowEditor/nodes/definitions/varset';
+import { VarGetNodeDefinition } from '../nodes/definitions/varget';
+import { VarSetNodeDefinition } from '../nodes/definitions/varset';
 
 const ContextMenu: React.FC<{ onClose: () => void }> = React.memo((props) => {
   const { nodeDefinition, createNode } = useNodeStore();

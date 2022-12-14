@@ -9,7 +9,7 @@ import { ConnectionLayer } from './ConnectionLayer';
 import { ContextMenuWrapper } from '../ContextMenu';
 import { useStage } from '../../hooks/useStage';
 import { useUIStore } from '../../store/ui';
-import './nodes/__all__';
+import '../../nodes/__all__';
 import {
   resetFlowEditorCursorStyle,
   setFlowEditorCursorStyle,

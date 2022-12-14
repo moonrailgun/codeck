@@ -1,5 +1,5 @@
 import { isUndefined, values } from 'lodash-es';
-import { VarGetNodeDefinition } from '../components/FlowEditor/nodes/definitions/varget';
+import { VarGetNodeDefinition } from '../nodes/definitions/varget';
 import { ConnectInfo, useConnectionStore } from '../store/connection';
 import {
   CodeckNode,

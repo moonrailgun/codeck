@@ -4,8 +4,8 @@ import Konva from 'konva';
 import { cloneDeep, set as _set } from 'lodash-es';
 import { useConnectionStore } from './connection';
 import { generateNodeId } from '../utils/string-helper';
-import { BeginNodeDefinition } from '../components/FlowEditor/nodes/definitions/core/begin';
-import { LogNodeDefinition } from '../components/FlowEditor/nodes/definitions/core/log';
+import { BeginNodeDefinition } from '../nodes/definitions/core/begin';
+import { LogNodeDefinition } from '../nodes/definitions/core/log';
 import { BEGIN_NODE_ID } from '../utils/consts';
 
 type CodeckNodeType = 'begin' | 'return' | 'function' | 'logic';

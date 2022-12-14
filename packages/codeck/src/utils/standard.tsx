@@ -1,17 +1,14 @@
 import { isEmpty } from 'lodash-es';
 import React from 'react';
-import { BaseNode } from '../components/FlowEditor/nodes/BaseNode';
-import {
-  OutputPinLabel,
-  PinLabel,
-} from '../components/FlowEditor/nodes/components/pin/Label';
-import { SelectInputPresetProps } from '../components/FlowEditor/nodes/components/preset/SelectInputPreset';
+import { BaseNode } from '../nodes/BaseNode';
+import { OutputPinLabel, PinLabel } from '../nodes/components/pin/Label';
+import { SelectInputPresetProps } from '../nodes/components/preset/SelectInputPreset';
 import {
   BooleanInputPreset,
   NumberInputPreset,
   SelectInputPreset,
   TextInputPreset,
-} from '../components/FlowEditor/nodes/__all__';
+} from '../nodes/__all__';
 import { CodeckNodePinDefinition, CodeckNodeDefinition } from '../store/node';
 import { STANDARD_PIN_EXEC_IN, STANDARD_PIN_EXEC_OUT } from './consts';
 import {
