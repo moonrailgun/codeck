@@ -1,7 +1,7 @@
 import { standard } from '../../..';
 import { CodeckNodeDefinition } from '../../../store/node';
 import { DEFAULT_CORE_CATEGORY } from '../../../utils/consts';
-import { buildNodeHeight, defaultNodeWidth } from '../../../utils/size-helper';
+import { buildNodeHeight } from '../../../utils/size-helper';
 import { BaseNode } from '../../BaseNode';
 
 const width = 200;
