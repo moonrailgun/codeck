@@ -5,6 +5,7 @@ import { LogNodeDefinition } from './definitions/core/log';
 import { LogErrorNodeDefinition } from './definitions/core/log-error';
 import { LoopNodeDefinition } from './definitions/core/loop';
 import { SleepNodeDefinition } from './definitions/core/sleep';
+import { TimerNodeDefinition } from './definitions/core/timer';
 import { AddNodeDefinition } from './definitions/logic/add';
 import { AnlNodeDefinition } from './definitions/logic/anl';
 import { DividedNodeDefinition } from './definitions/logic/divided';
@@ -18,6 +19,7 @@ import { VarSetNodeDefinition } from './definitions/varset';
 
 // definition
 export const builtinNodeDefinition = {
+  // Core
   BeginNodeDefinition,
   LogNodeDefinition,
   LogErrorNodeDefinition,
@@ -27,6 +29,9 @@ export const builtinNodeDefinition = {
   JSONStringifyNodeDefinition,
   LoopNodeDefinition,
   SleepNodeDefinition,
+  TimerNodeDefinition,
+
+  // Logic
   AddNodeDefinition,
   SubtractNodeDefinition,
   MultiplyNodeDefinition,
