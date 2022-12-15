@@ -2,6 +2,7 @@ import { AlertNodeDefinition } from './definitions/core/alert';
 import { BeginNodeDefinition } from './definitions/core/begin';
 import { JSONStringifyNodeDefinition } from './definitions/core/json-stringify';
 import { LogNodeDefinition } from './definitions/core/log';
+import { LogErrorNodeDefinition } from './definitions/core/log-error';
 import { LoopNodeDefinition } from './definitions/core/loop';
 import { SleepNodeDefinition } from './definitions/core/sleep';
 import { AddNodeDefinition } from './definitions/logic/add';
@@ -19,6 +20,7 @@ import { VarSetNodeDefinition } from './definitions/varset';
 export const builtinNodeDefinition = {
   BeginNodeDefinition,
   LogNodeDefinition,
+  LogErrorNodeDefinition,
   VarGetNodeDefinition,
   VarSetNodeDefinition,
   AlertNodeDefinition,

@@ -83,7 +83,7 @@ export const SendMessageNodeDefinition: CodeckNodeDefinition = {
   .then((${result}) => {
     ${onSuccess}
   })
-  .catch(() => {
+  .catch((err) => {
     ${onFailed}
   });\n`;
   },
