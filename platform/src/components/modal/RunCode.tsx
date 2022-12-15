@@ -32,32 +32,21 @@ export const RunCodeModal: React.FC<{ code: string }> = React.memo((props) => {
       `<!DOCTYPE html>
   <style>
     html, body{
+      background-color: black;
       color: white;
       margin: 0;
       padding: 0;
     }
   </style>
   <body>
-    <p id="logger"></p>
+    <ul id="console-log"></ul>
   </body>
+  <script type="application/javascript" src="//cdn.rawgit.com/Alorel/console-log-html/master/console-log-html.min.js"></script>
   <script>
-    window.parent = null;
-    window.top = null;
-    window.console = {
-      log: function(str){
-        var node = document.createElement("div");
-        node.appendChild(document.createTextNode(JSON.stringify(str)));
-        document.getElementById("logger").appendChild(node);
-      }
-    }
-
-    try{
-      ${props.code}
-    }
-    catch(err){
-      console.log("Error");
-      console.log(\`\${err}\`);
-    }
+    ConsoleLogHTML.connect(document.getElementById("console-log"));
+  </script>
+  <script type="module">
+    ${props.code}
   </script>
   </html>`
     );

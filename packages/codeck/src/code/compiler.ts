@@ -13,6 +13,11 @@ import { STANDARD_PIN_EXEC_OUT } from '../utils/consts';
 export class CodeCompiler {
   prepares: CodePrepare[] = [];
   moduleType: 'commonjs' | 'esmodule' = 'esmodule';
+  /**
+   * 是否使用Skypack作为module的处理
+   * 仅 esmodule 模式下有效
+   */
+  useSkypack = false;
 
   get nodeMap() {
     return useNodeStore.getState().nodeMap;
@@ -222,6 +227,10 @@ export class CodeCompiler {
                 .join('\n');
             } else {
               // esmodule
+              if (this.useSkypack === true) {
+                module = `https://cdn.skypack.dev/${module}`;
+              }
+
               if (members.length === 0) {
                 return `import '${module}';`;
               }

@@ -28,6 +28,7 @@ import {
 import { openRunCodeModal } from '../modal/RunCode';
 import { usePersist } from './persist';
 import { usePack } from './pack';
+import { useMemoizedFn } from 'ahooks';
 
 const FormItem = Form.Item;
 
@@ -44,6 +45,12 @@ export const ManagerPanel: React.FC = React.memo(() => {
     saveAs: handleSaveAs,
     currentFileName,
   } = usePersist();
+
+  const handleRun = useMemoizedFn(() => {
+    const compiler = new CodeCompiler();
+    compiler.useSkypack = true;
+    openRunCodeModal(compiler.generate());
+  });
 
   return (
     <div className="p-2 h-full flex flex-col">
@@ -79,11 +86,7 @@ export const ManagerPanel: React.FC = React.memo(() => {
               Reset
             </Button>
 
-            <Button
-              type="primary"
-              icon={<IconPlayArrow />}
-              onClick={() => openRunCodeModal(new CodeCompiler().generate())}
-            >
+            <Button type="primary" icon={<IconPlayArrow />} onClick={handleRun}>
               Run
             </Button>
           </Space>
