@@ -3,6 +3,7 @@ import { VarGetNodeDefinition } from '../nodes/definitions/varget';
 import { ConnectInfo, useConnectionStore } from '../store/connection';
 import {
   CodeckNode,
+  CodeckNodeDefinition,
   CodeFunctionPrepare,
   CodePrepare,
   useNodeStore,
@@ -65,9 +66,7 @@ export class CodeCompiler {
     // 主流程代码
     while (currentNode !== null) {
       const definition = this.nodeDefinition[currentNode.name];
-      if (Array.isArray(definition.prepare) && definition.prepare.length > 0) {
-        this.prepares.push(...definition.prepare);
-      }
+      this.collectPrepare(definition);
 
       const codeFn = definition.code;
       const node = currentNode;
@@ -133,6 +132,8 @@ export class CodeCompiler {
     }
 
     if (outputDef.code) {
+      this.collectPrepare(fromNodeDef);
+
       // 自定义输出代码生成逻辑
       return (
         outputDef.code({
@@ -311,5 +312,15 @@ export class CodeCompiler {
     }
 
     return this.nodeMap[execNextConnection[0].toNodeId] ?? null;
+  }
+
+  /**
+   * 收集节点预备逻辑
+   * @param nodeDef 节点定义
+   */
+  private collectPrepare(nodeDef: Pick<CodeckNodeDefinition, 'prepare'>) {
+    if (Array.isArray(nodeDef.prepare) && nodeDef.prepare.length > 0) {
+      this.prepares.push(...nodeDef.prepare);
+    }
   }
 }

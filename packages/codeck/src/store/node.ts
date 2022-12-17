@@ -8,7 +8,7 @@ import { BeginNodeDefinition } from '../nodes/definitions/core/begin';
 import { LogNodeDefinition } from '../nodes/definitions/core/log';
 import { BEGIN_NODE_ID } from '../utils/consts';
 
-type CodeckNodeType = 'begin' | 'return' | 'function' | 'logic';
+type CodeckNodeType = 'begin' | 'return' | 'function' | 'logic' | 'call';
 
 export type CodeFn = (ctx: {
   node: CodeckNode;
@@ -52,6 +52,7 @@ export interface CodeImportPrepare {
   /**
    * 导入模块的成员, 如果不填则为纯导入
    * 如果有别名则为元组
+   * 字符串为导入部分成员，如果为元组则视为别名
    * 特别的，如果是默认导入填写: ['default', 'anything']
    */
   member?: string | [string, string];

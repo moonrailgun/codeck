@@ -19,6 +19,7 @@ export const color = {
     begin: '#e17055',
     function: '#0984e3',
     logic: '#6c5ce7',
+    call: '#00b894',
     return: '#e84393',
   },
 };

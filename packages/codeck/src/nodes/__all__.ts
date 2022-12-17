@@ -8,6 +8,7 @@ import { LogErrorNodeDefinition } from './definitions/core/log-error';
 import { LoopNodeDefinition } from './definitions/core/loop';
 import { SleepNodeDefinition } from './definitions/core/sleep';
 import { TimerNodeDefinition } from './definitions/core/timer';
+import { LodashGetNodeDefinition } from './definitions/lodash/get';
 import { AddNodeDefinition } from './definitions/logic/add';
 import { AnlNodeDefinition } from './definitions/logic/anl';
 import { DividedNodeDefinition } from './definitions/logic/divided';
@@ -44,6 +45,9 @@ export const builtinNodeDefinition = {
   AnlNodeDefinition,
   OrlNodeDefinition,
   NotNodeDefinition,
+
+  // Lodash
+  LodashGetNodeDefinition,
 };
 
 // node

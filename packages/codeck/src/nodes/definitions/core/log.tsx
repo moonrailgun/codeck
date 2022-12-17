@@ -28,8 +28,8 @@ export const LogNodeDefinition: CodeckNodeDefinition = {
   ],
   outputs: [standard.execPinOutput(width)],
   code: ({ node, getConnectionInput }) => {
-    return `console.log(${
-      getConnectionInput('message') ?? JSON.stringify(node.data?.message ?? '')
-    });\n`;
+    const message =
+      getConnectionInput('message') ?? JSON.stringify(node.data?.message ?? '');
+    return `console.log(${message});\n`;
   },
 };

@@ -8,6 +8,8 @@ export const DEFAULT_CORE_CATEGORY = 'Core';
 
 export const DEFAULT_LOGIC_CATEGORY = 'Logic';
 
+export const LODASH_CATEGORY = 'Lodash';
+
 export const variableTypes = [
   'string',
   'number',

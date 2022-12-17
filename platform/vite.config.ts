@@ -11,6 +11,7 @@ export default defineConfig({
   build: {
     outDir: '../website/static/playground',
   },
+  clearScreen: false,
   base: './',
   resolve: {
     alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }], // 设置别名
