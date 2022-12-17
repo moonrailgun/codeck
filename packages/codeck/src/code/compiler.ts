@@ -19,6 +19,10 @@ export class CodeCompiler {
    * 仅 esmodule 模式下有效
    */
   useSkypack = false;
+  /**
+   * 是否为每个节点增加注释
+   */
+  printComment = true;
 
   get nodeMap() {
     return useNodeStore.getState().nodeMap;
@@ -72,6 +76,10 @@ export class CodeCompiler {
         const buildPinVarName = (pinName: string, nodeId?: string) => {
           return this.buildPinVarName(pinName, nodeId ?? node.id);
         };
+
+        if (this.printComment === true) {
+          codeText += `// ${node.id} (node: ${definition.name})\n`;
+        }
 
         codeText += codeFn({
           node,
