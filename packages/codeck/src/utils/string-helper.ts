@@ -15,7 +15,7 @@ export const generateNodeId = customAlphabet(urlAlphabet.replace('_', ''), 8);
  * @param rawBody 原始函数体
  * @param indent 缩进
  */
-export function formatFunctionIndent(rawBody?: string, indent = 2) {
+export function formatFunctionIndent(rawBody?: string | null, indent = 2) {
   if (!rawBody) {
     return '';
   }

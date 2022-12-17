@@ -1,6 +1,7 @@
 import { AlertNodeDefinition } from './definitions/core/alert';
 import { BeginNodeDefinition } from './definitions/core/begin';
 import { FetchNodeDefinition } from './definitions/core/fetch';
+import { ForEachNodeDefinition } from './definitions/core/foreach';
 import { JSONStringifyNodeDefinition } from './definitions/core/json-stringify';
 import { LogNodeDefinition } from './definitions/core/log';
 import { LogErrorNodeDefinition } from './definitions/core/log-error';
@@ -23,6 +24,7 @@ export const builtinNodeDefinition = {
   // Core
   BeginNodeDefinition,
   FetchNodeDefinition,
+  ForEachNodeDefinition,
   LogNodeDefinition,
   LogErrorNodeDefinition,
   VarGetNodeDefinition,

@@ -2,7 +2,7 @@ import React from 'react';
 import { CodeckNodeDefinition } from '../../../store/node';
 import { BaseNode } from '../../BaseNode';
 import { DEFAULT_CORE_CATEGORY } from '../../../utils/consts';
-import { buildNodeHeight, defaultNodeWidth } from '../../../utils/size-helper';
+import { buildNodeHeight } from '../../../utils/size-helper';
 import { formatFunctionIndent, standard } from '../../..';
 
 const width = 240;
@@ -125,7 +125,7 @@ export const FetchNodeDefinition: CodeckNodeDefinition = {
     const text = buildPinVarName('text');
     const json = buildPinVarName('json');
     const onFailed =
-      formatFunctionIndent(getConnectionExecOutput('onFailed')) ?? '';
+      formatFunctionIndent(getConnectionExecOutput('onFailed'), 4) ?? '';
 
     return `request(${url}, { method: ${method}, body: ${body}, headers: ${headers} })
   .then((res) => {
@@ -133,7 +133,7 @@ export const FetchNodeDefinition: CodeckNodeDefinition = {
   })
   .then((text) => {
     const ${text} = text;
-    const ${json} = {};
+    let ${json} = {};
     try {
       ${json} = JSON.parse(text);
     } catch(e) {}
@@ -142,6 +142,7 @@ export const FetchNodeDefinition: CodeckNodeDefinition = {
   })
   .catch((err) => {
     ${onFailed}
-  });`;
+  });
+`;
   },
 };
