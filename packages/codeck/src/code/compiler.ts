@@ -9,6 +9,7 @@ import {
 } from '../store/node';
 import { useVariableStore } from '../store/variable';
 import { STANDARD_PIN_EXEC_OUT } from '../utils/consts';
+import { formatFunctionIndent } from '../utils/string-helper';
 
 export class CodeCompiler {
   prepares: CodePrepare[] = [];
@@ -253,9 +254,9 @@ export class CodeCompiler {
         functions
           .map(
             (func) =>
-              `function ${func.name}(${func.parameters.join(', ')}) { ${
-                func.body
-              } }`
+              `function ${func.name}(${func.parameters.join(', ')}) {
+  ${formatFunctionIndent(func.body, 2)}
+}`
           )
           .join('\n\n') + '\n\n';
     }

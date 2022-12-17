@@ -15,6 +15,7 @@ export {
   defaultNodeWidth,
   buildNodeHeight,
 } from './utils/size-helper';
+export { formatFunctionIndent } from './utils/string-helper';
 export { PinLabel, OutputPinLabel } from './nodes/components/pin/Label';
 
 export * as persist from './utils/persist';

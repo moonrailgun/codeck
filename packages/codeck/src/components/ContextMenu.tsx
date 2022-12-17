@@ -84,6 +84,7 @@ const ContextMenu: React.FC<{ onClose: () => void }> = React.memo((props) => {
           placeholder="Search Node"
           value={searchValue}
           onChange={setSearchValue}
+          onKeyDown={(e) => e.stopPropagation()}
         />
 
         <div className="overflow-auto" style={{ maxHeight: 400 }}>
