@@ -22,7 +22,7 @@ export const ForEachNodeDefinition: CodeckNodeDefinition = {
       .pin({
         name: 'array',
         width,
-        position: 2,
+        position: 1,
       })
       .port.input.base(),
   ],
@@ -32,14 +32,14 @@ export const ForEachNodeDefinition: CodeckNodeDefinition = {
       .pin({
         name: 'iteration',
         width,
-        position: 2,
+        position: 1,
       })
       .exec.output(),
     standard
       .pin({
         name: 'item',
         width,
-        position: 3,
+        position: 2,
       })
       .port.output.base(),
   ],

@@ -21,7 +21,7 @@ export const SleepNodeDefinition: CodeckNodeDefinition = {
       .pin({
         width,
         name: 'ms',
-        position: 2,
+        position: 1,
       })
       .port.input.number(),
   ],
@@ -31,7 +31,7 @@ export const SleepNodeDefinition: CodeckNodeDefinition = {
         width,
         name: 'cb',
         label: '',
-        position: 1,
+        position: 0,
       })
       .exec.output(),
   ],

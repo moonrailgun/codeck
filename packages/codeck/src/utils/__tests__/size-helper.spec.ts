@@ -2,11 +2,11 @@ import { buildPinPosY, buildNodeHeight } from '../size-helper';
 
 describe('size-helper', () => {
   test.each<[number, number]>([
-    [1, 16],
-    [2, 50],
-    [3, 70],
-    [4, 90],
-    [5, 110],
+    [0, 16],
+    [1, 50],
+    [2, 70],
+    [3, 90],
+    [4, 110],
   ])('buildPinPosY', (position, output) => {
     expect(buildPinPosY(position)).toBe(output);
   });

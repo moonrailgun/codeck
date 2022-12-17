@@ -22,7 +22,7 @@ export const FetchNodeDefinition: CodeckNodeDefinition = {
       .pin({
         name: 'method',
         width,
-        position: 2,
+        position: 1,
       })
       .port.input.select([
         {
@@ -46,21 +46,21 @@ export const FetchNodeDefinition: CodeckNodeDefinition = {
       .pin({
         name: 'url',
         width,
-        position: 4,
+        position: 3,
       })
       .port.input.text(),
     standard
       .pin({
         name: 'data',
         width,
-        position: 6,
+        position: 5,
       })
       .port.input.base(),
     standard
       .pin({
         name: 'headers',
         width,
-        position: 7,
+        position: 6,
       })
       .port.input.base(),
   ],
@@ -70,28 +70,28 @@ export const FetchNodeDefinition: CodeckNodeDefinition = {
       .pin({
         name: 'onSuccess',
         width,
-        position: 2,
+        position: 1,
       })
       .exec.output(),
     standard
       .pin({
         name: 'text',
         width,
-        position: 3,
+        position: 2,
       })
       .port.output.base(),
     standard
       .pin({
         name: 'json',
         width,
-        position: 4,
+        position: 3,
       })
       .port.output.base(),
     standard
       .pin({
         name: 'onFailed',
         width,
-        position: 5,
+        position: 4,
       })
       .exec.output(),
   ],

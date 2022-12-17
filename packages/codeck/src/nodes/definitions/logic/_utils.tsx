@@ -1,3 +1,4 @@
+import React from 'react';
 import { CodeckNodeDefinition } from '../../../store/node';
 import { DEFAULT_LOGIC_CATEGORY } from '../../../utils/consts';
 import { buildPinPosX, buildPinPosY } from '../../../utils/size-helper';
@@ -38,7 +39,7 @@ export function buildCombinedLogicDefinition(
         type: 'port',
         position: {
           x: buildPinPosX(width, 'input'),
-          y: buildPinPosY(2),
+          y: buildPinPosY(1),
         },
         component: ({ nodeId }) => {
           return <InputPreset nodeId={nodeId} name="input1" label="input1" />;
@@ -49,7 +50,7 @@ export function buildCombinedLogicDefinition(
         type: 'port',
         position: {
           x: buildPinPosX(width, 'input'),
-          y: buildPinPosY(4),
+          y: buildPinPosY(3),
         },
         component: ({ nodeId }) => {
           return <InputPreset nodeId={nodeId} name="input2" label="input2" />;
@@ -62,7 +63,7 @@ export function buildCombinedLogicDefinition(
         type: 'port',
         position: {
           x: buildPinPosX(width, 'output'),
-          y: buildPinPosY(3),
+          y: buildPinPosY(2),
         },
         code: ({ node, getConnectionInput }) => {
           return options.outputCode(

@@ -21,14 +21,14 @@ export const TimerNodeDefinition: CodeckNodeDefinition = {
       .pin({
         width,
         name: 'ms',
-        position: 2,
+        position: 1,
       })
       .port.input.number(),
     standard
       .pin({
         width,
         name: 'forever',
-        position: 4,
+        position: 3,
       })
       .port.input.boolean(),
   ],
@@ -39,7 +39,7 @@ export const TimerNodeDefinition: CodeckNodeDefinition = {
         width,
         name: 'cb',
         label: 'call',
-        position: 2,
+        position: 1,
       })
       .exec.output(),
     standard
@@ -47,7 +47,7 @@ export const TimerNodeDefinition: CodeckNodeDefinition = {
         width,
         name: 'timerRef',
         label: 'timerRef',
-        position: 3,
+        position: 2,
       })
       .port.output.base(),
   ],

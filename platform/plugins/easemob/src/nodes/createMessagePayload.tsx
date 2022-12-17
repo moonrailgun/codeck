@@ -9,17 +9,20 @@ import {
 } from 'codeck';
 import { EASEMOB_CATEGORY } from '../const';
 
+const width = 180;
+const height = buildNodeHeight(14);
+
 export const CreateMessagePayloadNodeDefinition: CodeckNodeDefinition = {
   ...standard.objConstructNode({
     name: 'easemob:createMessagePayload',
     label: 'FE 构造环信消息体',
-    width: 180,
-    height: buildNodeHeight(14),
+    width,
+    height,
     category: EASEMOB_CATEGORY,
     inputList: [
       {
         name: 'chatType',
-        position: 2,
+        position: 1,
         required: true,
         component: ({ nodeId }) => (
           <SelectInputPreset
@@ -45,7 +48,7 @@ export const CreateMessagePayloadNodeDefinition: CodeckNodeDefinition = {
       },
       {
         name: 'type',
-        position: 4,
+        position: 3,
         required: true,
         component: ({ nodeId }) => (
           <SelectInputPreset
@@ -63,7 +66,7 @@ export const CreateMessagePayloadNodeDefinition: CodeckNodeDefinition = {
       },
       {
         name: 'to',
-        position: 6,
+        position: 5,
         required: true,
         component: ({ nodeId }) => (
           <TextInputPreset nodeId={nodeId} name="to" label="to" />
@@ -71,7 +74,7 @@ export const CreateMessagePayloadNodeDefinition: CodeckNodeDefinition = {
       },
       {
         name: 'msg',
-        position: 8,
+        position: 7,
         required: true,
         component: ({ nodeId }) => (
           <TextInputPreset nodeId={nodeId} name="msg" label="msg" />
@@ -79,22 +82,22 @@ export const CreateMessagePayloadNodeDefinition: CodeckNodeDefinition = {
       },
       {
         name: 'from',
-        position: 10,
+        position: 9,
         component: ({ nodeId }) => (
           <TextInputPreset nodeId={nodeId} name="from" label="from" />
         ),
       },
       {
         name: 'ext',
-        position: 12,
+        position: 11,
       },
       {
         name: 'msgConfig',
-        position: 13,
+        position: 12,
       },
       {
         name: 'isChatThread',
-        position: 14,
+        position: 13,
         component: ({ nodeId }) => (
           <BooleanInputPreset
             nodeId={nodeId}

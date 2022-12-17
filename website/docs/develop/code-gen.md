@@ -42,7 +42,7 @@ export const LogNodeDefinition: CodeckNodeDefinition = {
       type: 'exec',
       position: {
         x: buildPinPosX(width, 'input'),
-        y: buildPinPosY(1),
+        y: buildPinPosY(0),
       },
     },
     {
@@ -50,7 +50,7 @@ export const LogNodeDefinition: CodeckNodeDefinition = {
       type: 'port',
       position: {
         x: buildPinPosX(width, 'input'),
-        y: buildPinPosY(2),
+        y: buildPinPosY(1),
       },
       component: ({ nodeId }) => {
         return (
@@ -65,7 +65,7 @@ export const LogNodeDefinition: CodeckNodeDefinition = {
       type: 'exec',
       position: {
         x: buildPinPosX(width, 'output'),
-        y: buildPinPosY(1),
+        y: buildPinPosY(0),
       },
     },
   ],

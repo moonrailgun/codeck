@@ -1,5 +1,5 @@
-import { isEmpty } from 'lodash-es';
 import React from 'react';
+import { isEmpty } from 'lodash-es';
 import { BaseNode } from '../nodes/BaseNode';
 import { OutputPinLabel, PinLabel } from '../nodes/components/pin/Label';
 import { SelectInputPresetProps } from '../nodes/components/preset/SelectInputPreset';
@@ -27,7 +27,7 @@ export function execPinInput(width: number): CodeckNodePinDefinition {
     type: 'exec',
     position: {
       x: buildPinPosX(width, 'input'),
-      y: buildPinPosY(1),
+      y: buildPinPosY(0),
     },
   };
 }
@@ -41,7 +41,7 @@ export function execPinOutput(width: number): CodeckNodePinDefinition {
     type: 'exec',
     position: {
       x: buildPinPosX(width, 'output'),
-      y: buildPinPosY(1),
+      y: buildPinPosY(0),
     },
   };
 }
@@ -52,6 +52,7 @@ interface BasePinGenerateOptions {
   width: number;
   /**
    * y方向上的位置
+   * 默认输入输出节点位置为0(在label上)
    */
   position: number;
 }
@@ -230,7 +231,7 @@ export const objConstructNode = (
         type: 'port' as const,
         position: {
           x: buildPinPosX(width, 'input'),
-          y: item.position ? buildPinPosY(item.position) : buildPinPosY(i + 2),
+          y: item.position ? buildPinPosY(item.position) : buildPinPosY(i + 1),
         },
         component:
           item.component ??
@@ -246,7 +247,7 @@ export const objConstructNode = (
         type: 'port',
         position: {
           x: buildPinPosX(width, 'output'),
-          y: buildPinPosY(2),
+          y: buildPinPosY(1),
         },
         component: () => {
           return <OutputPinLabel label="payload" width={width / 2} />;
@@ -329,7 +330,7 @@ export const objDeconstructNode = (
         type: 'port',
         position: {
           x: buildPinPosX(width, 'input'),
-          y: buildPinPosY(2),
+          y: buildPinPosY(1),
         },
         component: () => {
           return <PinLabel label="payload" />;
@@ -343,7 +344,7 @@ export const objDeconstructNode = (
         type: 'port' as const,
         position: {
           x: buildPinPosX(width, 'output'),
-          y: buildPinPosY(i + 2),
+          y: buildPinPosY(i + 1),
         },
         component: () => {
           return (

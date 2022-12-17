@@ -36,7 +36,7 @@ export const BeginNodeDefinition: CodeckNodeDefinition = {
       type: 'exec',
       position: {
         x: buildPinPosX(width, 'output'),
-        y: buildPinPosY(1),
+        y: buildPinPosY(0),
       },
     },
   ],

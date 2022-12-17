@@ -14,17 +14,15 @@ export function buildPinPosX(width: number, type: 'input' | 'output') {
  * 构建pin的y坐标位置，1执行位。如果上一个节点拥有输入内容则跳过一个位置
  *
  * @example
- * 1 - 16
- * 2 - 50
- * 3 - 70
- * 4 - 90
+ * 0 - 16
+ * 1 - 50
+ * 2 - 70
+ * 3 - 90
  * ...
  */
 export function buildPinPosY(position: number) {
   return (
-    (position - 1) * pinHeight +
-    16 +
-    (position > 1 ? NODE_TITLE_HEIGHT - 18 : 0)
+    position * pinHeight + 16 + (position > 0 ? NODE_TITLE_HEIGHT - 18 : 0)
   );
 }
 

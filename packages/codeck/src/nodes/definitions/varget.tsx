@@ -27,7 +27,7 @@ export const VarGetNodeDefinition: CodeckNodeDefinition = {
       type: 'port',
       position: {
         x: buildPinPosX(width, 'output'),
-        y: buildPinPosY(1),
+        y: buildPinPosY(0),
       },
     },
   ],

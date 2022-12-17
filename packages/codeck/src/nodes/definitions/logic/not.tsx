@@ -30,7 +30,7 @@ export const NotNodeDefinition: CodeckNodeDefinition = {
       type: 'port',
       position: {
         x: buildPinPosX(width, 'input'),
-        y: buildPinPosY(2),
+        y: buildPinPosY(1),
       },
       component: ({ nodeId }) => {
         return (
@@ -45,7 +45,7 @@ export const NotNodeDefinition: CodeckNodeDefinition = {
       type: 'port',
       position: {
         x: buildPinPosX(width, 'output'),
-        y: buildPinPosY(2),
+        y: buildPinPosY(1),
       },
       code: ({ node, getConnectionInput }) => {
         return `!${getConnectionInput('input') ?? node.data?.input ?? false})`;

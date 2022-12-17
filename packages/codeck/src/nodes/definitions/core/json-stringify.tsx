@@ -1,18 +1,9 @@
 import React from 'react';
 import { CodeckNodeDefinition } from '../../../store/node';
 import { BaseNode } from '../../BaseNode';
-import {
-  DEFAULT_CORE_CATEGORY,
-  STANDARD_PIN_EXEC_IN,
-  STANDARD_PIN_EXEC_OUT,
-} from '../../../utils/consts';
-import { PinLabel } from '../../components/pin/Label';
-import { Group } from 'react-konva';
-import {
-  buildNodeHeight,
-  buildPinPosX,
-  buildPinPosY,
-} from '../../../utils/size-helper';
+import { DEFAULT_CORE_CATEGORY } from '../../../utils/consts';
+import { buildNodeHeight } from '../../../utils/size-helper';
+import { standard } from '../../..';
 
 const width = 180;
 const height = buildNodeHeight(1);
@@ -26,54 +17,29 @@ export const JSONStringifyNodeDefinition: CodeckNodeDefinition = {
   height,
   category: DEFAULT_CORE_CATEGORY,
   inputs: [
-    {
-      name: STANDARD_PIN_EXEC_IN,
-      type: 'exec',
-      position: {
-        x: buildPinPosX(width, 'input'),
-        y: buildPinPosY(1),
-      },
-    },
-    {
-      name: 'input',
-      type: 'port',
-      position: {
-        x: buildPinPosX(width, 'input'),
-        y: buildPinPosY(2),
-      },
-      component: ({ nodeId }) => {
-        return <PinLabel label={'input'} />;
-      },
-    },
+    standard.execPinInput(width),
+    standard
+      .pin({
+        name: 'input',
+        width,
+        position: 1,
+      })
+      .port.input.base(),
   ],
   outputs: [
-    {
-      name: STANDARD_PIN_EXEC_OUT,
-      type: 'exec',
-      position: {
-        x: buildPinPosX(width, 'output'),
-        y: buildPinPosY(1),
-      },
-    },
-    {
-      name: 'output',
-      type: 'port',
-      position: {
-        x: buildPinPosX(width, 'output'),
-        y: buildPinPosY(2),
-      },
-      component: ({ nodeId }) => {
-        return (
-          <Group x={-70}>
-            <PinLabel label={'output'} />
-          </Group>
-        );
-      },
-    },
+    standard.execPinOutput(width),
+    standard
+      .pin({
+        name: 'output',
+        width,
+        position: 1,
+      })
+      .port.output.base(),
   ],
   code: ({ node, buildPinVarName, getConnectionInput }) => {
-    return `let ${buildPinVarName('output')} = JSON.stringify(${
-      getConnectionInput('input') ?? '""'
-    });\n`;
+    const input = getConnectionInput('input') ?? '""';
+    const output = buildPinVarName('output');
+
+    return `let ${output} = JSON.stringify(${input});\n`;
   },
 };

@@ -27,77 +27,51 @@ export const CreateConnectionTokenNodeDefinition: CodeckNodeDefinition = {
   category: EASEMOB_CATEGORY,
   inputs: [
     standard.execPinInput(width),
-    {
-      name: 'appKey',
-      type: 'port',
-      position: {
-        x: buildPinPosX(width, 'input'),
-        y: buildPinPosY(2),
-      },
-      component: ({ nodeId }) => {
-        return <TextInputPreset nodeId={nodeId} name="appKey" label="appKey" />;
-      },
-    },
-    {
-      name: 'username',
-      type: 'port',
-      position: {
-        x: buildPinPosX(width, 'input'),
-        y: buildPinPosY(4),
-      },
-      component: ({ nodeId }) => {
-        return (
-          <TextInputPreset nodeId={nodeId} name="username" label="username" />
-        );
-      },
-    },
-    {
-      name: 'token',
-      type: 'port',
-      position: {
-        x: buildPinPosX(width, 'input'),
-        y: buildPinPosY(6),
-      },
-      component: ({ nodeId }) => {
-        return <TextInputPreset nodeId={nodeId} name="token" label="token" />;
-      },
-    },
+    standard
+      .pin({
+        name: 'appKey',
+        width,
+        position: 1,
+      })
+      .port.input.text(),
+    standard
+      .pin({
+        name: 'username',
+        width,
+        position: 3,
+      })
+      .port.input.text(),
+    standard
+      .pin({
+        name: 'token',
+        width,
+        position: 5,
+      })
+      .port.input.text(),
   ],
   outputs: [
     standard.execPinOutput(width),
-    {
-      name: 'onLoginSuccess',
-      type: 'exec',
-      position: {
-        x: buildPinPosX(width, 'output'),
-        y: buildPinPosY(2),
-      },
-      component: ({ nodeId }) => {
-        return <OutputPinLabel label="onLoginSuccess" width={width / 2} />;
-      },
-    },
-    {
-      name: 'onLoginFailed',
-      type: 'exec',
-      position: {
-        x: buildPinPosX(width, 'output'),
-        y: buildPinPosY(3),
-      },
-      component: ({ nodeId }) => {
-        return <OutputPinLabel label="onLoginFailed" width={width / 2} />;
-      },
-    },
-    {
-      name: 'conn',
-      type: 'port',
-      position: {
-        x: buildPinPosX(width, 'output'),
-        y: buildPinPosY(4),
-      },
-      component: ({ nodeId }) => {
-        return <PinLabel label={'conn'} x={-60} />;
-      },
-    },
+    standard
+      .pin({
+        name: 'onLoginSuccess',
+        width,
+        position: 1,
+      })
+      .exec.output(),
+    standard
+      .pin({
+        name: 'onLoginFailed',
+        width,
+        position: 2,
+      })
+      .exec.output(),
+    standard
+      .pin({
+        name: 'conn',
+        width,
+        position: 3,
+      })
+      .port.output.base(),
   ],
   prepare: [
     {

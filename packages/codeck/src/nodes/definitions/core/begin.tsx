@@ -1,14 +1,7 @@
+import { standard } from '../../..';
 import { CodeckNodeDefinition } from '../../../store/node';
-import {
-  DEFAULT_CORE_CATEGORY,
-  STANDARD_PIN_EXEC_OUT,
-} from '../../../utils/consts';
-import {
-  buildNodeHeight,
-  buildPinPosX,
-  buildPinPosY,
-  defaultNodeWidth,
-} from '../../../utils/size-helper';
+import { DEFAULT_CORE_CATEGORY } from '../../../utils/consts';
+import { buildNodeHeight, defaultNodeWidth } from '../../../utils/size-helper';
 import { BaseNode } from '../../BaseNode';
 
 const width = defaultNodeWidth;
@@ -24,14 +17,5 @@ export const BeginNodeDefinition: CodeckNodeDefinition = {
   category: DEFAULT_CORE_CATEGORY,
   hidden: true,
   inputs: [],
-  outputs: [
-    {
-      name: STANDARD_PIN_EXEC_OUT,
-      type: 'exec',
-      position: {
-        x: buildPinPosX(width, 'output'),
-        y: buildPinPosY(1),
-      },
-    },
-  ],
+  outputs: [standard.execPinOutput(width)],
 };

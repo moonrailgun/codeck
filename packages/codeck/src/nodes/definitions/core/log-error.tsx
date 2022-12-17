@@ -22,14 +22,14 @@ export const LogErrorNodeDefinition: CodeckNodeDefinition = {
       .pin({
         name: 'message',
         width,
-        position: 2,
+        position: 1,
       })
       .port.input.text(),
     standard
       .pin({
         name: 'error',
         width,
-        position: 4,
+        position: 3,
       })
       .port.input.base(),
   ],

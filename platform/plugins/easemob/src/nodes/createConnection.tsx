@@ -32,7 +32,7 @@ export const CreateConnectionNodeDefinition: CodeckNodeDefinition = {
       type: 'port',
       position: {
         x: buildPinPosX(width, 'input'),
-        y: buildPinPosY(2),
+        y: buildPinPosY(1),
       },
       component: ({ nodeId }) => {
         return <TextInputPreset nodeId={nodeId} name="appKey" label="appKey" />;
@@ -43,7 +43,7 @@ export const CreateConnectionNodeDefinition: CodeckNodeDefinition = {
       type: 'port',
       position: {
         x: buildPinPosX(width, 'input'),
-        y: buildPinPosY(4),
+        y: buildPinPosY(3),
       },
       component: ({ nodeId }) => {
         return (
@@ -56,7 +56,7 @@ export const CreateConnectionNodeDefinition: CodeckNodeDefinition = {
       type: 'port',
       position: {
         x: buildPinPosX(width, 'input'),
-        y: buildPinPosY(6),
+        y: buildPinPosY(5),
       },
       component: ({ nodeId }) => {
         return (
@@ -72,7 +72,7 @@ export const CreateConnectionNodeDefinition: CodeckNodeDefinition = {
       type: 'exec',
       position: {
         x: buildPinPosX(width, 'output'),
-        y: buildPinPosY(2),
+        y: buildPinPosY(1),
       },
       component: ({ nodeId }) => {
         return <OutputPinLabel label="onLoginSuccess" width={width / 2} />;
@@ -83,7 +83,7 @@ export const CreateConnectionNodeDefinition: CodeckNodeDefinition = {
       type: 'exec',
       position: {
         x: buildPinPosX(width, 'output'),
-        y: buildPinPosY(3),
+        y: buildPinPosY(2),
       },
       component: ({ nodeId }) => {
         return <OutputPinLabel label="onLoginFailed" width={width / 2} />;
@@ -94,7 +94,7 @@ export const CreateConnectionNodeDefinition: CodeckNodeDefinition = {
       type: 'port',
       position: {
         x: buildPinPosX(width, 'output'),
-        y: buildPinPosY(4),
+        y: buildPinPosY(3),
       },
       component: ({ nodeId }) => {
         return <PinLabel label={'conn'} x={-60} />;

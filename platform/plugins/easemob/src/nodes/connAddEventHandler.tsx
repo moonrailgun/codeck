@@ -29,7 +29,7 @@ export const ConnAddEventHandlerNodeDefinition: CodeckNodeDefinition = {
       type: 'port',
       position: {
         x: buildPinPosX(width, 'input'),
-        y: buildPinPosY(2),
+        y: buildPinPosY(1),
       },
       component: ({ nodeId }) => {
         return <PinLabel label={'conn'} />;
@@ -40,7 +40,7 @@ export const ConnAddEventHandlerNodeDefinition: CodeckNodeDefinition = {
       type: 'port',
       position: {
         x: buildPinPosX(width, 'input'),
-        y: buildPinPosY(3),
+        y: buildPinPosY(2),
       },
       defaultValue: 'default',
       component: ({ nodeId }) => {
@@ -55,7 +55,7 @@ export const ConnAddEventHandlerNodeDefinition: CodeckNodeDefinition = {
       type: 'exec',
       position: {
         x: buildPinPosX(width, 'output'),
-        y: buildPinPosY(2),
+        y: buildPinPosY(1),
       },
       component: ({ nodeId }) => {
         return <PinLabel label="onTextMessage" x={-130} />;
@@ -66,7 +66,7 @@ export const ConnAddEventHandlerNodeDefinition: CodeckNodeDefinition = {
       type: 'port',
       position: {
         x: buildPinPosX(width, 'output'),
-        y: buildPinPosY(3),
+        y: buildPinPosY(2),
       },
       component: ({ nodeId }) => {
         return <PinLabel label="data" x={-60} />;

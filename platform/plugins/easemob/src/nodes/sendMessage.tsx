@@ -24,14 +24,14 @@ export const SendMessageNodeDefinition: CodeckNodeDefinition = {
       .pin({
         name: 'conn',
         width,
-        position: 2,
+        position: 1,
       })
       .port.input.base(),
     standard
       .pin({
         name: 'payload',
         width,
-        position: 3,
+        position: 2,
       })
       .port.input.base(),
   ],
@@ -41,21 +41,21 @@ export const SendMessageNodeDefinition: CodeckNodeDefinition = {
       .pin({
         name: 'onSuccess',
         width,
-        position: 2,
+        position: 1,
       })
       .exec.output(),
     standard
       .pin({
         name: 'result',
         width,
-        position: 3,
+        position: 2,
       })
       .port.output.base(),
     standard
       .pin({
         name: 'onFailed',
         width,
-        position: 4,
+        position: 3,
       })
       .exec.output(),
   ],

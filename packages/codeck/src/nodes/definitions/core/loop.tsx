@@ -1,18 +1,9 @@
 import React from 'react';
 import { CodeckNodeDefinition } from '../../../store/node';
 import { BaseNode } from '../../BaseNode';
-import {
-  DEFAULT_CORE_CATEGORY,
-  STANDARD_PIN_EXEC_IN,
-  STANDARD_PIN_EXEC_OUT,
-} from '../../../utils/consts';
-import {
-  buildNodeHeight,
-  buildPinPosX,
-  buildPinPosY,
-} from '../../../utils/size-helper';
-import { NumberInputPreset } from '../../components/preset/NumberInputPreset';
-import { PinLabel } from '../../components/pin/Label';
+import { DEFAULT_CORE_CATEGORY } from '../../../utils/consts';
+import { buildNodeHeight } from '../../../utils/size-helper';
+import { standard } from '../../..';
 
 const width = 180;
 const height = buildNodeHeight(2);
@@ -26,57 +17,31 @@ export const LoopNodeDefinition: CodeckNodeDefinition = {
   height,
   category: DEFAULT_CORE_CATEGORY,
   inputs: [
-    {
-      name: STANDARD_PIN_EXEC_IN,
-      type: 'exec',
-      position: {
-        x: buildPinPosX(width, 'input'),
-        y: buildPinPosY(1),
-      },
-    },
-    {
-      name: 'times',
-      type: 'port',
-      position: {
-        x: buildPinPosX(width, 'input'),
-        y: buildPinPosY(2),
-      },
-      component: ({ nodeId }) => {
-        return <NumberInputPreset nodeId={nodeId} name="times" label="times" />;
-      },
-    },
+    standard.execPinInput(width),
+    standard
+      .pin({
+        name: 'times',
+        width,
+        position: 1,
+      })
+      .port.input.number(),
   ],
   outputs: [
-    {
-      name: STANDARD_PIN_EXEC_OUT,
-      type: 'exec',
-      position: {
-        x: buildPinPosX(width, 'output'),
-        y: buildPinPosY(1),
-      },
-    },
-    {
-      name: 'body',
-      type: 'exec',
-      position: {
-        x: buildPinPosX(width, 'output'),
-        y: buildPinPosY(2),
-      },
-      component: ({ nodeId }) => {
-        return <PinLabel label={'body'} x={-60} />;
-      },
-    },
-    {
-      name: 'inc',
-      type: 'port',
-      position: {
-        x: buildPinPosX(width, 'output'),
-        y: buildPinPosY(3),
-      },
-      component: ({ nodeId }) => {
-        return <PinLabel label={'inc'} x={-50} />;
-      },
-    },
+    standard.execPinOutput(width),
+    standard
+      .pin({
+        name: 'body',
+        width,
+        position: 1,
+      })
+      .exec.output(),
+    standard
+      .pin({
+        name: 'inc',
+        width,
+        position: 2,
+      })
+      .port.output.base(),
   ],
   code: ({
     node,

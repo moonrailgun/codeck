@@ -39,7 +39,7 @@ export const LoopNodeDefinition: CodeckNodeDefinition = {
       type: 'exec',
       position: {
         x: buildPinPosX(width, 'input'),
-        y: buildPinPosY(1),
+        y: buildPinPosY(0),
       },
     },
     {
@@ -47,7 +47,7 @@ export const LoopNodeDefinition: CodeckNodeDefinition = {
       type: 'port',
       position: {
         x: buildPinPosX(width, 'input'),
-        y: buildPinPosY(2),
+        y: buildPinPosY(1),
       },
       component: ({ nodeId }) => {
         return <NumberInputPreset nodeId={nodeId} name="times" label="times" />;
@@ -60,7 +60,7 @@ export const LoopNodeDefinition: CodeckNodeDefinition = {
       type: 'exec',
       position: {
         x: buildPinPosX(width, 'output'),
-        y: buildPinPosY(1),
+        y: buildPinPosY(0),
       },
     },
     {
@@ -68,7 +68,7 @@ export const LoopNodeDefinition: CodeckNodeDefinition = {
       type: 'exec',
       position: {
         x: buildPinPosX(width, 'output'),
-        y: buildPinPosY(2),
+        y: buildPinPosY(1),
       },
       component: ({ nodeId }) => {
         return <PinLabel label={'body'} x={-60} />;
@@ -79,7 +79,7 @@ export const LoopNodeDefinition: CodeckNodeDefinition = {
       type: 'port',
       position: {
         x: buildPinPosX(width, 'output'),
-        y: buildPinPosY(3),
+        y: buildPinPosY(2),
       },
       component: ({ nodeId }) => {
         return <PinLabel label={'inc'} x={-50} />;
