@@ -1,14 +1,10 @@
 import React from 'react';
 import {
   BaseNode,
-  buildPinPosX,
-  buildPinPosY,
   CodeckNodeDefinition,
-  TextInputPreset,
   buildNodeHeight,
-  PinLabel,
   standard,
-  OutputPinLabel,
+  formatFunctionIndent,
 } from 'codeck';
 import { EASEMOB_CATEGORY } from '../const';
 
@@ -60,18 +56,18 @@ export const CreateConnectionTokenNodeDefinition: CodeckNodeDefinition = {
       .exec.output(),
     standard
       .pin({
-        name: 'onLoginFailed',
+        name: 'conn',
         width,
         position: 2,
       })
-      .exec.output(),
+      .port.output.base(),
     standard
       .pin({
-        name: 'conn',
+        name: 'onLoginFailed',
         width,
         position: 3,
       })
-      .port.output.base(),
+      .exec.output(),
   ],
   prepare: [
     {
@@ -94,16 +90,14 @@ export const CreateConnectionTokenNodeDefinition: CodeckNodeDefinition = {
     const token =
       getConnectionInput('token') ?? JSON.stringify(node.data?.token ?? '');
     const conn = buildPinVarName('conn');
-    const onLoginSuccess =
-      getConnectionExecOutput('onLoginSuccess')
-        ?.trim()
-        .split('\n')
-        .join('\n    ') ?? '';
-    const onLoginFailed =
-      getConnectionExecOutput('onLoginFailed')
-        ?.trim()
-        .split('\n')
-        .join('\n    ') ?? '';
+    const onLoginSuccess = formatFunctionIndent(
+      getConnectionExecOutput('onLoginSuccess'),
+      4
+    );
+    const onLoginFailed = formatFunctionIndent(
+      getConnectionExecOutput('onLoginFailed'),
+      4
+    );
 
     return `const ${conn} = new WebIM.connection({appKey: ${appKey}});
 ${conn}.open({user: ${username}, accessToken: ${token}})

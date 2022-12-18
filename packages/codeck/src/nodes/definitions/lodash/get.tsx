@@ -44,9 +44,9 @@ export const LodashGetNodeDefinition: CodeckNodeDefinition = {
       code: ({ node, getConnectionInput }) => {
         const obj = getConnectionInput('obj') ?? 'null';
         const path =
-          getConnectionInput('obj') ?? String(node.data?.path ?? '""');
+          getConnectionInput('path') ?? String(node.data?.path ?? '');
 
-        return `_get(${obj}, ${path})`;
+        return `_get(${obj}, "${path}")`;
       },
     },
   ],

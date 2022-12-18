@@ -4,6 +4,7 @@ import { DEFAULT_CORE_CATEGORY } from '../../utils/consts';
 import { BaseNode } from '../BaseNode';
 import { buildNodeHeight, defaultNodeWidth } from '../../utils/size-helper';
 import { standard } from '../..';
+import { VariableSetNode } from '../VariableSetNode';
 
 const width = defaultNodeWidth;
 const height = buildNodeHeight(2);
@@ -12,7 +13,7 @@ export const VarSetNodeDefinition: CodeckNodeDefinition = {
   name: 'varset',
   label: 'Set Variable',
   type: 'function',
-  component: BaseNode,
+  component: VariableSetNode,
   width,
   height,
   category: DEFAULT_CORE_CATEGORY,

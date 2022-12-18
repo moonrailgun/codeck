@@ -8,7 +8,7 @@ import { color } from '../utils/color';
 import { BaseNodeWrapper } from './BaseNodeWrapper';
 import { usePinRender } from './hooks/usePinRender';
 
-export const BaseNode: React.FC<CodeckNodeComponentProps> = React.memo(
+export const VariableSetNode: React.FC<CodeckNodeComponentProps> = React.memo(
   (props) => {
     const nodeId = props.id;
     const { node, definition } = useNodeInfo(nodeId);
@@ -21,6 +21,7 @@ export const BaseNode: React.FC<CodeckNodeComponentProps> = React.memo(
 
     const { width, height, label } = definition;
     const { x, y } = node.position;
+    const { name } = node.data ?? {};
 
     return (
       <BaseNodeWrapper x={x} y={y} nodeId={nodeId}>
@@ -60,7 +61,7 @@ export const BaseNode: React.FC<CodeckNodeComponentProps> = React.memo(
           align="left"
           verticalAlign="middle"
           fontSize={16}
-          text={label}
+          text={`Set ${name}`}
           fill="white"
         />
 
@@ -69,4 +70,4 @@ export const BaseNode: React.FC<CodeckNodeComponentProps> = React.memo(
     );
   }
 );
-BaseNode.displayName = 'BaseNode';
+VariableSetNode.displayName = 'VariableSetNode';

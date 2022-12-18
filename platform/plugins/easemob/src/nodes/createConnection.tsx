@@ -1,14 +1,10 @@
 import React from 'react';
 import {
   BaseNode,
-  buildPinPosX,
-  buildPinPosY,
   CodeckNodeDefinition,
-  TextInputPreset,
   buildNodeHeight,
-  PinLabel,
   standard,
-  OutputPinLabel,
+  formatFunctionIndent,
 } from 'codeck';
 import { EASEMOB_CATEGORY } from '../const';
 
@@ -27,79 +23,51 @@ export const CreateConnectionNodeDefinition: CodeckNodeDefinition = {
   category: EASEMOB_CATEGORY,
   inputs: [
     standard.execPinInput(width),
-    {
-      name: 'appKey',
-      type: 'port',
-      position: {
-        x: buildPinPosX(width, 'input'),
-        y: buildPinPosY(1),
-      },
-      component: ({ nodeId }) => {
-        return <TextInputPreset nodeId={nodeId} name="appKey" label="appKey" />;
-      },
-    },
-    {
-      name: 'username',
-      type: 'port',
-      position: {
-        x: buildPinPosX(width, 'input'),
-        y: buildPinPosY(3),
-      },
-      component: ({ nodeId }) => {
-        return (
-          <TextInputPreset nodeId={nodeId} name="username" label="username" />
-        );
-      },
-    },
-    {
-      name: 'password',
-      type: 'port',
-      position: {
-        x: buildPinPosX(width, 'input'),
-        y: buildPinPosY(5),
-      },
-      component: ({ nodeId }) => {
-        return (
-          <TextInputPreset nodeId={nodeId} name="password" label="password" />
-        );
-      },
-    },
+    standard
+      .pin({
+        name: 'appKey',
+        width,
+        position: 1,
+      })
+      .port.input.text(),
+    standard
+      .pin({
+        name: 'username',
+        width,
+        position: 3,
+      })
+      .port.input.text(),
+    standard
+      .pin({
+        name: 'password',
+        width,
+        position: 5,
+      })
+      .port.input.text(),
   ],
   outputs: [
     standard.execPinOutput(width),
-    {
-      name: 'onLoginSuccess',
-      type: 'exec',
-      position: {
-        x: buildPinPosX(width, 'output'),
-        y: buildPinPosY(1),
-      },
-      component: ({ nodeId }) => {
-        return <OutputPinLabel label="onLoginSuccess" width={width / 2} />;
-      },
-    },
-    {
-      name: 'onLoginFailed',
-      type: 'exec',
-      position: {
-        x: buildPinPosX(width, 'output'),
-        y: buildPinPosY(2),
-      },
-      component: ({ nodeId }) => {
-        return <OutputPinLabel label="onLoginFailed" width={width / 2} />;
-      },
-    },
-    {
-      name: 'conn',
-      type: 'port',
-      position: {
-        x: buildPinPosX(width, 'output'),
-        y: buildPinPosY(3),
-      },
-      component: ({ nodeId }) => {
-        return <PinLabel label={'conn'} x={-60} />;
-      },
-    },
+    standard
+      .pin({
+        name: 'onLoginSuccess',
+        width,
+        position: 1,
+      })
+      .exec.output(),
+    standard
+      .pin({
+        name: 'conn',
+        width,
+        position: 2,
+      })
+      .port.output.base(),
+    standard
+      .pin({
+        name: 'onLoginFailed',
+        width,
+        position: 3,
+      })
+      .exec.output(),
   ],
   prepare: [
     {
@@ -123,16 +91,14 @@ export const CreateConnectionNodeDefinition: CodeckNodeDefinition = {
       getConnectionInput('password') ??
       JSON.stringify(node.data?.password ?? '');
     const conn = buildPinVarName('conn');
-    const onLoginSuccess =
-      getConnectionExecOutput('onLoginSuccess')
-        ?.trim()
-        .split('\n')
-        .join('\n    ') ?? '';
-    const onLoginFailed =
-      getConnectionExecOutput('onLoginFailed')
-        ?.trim()
-        .split('\n')
-        .join('\n    ') ?? '';
+    const onLoginSuccess = formatFunctionIndent(
+      getConnectionExecOutput('onLoginSuccess'),
+      4
+    );
+    const onLoginFailed = formatFunctionIndent(
+      getConnectionExecOutput('onLoginFailed'),
+      4
+    );
 
     return `const ${conn} = new WebIM.connection({appKey: ${appKey}});
 ${conn}.open({user: ${username}, pwd: ${password}})

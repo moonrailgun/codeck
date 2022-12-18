@@ -2,12 +2,11 @@ import React from 'react';
 import { Rect, Text } from 'react-konva';
 import { useNodeData } from '../hooks/useNodeData';
 import { useNodeInfo } from '../hooks/useNodeInfo';
-import { useConnectionStore } from '../store/connection';
 import { CodeckNodeComponentProps } from '../store/node';
 import { useUIStore } from '../store/ui';
 import { color } from '../utils/color';
 import { BaseNodeWrapper } from './BaseNodeWrapper';
-import { Pin } from './components/pin';
+import { usePinRender } from './hooks/usePinRender';
 
 export const VariableNode: React.FC<CodeckNodeComponentProps> = React.memo(
   (props) => {
@@ -15,12 +14,13 @@ export const VariableNode: React.FC<CodeckNodeComponentProps> = React.memo(
     const { node, definition } = useNodeInfo(nodeId);
     const { name } = useNodeData(nodeId);
     const { selectedNodeIds } = useUIStore();
+    const pinEl = usePinRender(nodeId);
 
     if (!node || !definition) {
       return null;
     }
 
-    const { width, height, label } = definition;
+    const { width, height } = definition;
     const { x, y } = node.position;
 
     return (
@@ -56,46 +56,7 @@ export const VariableNode: React.FC<CodeckNodeComponentProps> = React.memo(
           fill="white"
         />
 
-        {definition.inputs.map((inputPin) => (
-          <Pin
-            key={node.id + inputPin.name}
-            nodeId={nodeId}
-            definition={inputPin}
-            onConnectionStart={() => {
-              useConnectionStore
-                .getState()
-                .startConnect(props.id, inputPin.name, inputPin.type, 'in-out');
-            }}
-            onConnectionEnd={() => {
-              useConnectionStore
-                .getState()
-                .endConnect(props.id, inputPin.name, inputPin.type, 'in-out');
-            }}
-          />
-        ))}
-
-        {definition.outputs.map((outputPin) => (
-          <Pin
-            key={node.id + outputPin.name}
-            nodeId={nodeId}
-            definition={outputPin}
-            onConnectionStart={() => {
-              useConnectionStore
-                .getState()
-                .startConnect(
-                  props.id,
-                  outputPin.name,
-                  outputPin.type,
-                  'out-in'
-                );
-            }}
-            onConnectionEnd={() => {
-              useConnectionStore
-                .getState()
-                .endConnect(props.id, outputPin.name, outputPin.type, 'out-in');
-            }}
-          />
-        ))}
+        {pinEl}
       </BaseNodeWrapper>
     );
   }
