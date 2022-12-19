@@ -94,7 +94,7 @@ export const ConnAddEventHandlerNodeDefinition: CodeckNodeDefinition = {
     }
 
     return `${conn}.addEventHandler(${eventId}, {
-  onMessage: (${data}) => {
+  onTextMessage: (${data}) => {
     ${onTextMessage}
   },
 });\n`;
