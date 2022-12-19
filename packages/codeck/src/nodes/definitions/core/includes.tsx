@@ -43,7 +43,7 @@ export const IncludesNodeDefinition: CodeckNodeDefinition = {
         .port.output.base(),
       code: ({ node, getConnectionInput }) => {
         const data = getConnectionInput('data') ?? '{}';
-        const item = getConnectionInput('item') ?? '""';
+        const item = getConnectionInput('item') ?? node.data?.item ?? '""';
 
         return `${data}.includes(${item})`;
       },
