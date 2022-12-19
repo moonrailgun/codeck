@@ -22,7 +22,7 @@ export const VarSetNodeDefinition: CodeckNodeDefinition = {
     standard.execPinInput(width),
     standard
       .pin({
-        name: 'variable',
+        name: 'value',
         width,
         position: 1,
       })
@@ -31,7 +31,7 @@ export const VarSetNodeDefinition: CodeckNodeDefinition = {
   outputs: [standard.execPinOutput(width)],
   code: ({ node, getConnectionInput }) => {
     return `${node.data?.name ?? ''} = ${
-      getConnectionInput('variable') ?? JSON.stringify(node.data?.manual ?? '')
+      getConnectionInput('value') ?? JSON.stringify(node.data?.value ?? '')
     };\n`;
   },
 };

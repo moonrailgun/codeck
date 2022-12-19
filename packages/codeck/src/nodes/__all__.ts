@@ -2,16 +2,25 @@ import { AlertNodeDefinition } from './definitions/core/alert';
 import { BeginNodeDefinition } from './definitions/core/begin';
 import { FetchNodeDefinition } from './definitions/core/fetch';
 import { ForEachNodeDefinition } from './definitions/core/foreach';
+import { IfNodeDefinition } from './definitions/core/if';
+import { IncludesNodeDefinition } from './definitions/core/includes';
 import { JSONStringifyNodeDefinition } from './definitions/core/json-stringify';
+import { LengthNodeDefinition } from './definitions/core/length';
 import { LogNodeDefinition } from './definitions/core/log';
 import { LogErrorNodeDefinition } from './definitions/core/log-error';
 import { LoopNodeDefinition } from './definitions/core/loop';
+import { RawJSNodeDefinition } from './definitions/core/raw-js';
 import { SleepNodeDefinition } from './definitions/core/sleep';
 import { TimerNodeDefinition } from './definitions/core/timer';
 import { LodashGetNodeDefinition } from './definitions/lodash/get';
 import { AddNodeDefinition } from './definitions/logic/add';
 import { AnlNodeDefinition } from './definitions/logic/anl';
 import { DividedNodeDefinition } from './definitions/logic/divided';
+import { EqualNodeDefinition } from './definitions/logic/equal';
+import { GTNodeDefinition } from './definitions/logic/gt';
+import { GTENodeDefinition } from './definitions/logic/gte';
+import { LTNodeDefinition } from './definitions/logic/lt';
+import { LTENodeDefinition } from './definitions/logic/lte';
 import { ModNodeDefinition } from './definitions/logic/mod';
 import { MultiplyNodeDefinition } from './definitions/logic/multiply';
 import { NotNodeDefinition } from './definitions/logic/not';
@@ -26,13 +35,17 @@ export const builtinNodeDefinition = {
   BeginNodeDefinition,
   FetchNodeDefinition,
   ForEachNodeDefinition,
-  LogNodeDefinition,
+  IfNodeDefinition,
+  IncludesNodeDefinition,
+  LengthNodeDefinition,
+  JSONStringifyNodeDefinition,
   LogErrorNodeDefinition,
+  LogNodeDefinition,
   VarGetNodeDefinition,
   VarSetNodeDefinition,
   AlertNodeDefinition,
-  JSONStringifyNodeDefinition,
   LoopNodeDefinition,
+  RawJSNodeDefinition,
   SleepNodeDefinition,
   TimerNodeDefinition,
 
@@ -41,6 +54,11 @@ export const builtinNodeDefinition = {
   SubtractNodeDefinition,
   MultiplyNodeDefinition,
   DividedNodeDefinition,
+  EqualNodeDefinition,
+  GTNodeDefinition,
+  GTENodeDefinition,
+  LTNodeDefinition,
+  LTENodeDefinition,
   ModNodeDefinition,
   AnlNodeDefinition,
   OrlNodeDefinition,
