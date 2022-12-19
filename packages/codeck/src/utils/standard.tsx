@@ -17,6 +17,10 @@ import {
   buildPinPosY,
   defaultNodeWidth,
 } from './size-helper';
+import {
+  TextAreaInputPreset,
+  TextAreaInputPresetProps,
+} from '../nodes/components/preset/TextAreaInputPreset';
 
 /**
  * 标准执行输入
@@ -68,6 +72,9 @@ function portPin(
   input: {
     base: () => CodeckNodePinDefinition;
     text: () => CodeckNodePinDefinition;
+    textarea: (
+      inputProps: TextAreaInputPresetProps['inputProps']
+    ) => CodeckNodePinDefinition;
     number: () => CodeckNodePinDefinition;
     boolean: () => CodeckNodePinDefinition;
     select: (
@@ -106,6 +113,19 @@ function portPin(
               nodeId={nodeId}
               name={options.name}
               label={options.label ?? options.name}
+            />
+          );
+        },
+      }),
+      textarea: (inputProps) => ({
+        ...buildBaseDef('input'),
+        component: ({ nodeId }) => {
+          return (
+            <TextAreaInputPreset
+              nodeId={nodeId}
+              name={options.name}
+              label={options.label ?? options.name}
+              inputProps={inputProps}
             />
           );
         },
@@ -355,7 +375,7 @@ export const objDeconstructNode = (
     ],
     code: ({ getConnectionInput, buildPinVarName }) => {
       const vars = options.outputList
-        .map((item) => buildPinVarName(item.name))
+        .map((item) => `${item.name}: ${buildPinVarName(item.name)}`)
         .join(',\n  ');
       const payload = getConnectionInput('payload');
 
