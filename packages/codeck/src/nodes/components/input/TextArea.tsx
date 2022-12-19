@@ -1,6 +1,7 @@
 import React from 'react';
 import { Html } from 'react-konva-utils';
 import { NodeInputBase, NodeInputProps } from './Base';
+import { sharedInputStyle } from './shared';
 
 export interface NodeInputTextAreaProps extends NodeInputProps {
   row: number;
@@ -14,12 +15,10 @@ export const NodeInputTextArea: React.FC<NodeInputTextAreaProps> = React.memo(
         renderEditor={({ width, height, value, setValue, handleBlur }) => (
           <Html>
             <textarea
-              className="block text-white text-xs bg-transparent border-white"
               style={{
-                lineHeight: '16px',
+                ...sharedInputStyle,
                 width,
                 height,
-                border: '1px solid white',
               }}
               autoFocus={true}
               rows={props.row}

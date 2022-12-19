@@ -73,9 +73,9 @@ const ContextMenu: React.FC<{ onClose: () => void }> = React.memo((props) => {
 
   return (
     <div
-      className="bg-black bg-opacity-80"
       style={{
         width: 240,
+        backgroundColor: 'rgba(0,0,0,0.8)',
       }}
     >
       <Menu>
@@ -87,8 +87,8 @@ const ContextMenu: React.FC<{ onClose: () => void }> = React.memo((props) => {
           onKeyDown={(e) => e.stopPropagation()}
         />
 
-        <div className="overflow-auto" style={{ maxHeight: 400 }}>
-          <Tree size="mini" className="h-full" blockNode={true}>
+        <div style={{ overflow: 'auto', maxHeight: 400 }}>
+          <Tree size="mini" style={{ height: '100%' }} blockNode={true}>
             {Array.isArray(matchedVariable) && matchedVariable.length > 0 && (
               <Tree.Node title="Variable">
                 {matchedVariable.map((item) => (
@@ -165,6 +165,7 @@ ContextMenu.displayName = 'ContextMenu';
 
 interface ContextMenuWrapperProps extends PropsWithChildren {
   className?: string;
+  style?: React.CSSProperties;
 }
 export const ContextMenuWrapper = React.forwardRef<
   HTMLDivElement,
@@ -190,7 +191,7 @@ export const ContextMenuWrapper = React.forwardRef<
       trigger={['contextMenu']}
       disabled={!!workingConnection}
     >
-      <div className={props.className} ref={ref}>
+      <div className={props.className} style={props.style} ref={ref}>
         {props.children}
       </div>
     </Trigger>

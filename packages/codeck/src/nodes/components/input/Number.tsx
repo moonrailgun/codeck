@@ -9,8 +9,11 @@ export const NodeInputNumber: React.FC<NodeInputProps> = React.memo((props) => {
       renderEditor={({ width, height, value, setValue, handleBlur }) => (
         <Html>
           <input
-            className="block text-white text-xs bg-transparent border-white"
             style={{
+              display: 'block',
+              color: 'white',
+              fontSize: 12,
+              backgroundColor: 'transparent',
               lineHeight: '16px',
               width,
               height,

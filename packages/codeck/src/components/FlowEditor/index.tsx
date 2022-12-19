@@ -39,10 +39,14 @@ export const FlowEditor: React.FC = React.memo(() => {
   }, []);
 
   return (
-    <ContextMenuWrapper ref={containerRef} className="h-full w-full">
+    <ContextMenuWrapper
+      ref={containerRef}
+      style={{ height: '100%', width: '100%' }}
+    >
       <Stage
         ref={stageRef}
-        className="h-full w-full flow-editor"
+        className="flow-editor"
+        style={{ height: '100%', width: '100%' }}
         width={width}
         height={height}
         scale={scale}
