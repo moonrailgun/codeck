@@ -3,7 +3,7 @@
   "files": [
     "lib"
   ],
-  "version": "0.0.1",
+  "version": "1.0.0",
   "type": "module",
   "main": "./lib/index.js",
   "scripts": {
