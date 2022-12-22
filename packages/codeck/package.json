@@ -6,6 +6,13 @@
   "version": "1.0.0",
   "type": "module",
   "main": "./lib/index.js",
+  "description": "A visual programming engine base on js",
+  "homepage": "https://codeck.moonrailgun.com/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/moonrailgun/codeck",
+    "directory": "packages/codeck"
+  },
   "scripts": {
     "dev": "tsc --watch",
     "build": "tsc",
