@@ -21,7 +21,7 @@
     "@monaco-editor/react": "^4.4.6",
     "ahooks": "^3.7.2",
     "allotment": "^1.17.0",
-    "codeck": "workspace:^0.0.1",
+    "codeck": "workspace:^",
     "file-saver": "^2.0.5",
     "fuse.js": "^6.6.2",
     "immer": "^9.0.16",
