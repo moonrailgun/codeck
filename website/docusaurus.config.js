@@ -135,7 +135,7 @@ const config = {
 
   scripts: [
     {
-      src: 'https://umami.moonrailgun.com/umami.js',
+      src: 'https://umami.moonrailgun.com/script.js',
       async: true,
       defer: true,
       'data-website-id': '50e8ddd6-7f28-4099-9862-7fb1ec00f49f',
